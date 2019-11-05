@@ -1,17 +1,21 @@
-package fac.pacmanproject;
+package pacmanproject;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import scenes.Game;
+import scenes.MainMenu;
 
 public class App extends Application{
+    Game game = new Game();
+    MainMenu mainMenu = new MainMenu();
+
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) {      
         
+    
         stage.setTitle("Pacman Project");
-        stage.setScene(new Scene(new Label("------------------------------------------")));
+        stage.setScene(mainMenu.getScene());
         stage.show();
     }
     
