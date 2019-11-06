@@ -18,7 +18,7 @@ public class Kernel {
 
     public void step(){
         Pacman pacman = (Pacman) getPacman();
-        pacman.move();
+        pacman.move() ;
     }
 
     public Entity getPacman(){
