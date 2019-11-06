@@ -10,18 +10,18 @@ public class SceneController {
     public MainMenu mainMenu;
 
     public SceneController(Scene mainScene) {
+        this.scene = mainScene;
         game = new Game(this);
         mainMenu = new MainMenu(this);
-        this.scene = mainScene;
     }
     
     public void showGame(){
         scene.setRoot(game.getNode());
+        game.start();
     }
     
     public void showMainMenu(){
-        System.out.println(scene);
-        System.out.println(mainMenu.getNode());
+        game.stop();
         scene.setRoot(mainMenu.getNode());
     }
 

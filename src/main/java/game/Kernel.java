@@ -14,11 +14,11 @@ public class Kernel {
         collisionEngine = new CollisionEngine();
         entities = new ArrayList<>();
         ias = new ArrayList<>();
+        
     }
 
     public void step(){
-        Pacman pacman = (Pacman) getPacman();
-        pacman.move() ;
+        ((Pacman) getPacman()).move() ;
     }
 
     public Entity getPacman(){

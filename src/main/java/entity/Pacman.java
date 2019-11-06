@@ -1,6 +1,7 @@
 package entity;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Pacman extends Entity {
     Direction direction;
@@ -30,18 +31,19 @@ public class Pacman extends Entity {
         direction = Direction.STOP;
     }
 
-    public void move(){
+    public void move(){        
         switch (direction){
-            case UP: y--; break;
-            case DOWN: y++; break;
-            case LEFT: x++; break;
-            case RIGHT: x--; break;
+            case UP: y-=0.1; break;
+            case DOWN: y+=0.1; break;
+            case LEFT: x-=0.1; break;
+            case RIGHT: x+=0.1; break;
             default: break;
         }
     }
-
+    
     @Override
     public void draw(GraphicsContext gc) {
-
+        gc.setFill(Color.DARKGRAY);
+        gc.fillRect(x, y, 50, 50);
     }
 }
