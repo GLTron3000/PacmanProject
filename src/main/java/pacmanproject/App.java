@@ -23,8 +23,7 @@ public class App extends Application{
         sceneController = new SceneController(mainScene);
         
         sceneController.showMainMenu();
-        //sceneController.showGame();        
-        
+
         stage.show();
     }
     

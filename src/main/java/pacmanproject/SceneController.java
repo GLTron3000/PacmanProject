@@ -24,5 +24,8 @@ public class SceneController {
         System.out.println(mainMenu.getNode());
         scene.setRoot(mainMenu.getNode());
     }
-    
+
+    public Scene getScene() {
+        return scene;
+    }
 }
