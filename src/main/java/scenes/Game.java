@@ -1,26 +1,27 @@
 package scenes;
 
 import game.Kernel;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
+import pacmanproject.SceneController;
 
 public class Game {
-    Scene scene; 
+    SceneController sceneController;
+    StackPane stackPane;
     Canvas canvas;
     Kernel kernel;
 
-    public Game() {
-        StackPane stackPane = new StackPane();
+    public Game(SceneController sceneController) {
+        stackPane = new StackPane();
         canvas = new Canvas();
         
         stackPane.getChildren().add(canvas);
-        scene = new Scene(stackPane, 640, 640);
+        this.sceneController = sceneController;
     }
 
-    public Scene getScene() {
-        return scene;
+    public StackPane getNode() {
+        return stackPane;
     }
     
     void refresh(){
