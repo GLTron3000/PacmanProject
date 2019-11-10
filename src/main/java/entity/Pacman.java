@@ -9,6 +9,7 @@ public class Pacman extends Entity {
     public Pacman(double x, double y) {
         super(x, y);
         direction = Direction.STOP;
+        type="Pacman";
     }
 
     public void goUp(){
@@ -45,5 +46,15 @@ public class Pacman extends Entity {
     public void draw(GraphicsContext gc) {
         gc.setFill(Color.DARKGRAY);
         gc.fillRect(x, y, 50, 50);
+    }
+
+    @Override
+    public String toString() {
+        return "Pacman{" +
+                "direction=" + direction +
+                ", x=" + x +
+                ", y=" + y +
+                ", type='" + type + '\'' +
+                '}';
     }
 }

@@ -1,9 +1,14 @@
 package JSON;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 import entity.Entity;
+import entity.Fantom;
+import entity.Pacman;
+import entity.Wall;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,18 +19,25 @@ public class Loader {
     public List<Entity> loadlevel(String path) {
         Entity[] result;
         File file = new File(path);
+
         try {
-        FileInputStream fis = new FileInputStream(file);
-        byte[] data = new byte[(int) file.length()];
+            FileInputStream fis = new FileInputStream(file);
+            byte[] data = new byte[(int) file.length()];
             fis.read(data);
             fis.close();
-            String str = new String(data, StandardCharsets.UTF_8);
+            String input = new String(data, StandardCharsets.UTF_8);
+
+            Gson gson = new GsonBuilder().registerTypeAdapter(Entity.class, new EntityJsonDeserialize()).create();
+            Type type = new TypeToken<List<Entity>>(){}.getType();
+
+            return gson.fromJson(input, type);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String entities="";
-        Gson gson = new Gson();
-        result=gson.fromJson(entities,Entity[].class);
-        return new ArrayList<>(Arrays.asList(result));
+        return null;
+
     }
+
+
+
 }

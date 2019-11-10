@@ -8,6 +8,7 @@ public class Fantom extends Entity {
     String name;
     public Fantom(double x, double y, String name) {
         super(x, y);
+        type="Fantom";
     }
 
     public void goUp(){
@@ -33,5 +34,16 @@ public class Fantom extends Entity {
     @Override
     public void draw(GraphicsContext gc) {
 
+    }
+
+    @Override
+    public String toString() {
+        return "Fantom{" +
+                "direction=" + direction +
+                ", name='" + name + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                ", type='" + type + '\'' +
+                '}';
     }
 }
