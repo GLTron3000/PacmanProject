@@ -1,6 +1,5 @@
 package entity;
 
-import java.awt.Rectangle;
 import javafx.scene.canvas.GraphicsContext;
 
 public abstract class Entity {
