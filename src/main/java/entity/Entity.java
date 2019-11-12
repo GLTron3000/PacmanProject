@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Rectangle;
 import javafx.scene.canvas.GraphicsContext;
 
 public abstract class Entity {
@@ -20,4 +21,5 @@ public abstract class Entity {
     public double getY() {
         return y;
     }
+    
 }

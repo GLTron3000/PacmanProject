@@ -40,6 +40,7 @@ public class Game {
                 
                 System.out.println(ke.getCode());
                 
+                
                 switch (ke.getCode()){
                     case UP: pacman.goUp(); break;
                     case DOWN: pacman.goDown(); break;
@@ -50,6 +51,7 @@ public class Game {
                     default: break;
                 }
                 ke.consume();
+
             }
         });
                 
@@ -58,16 +60,22 @@ public class Game {
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                Pacman pacman = (Pacman) kernel.getPacman();
+                if(kernel.collisionEngine.outOfBorad(pacman , canvas))
+                    pacman.stop();
                 kernel.step();
                 
                 gc.strokeRect(0, 0, 10, 10);
-                gc.clearRect(0, 0, canvas.getHeight(), canvas.getWidth());    
+                gc.clearRect(0, 0, canvas.getHeight(), canvas.getWidth());
+                
+                
 
                 kernel.entities.forEach((entity) -> {
                     entity.draw(gc);
                 });
             }
         };
+        
 
     }
 
