@@ -1,6 +1,7 @@
 package entity;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Wall extends Entity {
 
@@ -11,7 +12,8 @@ public class Wall extends Entity {
 
     @Override
     public void draw(GraphicsContext gc) {
-
+        gc.setFill(Color.GRAY);
+        gc.fillRect(x, y, 50, 50);
     }
 
     @Override

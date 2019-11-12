@@ -1,39 +1,21 @@
 package entity;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
-public class Fantom extends Entity {
-    Direction direction;
-
+public class Fantom extends Movable {
     String name;
+    
     public Fantom(double x, double y, String name) {
-        super(x, y);
+        super(x, y, 0.1);
         type="Fantom";
-    }
-
-    public void goUp(){
-        direction = Direction.UP;
-    }
-
-    public void goDown(){
-        direction = Direction.DOWN;
-    }
-
-    public void goLeft(){
-        direction = Direction.LEFT;
-    }
-
-    public void goRight(){
-        direction = Direction.RIGHT;
-    }
-
-    public void stop(){
-        direction = Direction.STOP;
+        this.name = name;
     }
 
     @Override
     public void draw(GraphicsContext gc) {
-
+        gc.setFill(Color.CYAN);
+        gc.fillRect(x, y, 50, 50);
     }
 
     @Override

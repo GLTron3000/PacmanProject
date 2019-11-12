@@ -1,6 +1,8 @@
 package scenes;
 
+import entity.Fantom;
 import entity.Pacman;
+import entity.Wall;
 import game.Kernel;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -11,6 +13,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import pacmanproject.SceneController;
 
 public class Game {
@@ -26,10 +29,13 @@ public class Game {
         stackPane = new StackPane();
         canvas = new Canvas(500, 500);
         entities = new Group();
-        kernel = new Kernel();
+        kernel = new Kernel(canvas.getWidth(), canvas.getHeight());
         gc = canvas.getGraphicsContext2D();
         
+        
         stackPane.getChildren().add(canvas);
+        stackPane.getStyleClass().add("stackPane");
+        stackPane.getStylesheets().add("file:src/main/css/gameStyle.css");
         this.sceneController = sceneController;
         
         entityInit();
@@ -60,15 +66,12 @@ public class Game {
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                Pacman pacman = (Pacman) kernel.getPacman();
-                if(kernel.collisionEngine.outOfBorad(pacman , canvas))
-                    pacman.stop();
                 kernel.step();
-                
-                gc.strokeRect(0, 0, 10, 10);
+
                 gc.clearRect(0, 0, canvas.getHeight(), canvas.getWidth());
                 
-                
+                gc.setStroke(Color.WHITE);
+                gc.strokeRect(0, 0, canvas.getHeight(), canvas.getWidth());
 
                 kernel.entities.forEach((entity) -> {
                     entity.draw(gc);
@@ -96,7 +99,9 @@ public class Game {
 
     private void entityInit(){
         //loadLevel
-        kernel.entities.add(new Pacman(50,50));
+        kernel.entities.add(new Pacman(100,100));
+        kernel.entities.add(new Fantom(10,10,"pedro"));
+        kernel.entities.add(new Wall(200,100));
     }
     
 }

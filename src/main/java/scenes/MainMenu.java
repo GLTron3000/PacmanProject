@@ -25,7 +25,7 @@ public class MainMenu {
         vbox.setPadding(new Insets(50));
         vbox.setSpacing(5);
         
-        vbox.setStyle("-fx-background-color: transparent;");
+        vbox.getStyleClass().add("vbox");
         
         vbox.getChildren().addAll(title, gameSingleButton(), gameMultiButton(), settingsButton(), exitButton());
         vbox.getStylesheets().add("file:src/main/css/menuStyle.css");

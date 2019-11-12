@@ -1,10 +1,12 @@
-package entity;
+package JSON;
 
-import JSON.Loader;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import entity.Entity;
+import entity.Fantom;
+import entity.Pacman;
+import entity.Wall;
+
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 3Dventure;
+    src: url("../../../assets/3Dventure.ttf");
+}
+
+.stackPane{
+    -fx-background-color: darkblue;
+}

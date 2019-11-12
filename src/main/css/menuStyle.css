@@ -23,3 +23,7 @@
     -fx-scale-z: 1.1;
 }
 
+.vbox{
+    -fx-background-color: darkblue;
+}
+

@@ -6,6 +6,7 @@ public abstract class Entity {
     double x;
     double y;
     String type;
+    
     public abstract void draw(GraphicsContext gc);
 
     public Entity(double x, double y) {

@@ -9,16 +9,23 @@ public class Kernel {
     public CollisionEngine collisionEngine;
     public ArrayList<Entity> entities;
     public ArrayList<IA> ias;
+    double canvasWidth;
+    double canvasHeight;
 
-    public Kernel() {
+    public Kernel(double canvasWidth, double canvasHeight) {
         collisionEngine = new CollisionEngine();
         entities = new ArrayList<>();
         ias = new ArrayList<>();
-        
+        this.canvasWidth = canvasWidth;
+        this.canvasHeight = canvasHeight;
     }
+    
+    
 
     public void step(){
-        ((Pacman) getPacman()).move() ;
+        Pacman pacman = (Pacman) getPacman();
+        pacman.move();
+        if(collisionEngine.outOfBorad(pacman , canvasHeight, canvasWidth)) pacman.stop();
     }
 
     public Entity getPacman(){
