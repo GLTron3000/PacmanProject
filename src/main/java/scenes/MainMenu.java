@@ -7,16 +7,17 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import pacmanproject.SceneController;
 
 public class MainMenu {
-    Pane pane;
+    StackPane stackPane;
     SceneController sceneController;
 
     public MainMenu(SceneController sceneController) {
+        stackPane = new StackPane();
         VBox vbox = new VBox();
-        pane = new Pane();
         
         Label title = new Label("PACMAN");
         title.setPadding(new Insets(70));
@@ -30,7 +31,9 @@ public class MainMenu {
         vbox.getChildren().addAll(title, gameSingleButton(), gameMultiButton(), settingsButton(), exitButton());
         vbox.getStylesheets().add("file:src/main/css/menuStyle.css");
         
-        pane.getChildren().add(vbox);
+        stackPane.setAlignment(Pos.CENTER);
+        
+        stackPane.getChildren().add(vbox);
         this.sceneController = sceneController;
     }
     
@@ -76,7 +79,7 @@ public class MainMenu {
     }
 
     public Pane getNode() {
-        return pane;
+        return stackPane;
     }
    
 }

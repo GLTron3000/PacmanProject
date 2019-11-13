@@ -12,7 +12,7 @@ public class App extends Application{
     
     @Override
     public void start(Stage stage) {   
-        Scene mainScene = new Scene(new Label("Chargement"), 640, 640);
+        Scene mainScene = new Scene(new Label("Chargement"), 900, 900);
         
         stage.setTitle("Pacman Project");
         stage.setScene(mainScene);

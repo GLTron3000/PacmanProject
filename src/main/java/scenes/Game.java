@@ -27,7 +27,7 @@ public class Game {
 
     public Game(SceneController sceneController) {
         stackPane = new StackPane();
-        canvas = new Canvas(500, 500);
+        canvas = new Canvas(700, 700);
         entities = new Group();
         kernel = new Kernel(canvas.getWidth(), canvas.getHeight());
         gc = canvas.getGraphicsContext2D();
@@ -70,6 +70,8 @@ public class Game {
 
                 gc.clearRect(0, 0, canvas.getHeight(), canvas.getWidth());
                 
+                gc.setFill(Color.BLACK);
+                gc.fillRect(0, 0, canvas.getHeight(), canvas.getWidth());
                 gc.setStroke(Color.WHITE);
                 gc.strokeRect(0, 0, canvas.getHeight(), canvas.getWidth());
 
