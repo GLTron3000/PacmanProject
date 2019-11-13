@@ -58,7 +58,7 @@ public class LevelBuilder {
         titleLabel.setFont(new Font(25));
         
         
-        Label helpLabel = new Label("P: Pacman | F: Fantom | W: Wall | R: Fruit | G: Pacgum | Enter: sauvegarder | Echap: quitter");
+        Label helpLabel = new Label("P: Pacman | F: Fantom | W: Wall | R: Fruit | G: Pacgum | D: supprimer | Enter: sauvegarder | Echap: quitter");
         helpLabel.setFont(new Font(15));
         helpLabel.setTextFill(Color.WHITE);
         
@@ -85,11 +85,12 @@ public class LevelBuilder {
                     case RIGHT: moveRight(); break;
                     case ESCAPE: sceneController.showMainMenu(); break;
                     case ENTER: writeLevel(); break;
-                    case F: entities.add(new Fantom(x, y, fantomCounter+"")); fantomCounter++; break;
-                    case P: entities.add(new Pacman(x, y)); break;
-                    case W: entities.add(new Wall(x, y)); break;
-                    case R: entities.add(new Fruit(x, y)); break;
-                    case G: entities.add(new Pacgum(x, y)); break;
+                    case F: if(!checkEntityPresence()) entities.add(new Fantom(x, y, fantomCounter+"")); fantomCounter++; break;
+                    case P: if(!checkEntityPresence()) entities.add(new Pacman(x, y)); break;
+                    case W: if(!checkEntityPresence()) entities.add(new Wall(x, y)); break;
+                    case R: if(!checkEntityPresence()) entities.add(new Fruit(x, y)); break;
+                    case G: if(!checkEntityPresence()) entities.add(new Pacgum(x, y)); break;
+                    case D: deleteEntity(); break;
                     default: break;
                 }
                 ke.consume();
@@ -136,6 +137,22 @@ public class LevelBuilder {
         gc.clearRect(0, 0, canvas.getHeight(), canvas.getWidth());
 
         timer.stop();
+    }
+    
+    private void deleteEntity(){
+        Entity entityToDelete = null;
+        for(Entity entity : entities){
+            if(entity.getX() == x && entity.getY() == y) entityToDelete = entity;
+        }
+        
+        if(entityToDelete != null) entities.remove(entityToDelete);
+    }
+    
+    private boolean checkEntityPresence(){
+        for(Entity entity : entities){
+            if(entity.getX() == x && entity.getY() == y) return true;
+        }
+        return false;
     }
     
     private void writeLevel(){
