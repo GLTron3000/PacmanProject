@@ -28,7 +28,7 @@ public class MainMenu {
         
         vbox.getStyleClass().add("vbox");
         
-        vbox.getChildren().addAll(title, gameSingleButton(), gameMultiButton(), settingsButton(), exitButton());
+        vbox.getChildren().addAll(title, gameSingleButton(), gameMultiButton(), levelBuilderButton(), settingsButton(), exitButton());
         vbox.getStylesheets().add("file:src/main/css/menuStyle.css");
         
         stackPane.setAlignment(Pos.CENTER);
@@ -52,6 +52,16 @@ public class MainMenu {
         
         button.setOnAction((ActionEvent event) -> {
             
+        });
+        
+        return button;
+    }
+    
+    private Button levelBuilderButton(){
+        Button button = new Button("Editeur de niveau");
+        
+        button.setOnAction((ActionEvent event) -> {
+            sceneController.showLevelBuilder();
         });
         
         return button;

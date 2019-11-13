@@ -13,7 +13,7 @@ public class Wall extends Entity {
     @Override
     public void draw(GraphicsContext gc) {
         gc.setFill(Color.GRAY);
-        gc.fillRect(x, y, 50, 50);
+        gc.fillRect(x, y, size, size);
     }
 
     @Override

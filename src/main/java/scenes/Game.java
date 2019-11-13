@@ -4,11 +4,8 @@ import entity.Fantom;
 import entity.Pacman;
 import entity.Wall;
 import game.Kernel;
-import java.util.Timer;
-import java.util.TimerTask;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -19,19 +16,20 @@ import pacmanproject.SceneController;
 public class Game {
     SceneController sceneController;
     StackPane stackPane;
+    
     Canvas canvas;
     Kernel kernel;
-    Group entities;
+    
     AnimationTimer timer;
     GraphicsContext gc;
 
     public Game(SceneController sceneController) {
         stackPane = new StackPane();
-        canvas = new Canvas(700, 700);
-        entities = new Group();
+        
+        //28 * 32
+        canvas = new Canvas(700, 800);
         kernel = new Kernel(canvas.getWidth(), canvas.getHeight());
         gc = canvas.getGraphicsContext2D();
-        
         
         stackPane.getChildren().add(canvas);
         stackPane.getStyleClass().add("stackPane");
@@ -68,12 +66,12 @@ public class Game {
             public void handle(long now) {
                 kernel.step();
 
-                gc.clearRect(0, 0, canvas.getHeight(), canvas.getWidth());
+                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 
                 gc.setFill(Color.BLACK);
-                gc.fillRect(0, 0, canvas.getHeight(), canvas.getWidth());
+                gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 gc.setStroke(Color.WHITE);
-                gc.strokeRect(0, 0, canvas.getHeight(), canvas.getWidth());
+                gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
                 kernel.entities.forEach((entity) -> {
                     entity.draw(gc);

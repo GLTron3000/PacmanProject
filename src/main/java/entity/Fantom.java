@@ -15,7 +15,7 @@ public class Fantom extends Movable {
     @Override
     public void draw(GraphicsContext gc) {
         gc.setFill(Color.CYAN);
-        gc.fillRect(x, y, 50, 50);
+        gc.fillRect(x, y, size, size);
     }
 
     @Override

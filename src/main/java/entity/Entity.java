@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 public abstract class Entity {
     double x;
     double y;
+    double size;
     String type;
     
     public abstract void draw(GraphicsContext gc);
@@ -12,6 +13,7 @@ public abstract class Entity {
     public Entity(double x, double y) {
         this.x = x;
         this.y = y;
+        size = 25;
     }
     
     public double getX() {
@@ -21,5 +23,9 @@ public abstract class Entity {
     public double getY() {
         return y;
     }
-    
+
+    public double getSize() {
+        return size;
+    }
+
 }
