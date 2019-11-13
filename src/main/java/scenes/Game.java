@@ -1,9 +1,21 @@
 package scenes;
 
+import JSON.EntityJsonDeserialize;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import entity.Entity;
 import entity.Fantom;
 import entity.Pacman;
 import entity.Wall;
 import game.Kernel;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
@@ -98,10 +110,21 @@ public class Game {
     }
 
     private void entityInit(){
-        //loadLevel
-        kernel.entities.add(new Pacman(100,100));
-        kernel.entities.add(new Fantom(10,10,"pedro"));
-        kernel.entities.add(new Wall(200,100));
+        File file = new File("customLevel1.pml"); 
+        
+        try {
+            String level = new String(Files.readAllBytes(file.toPath()));
+            Gson gson = new GsonBuilder().registerTypeAdapter(Entity.class, new EntityJsonDeserialize()).create();
+            Type type = new TypeToken<List<Entity>>(){}.getType();
+
+            kernel.entities = gson.fromJson(level, type);
+        } catch (IOException ex) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //kernel.entities.add(new Pacman(100,100));
+        //kernel.entities.add(new Fantom(10,10,"pedro"));
+        //kernel.entities.add(new Wall(200,100));
     }
     
 }
