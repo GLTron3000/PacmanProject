@@ -2,6 +2,8 @@ package entity;
 
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.Objects;
+
 public abstract class Entity {
     double x;
     double y;
@@ -15,7 +17,23 @@ public abstract class Entity {
         this.y = y;
         size = 25;
     }
-    
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Entity entity = (Entity) o;
+        return Double.compare(entity.x, x) == 0 &&
+                Double.compare(entity.y, y) == 0 &&
+                Double.compare(entity.size, size) == 0 &&
+                Objects.equals(type, entity.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y, size, type);
+    }
+
     public double getX() {
         return x;
     }

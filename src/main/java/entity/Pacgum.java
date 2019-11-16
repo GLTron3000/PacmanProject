@@ -8,6 +8,7 @@ public class Pacgum extends Pickable{
 
     public Pacgum(double x, double y) {
         super(x, y);
+        type="Pacgum";
     }
 
     @Override

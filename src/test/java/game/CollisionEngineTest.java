@@ -19,24 +19,24 @@ class CollisionEngineTest {
 
         //net collision
         Entity wall = new Wall(10,10);
-        Entity pacman = new Pacman(40,10);
+        Entity pacman = new Pacman(20,10);
 
 
         assertTrue(collisionEngine.isCollide(wall,pacman));
 
-        // pas de collsion
+        // pas de collision
         Entity wall2 = new Wall(33,54);
         Entity pacman2 = new Pacman(98,26);
         assertFalse(collisionEngine.isCollide(wall2,pacman2));
 
-        //se touche mais ne se rentre pas dedans
+        //se touche mais ne se rentre pas dedans size =25
         Entity wall3 = new Wall(30,50);
-        Entity pacman3 = new Pacman(80,50);
+        Entity pacman3 = new Pacman(55,50);
         assertFalse(collisionEngine.isCollide(wall3,pacman3));
 
-        //se rentre dedans de 1 pixel
+        //se rentre dedans de 1 pixel size =25
         Entity wall4 = new Wall(30,50);
-        Entity pacman4 = new Pacman(79,50);
+        Entity pacman4 = new Pacman(54,50);
         assertTrue(collisionEngine.isCollide(wall4,pacman4));
     }
 

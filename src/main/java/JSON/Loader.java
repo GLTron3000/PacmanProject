@@ -14,10 +14,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
+@Deprecated
 public class Loader {
-    public List<Entity> loadlevel(String path) {
-        Entity[] result;
+    public LevelData loadlevel(String path) {
         File file = new File(path);
 
         try {

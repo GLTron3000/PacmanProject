@@ -8,7 +8,7 @@ import entity.Entity;
 import java.lang.reflect.Type;
 import java.util.List;
 
-
+/*
 class LoaderTest {
 
     @org.junit.jupiter.api.Test
@@ -34,4 +34,4 @@ class LoaderTest {
             System.out.println(e);
         }
     }
-}
+} */

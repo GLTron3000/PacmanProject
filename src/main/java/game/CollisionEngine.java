@@ -33,7 +33,7 @@ public class CollisionEngine {
 
     }
     public boolean isCollide(Entity e1, Entity e2){
-       if(distanceEntities(e1,e2) <e1.getSize()+e2.getSize()){
+       if(distanceEntities(e1,e2) <e1.getSize()/2+e2.getSize()/2){
            return true;
        }
        return false;
@@ -44,7 +44,13 @@ public class CollisionEngine {
         double yE1 = e1.getY();
         double xE2 = e2.getX();
         double yE2 = e2.getY();
-        return Math.sqrt(Math.pow(xE1-xE2,2) + Math.pow(yE1-yE2,2)*1.0);
+
+        double centerE1X=xE1+e1.getSize()/2;
+        double centerE1Y=yE1+e1.getSize()/2;
+
+        double centerE2X=xE2+e2.getSize()/2;
+        double centerE2Y=yE2+e2.getSize()/2;
+        return Math.sqrt(Math.pow(centerE1X-centerE2X,2) + Math.pow(centerE1Y-centerE2Y,2)*1.0);
     }
   
 }

@@ -35,6 +35,30 @@ public class Kernel {
 
     public void step(){
         if(collisionEngine.outOfBoard(pacman , canvasHeight, canvasWidth)) pacman.stop();
+        collide();
+
         pacman.move();
-    }    
+    }
+    public void collide(){
+        for(Wall w :walls ){
+            for(Fantom f :fantoms ){
+                if(collisionEngine.isCollide(w,f)){
+                    f.stop();
+                }
+            }
+            if(collisionEngine.isCollide(pacman,w)){
+                pacman.stop();
+            }
+        }
+        for(Fantom f: fantoms){
+            if(collisionEngine.isCollide(pacman,f)){
+
+            }
+        }
+        for(Pickable p : pickables){
+            if(collisionEngine.isCollide(pacman,p)){
+
+            }
+        }
+    }
 }

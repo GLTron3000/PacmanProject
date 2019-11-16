@@ -11,6 +11,7 @@ import entity.Wall;
 
 import java.lang.reflect.Type;
 
+@Deprecated
 public class EntityJsonDeserialize implements JsonDeserializer<Entity> {
     @Override
     public Entity deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
