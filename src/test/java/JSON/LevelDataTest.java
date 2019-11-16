@@ -25,6 +25,7 @@ class LevelDataTest {
         fantoms.add(new Fantom(45,74,"Blinky"));
         pickables.add(new Pacgum(12,57));
         pickables.add(new Pacgum(36,87));
+        pickables.add(new Fruit(36,56));
         level.save(pacman, fantoms, pickables, walls, path);
 
     }
@@ -41,6 +42,7 @@ class LevelDataTest {
         fantoms.add(new Fantom(45,74,"Blinky"));
         pickables.add(new Pacgum(12,57));
         pickables.add(new Pacgum(36,87));
+        pickables.add(new Fruit(36,56));
         Pacman pacman = new Pacman(12,15);
 
 

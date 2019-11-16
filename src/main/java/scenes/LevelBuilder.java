@@ -1,5 +1,6 @@
 package scenes;
 
+import JSON.LevelData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entity.Entity;
@@ -7,7 +8,9 @@ import entity.Fantom;
 import entity.Fruit;
 import entity.Pacgum;
 import entity.Pacman;
+import entity.Pickable;
 import entity.Wall;
+import ia.IA;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -155,17 +158,23 @@ public class LevelBuilder {
     }
     
     private void writeLevel(){
-        final GsonBuilder builder = new GsonBuilder();
-        final Gson gson = builder.create();
-        final String json = gson.toJson(entities);
+        LevelData levelData = new LevelData();
         
         saveCounter++;
-        File file = new File("customLevel"+saveCounter+".pml");
-        try {
-            Files.write(file.toPath(), json.getBytes());
-        } catch (IOException ex) {
-            Logger.getLogger(LevelBuilder.class.getName()).log(Level.SEVERE, null, ex);
+        
+        Pacman pacman = null;
+        ArrayList<Fantom> fantoms = new ArrayList<>();
+        ArrayList<Pickable> pickables = new ArrayList<>();
+        ArrayList<Wall> walls = new ArrayList<>();
+        
+        for(Entity entity : entities){
+            if(entity instanceof Pacman) pacman = (Pacman) entity;
+            else if(entity instanceof Fantom) fantoms.add((Fantom) entity);
+            else if(entity instanceof Wall) walls.add((Wall) entity);
+            else if(entity instanceof Pickable) pickables.add((Pickable) entity);
         }
+        
+        levelData.save(pacman, fantoms, pickables, walls, "customLevel"+saveCounter+".pml");
     }
     
     void moveUp(){

@@ -1,11 +1,14 @@
 package scenes;
 
 import JSON.EntityJsonDeserialize;
+import JSON.LevelData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import entity.Entity;
+import entity.Fantom;
 import entity.Pacman;
+import entity.Wall;
 import game.Kernel;
 import java.io.File;
 import java.io.IOException;
@@ -115,23 +118,13 @@ public class Game {
     }
 
     private void entityInit(){
-        File file = new File("customLevel1.pml"); 
-        
-        try {
-            String level = new String(Files.readAllBytes(file.toPath()));
-            Gson gson = new GsonBuilder().registerTypeAdapter(Entity.class, new EntityJsonDeserialize()).create();
-            Type type = new TypeToken<List<Entity>>(){}.getType();
+        LevelData levelData = new LevelData();
+        levelData.load("customLevel1.pml");
 
-            //kernel.entities = gson.fromJson(level, type);
-            
-            
-        } catch (IOException ex) {
-            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //kernel.entities.add(new Pacman(100,100));
-        //kernel.entities.add(new Fantom(10,10,"pedro"));
-        //kernel.entities.add(new Wall(200,100));
+        kernel.pacman = levelData.pacman;
+        kernel.fantoms = levelData.fantoms;
+        kernel.walls = levelData.walls;
+        kernel.pickables = levelData.pickables;
     }
     
 }

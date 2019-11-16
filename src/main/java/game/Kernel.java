@@ -14,6 +14,7 @@ public class Kernel {
     public ArrayList<Fantom> fantoms;
     public ArrayList<Pickable> pickables;
     public ArrayList<Wall> walls;
+    
     public ArrayList<IA> ias;
     
     double canvasWidth;
@@ -35,9 +36,8 @@ public class Kernel {
 
     public void step(){
         if(collisionEngine.outOfBoard(pacman , canvasHeight, canvasWidth)) pacman.stop();
-        collide();
-
         pacman.move();
+        collide();
     }
     public void collide(){
         for(Wall w :walls ){
@@ -47,6 +47,7 @@ public class Kernel {
                 }
             }
             if(collisionEngine.isCollide(pacman,w)){
+                System.out.println("collision mur");
                 pacman.stop();
             }
         }
