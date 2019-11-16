@@ -8,7 +8,7 @@ class PacgumTest {
 
     @Test
     void onPick() {
-        Pacgum pacgum = new Pacgum(25.0,25.0);
+        Pacgum pacgum = new Pacgum(0.0,25.0);
         pacgum.data.load("customLevel2.pml");
         int test = pacgum.data.pickables.size();
         pacgum.onPick();
