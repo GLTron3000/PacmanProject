@@ -22,16 +22,22 @@ public class SceneController {
         game.start();
     }
     
-    public void showMainMenu(){
-        if(game != null) game.stop();
-        if(levelBuilder != null) levelBuilder.stop();
-        scene.setRoot(mainMenu.getNode());
-    }
-    
     public void showLevelBuilder(){
         levelBuilder = new LevelBuilder(this);
         scene.setRoot(levelBuilder.getNode());
         levelBuilder.start();
+    }
+    
+    public void showMainMenu(){
+        if(game != null){ 
+            game.stop();
+            game = null;
+        }
+        if(levelBuilder != null){ 
+            levelBuilder.stop();
+            levelBuilder = null;
+        }
+        scene.setRoot(mainMenu.getNode());
     }
 
     public Scene getScene() {

@@ -5,9 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import entity.Entity;
-import entity.Fantom;
 import entity.Pacman;
-import entity.Wall;
 import game.Kernel;
 import java.io.File;
 import java.io.IOException;
@@ -51,17 +49,14 @@ public class Game {
         entityInit();
         
         sceneController.getScene().addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent ke) {
-                Pacman pacman = (Pacman) kernel.getPacman();
-                
+            public void handle(KeyEvent ke) {               
                 System.out.println(ke.getCode());
                 
-                
                 switch (ke.getCode()){
-                    case UP: pacman.goUp(); break;
-                    case DOWN: pacman.goDown(); break;
-                    case LEFT: pacman.goLeft(); break;
-                    case RIGHT: pacman.goRight(); break;
+                    case UP: kernel.pacman.goUp(); break;
+                    case DOWN: kernel.pacman.goDown(); break;
+                    case LEFT: kernel.pacman.goLeft(); break;
+                    case RIGHT: kernel.pacman.goRight(); break;
                     case ESCAPE: sceneController.showMainMenu(); break;
                     case ENTER: break;
                     default: break;
@@ -85,7 +80,17 @@ public class Game {
                 gc.setStroke(Color.WHITE);
                 gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-                kernel.entities.forEach((entity) -> {
+                kernel.pacman.draw(gc);
+                
+                kernel.fantoms.forEach((entity) -> {
+                    entity.draw(gc);
+                });
+                
+                kernel.walls.forEach((entity) -> {
+                    entity.draw(gc);
+                });
+                
+                kernel.pickables.forEach((entity) -> {
                     entity.draw(gc);
                 });
             }
@@ -117,7 +122,9 @@ public class Game {
             Gson gson = new GsonBuilder().registerTypeAdapter(Entity.class, new EntityJsonDeserialize()).create();
             Type type = new TypeToken<List<Entity>>(){}.getType();
 
-            kernel.entities = gson.fromJson(level, type);
+            //kernel.entities = gson.fromJson(level, type);
+            
+            
         } catch (IOException ex) {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
