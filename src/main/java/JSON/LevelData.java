@@ -16,7 +16,6 @@ import entity.Wall;
 import scenes.LevelBuilder;
 
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -42,7 +41,7 @@ public class LevelData {
         BufferedWriter br = null;
         PrintWriter pr = null;
         try {
-            fr = new FileWriter(file, true);
+            fr = new FileWriter(file, false);
             br = new BufferedWriter(fr);
             pr = new PrintWriter(br);
             pr.print(strPacman);
