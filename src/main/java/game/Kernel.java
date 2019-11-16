@@ -14,6 +14,7 @@ public class Kernel {
     public ArrayList<Fantom> fantoms;
     public ArrayList<Pickable> pickables;
     public ArrayList<Wall> walls;
+    
     public ArrayList<IA> ias;
     
     double canvasWidth;
