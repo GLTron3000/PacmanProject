@@ -24,7 +24,7 @@ public class Kernel {
 
     public void step(){
         Pacman pacman = (Pacman) getPacman();
-        if(collisionEngine.outOfBorad(pacman , canvasHeight, canvasWidth)) pacman.stop();
+        if(collisionEngine.outOfBoard(pacman , canvasHeight, canvasWidth)) pacman.stop();
         pacman.move();
     }
 

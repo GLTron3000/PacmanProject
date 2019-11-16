@@ -1,10 +1,11 @@
 package game;
 
 import entity.Direction;
+import entity.Entity;
 import entity.Movable;
 public class CollisionEngine {
     
-    public Boolean outOfBorad(Movable movable , double canvasHeight, double canvasWidth){
+    public Boolean outOfBoard(Movable movable , double canvasHeight, double canvasWidth){
         //tant qu'on ne touche pas un bord
         if(movable.getX() > 0 && movable.getY() > 0 && movable.getX()+movable.getSize()-1 < canvasWidth  
                 && movable.getY()+49 < canvasHeight ) 
@@ -30,6 +31,20 @@ public class CollisionEngine {
         
         return !( west || north || east || south); //continuer de bouger contre le bord gauche
 
+    }
+    public boolean isCollide(Entity e1, Entity e2){
+       if(distanceEntities(e1,e2) <e1.getSize()+e2.getSize()){
+           return true;
+       }
+       return false;
+    }
+
+    public double distanceEntities(Entity e1, Entity e2){
+        double xE1 = e1.getX();
+        double yE1 = e1.getY();
+        double xE2 = e2.getX();
+        double yE2 = e2.getY();
+        return Math.sqrt(Math.pow(xE1-xE2,2) + Math.pow(yE1-yE2,2)*1.0);
     }
   
 }
