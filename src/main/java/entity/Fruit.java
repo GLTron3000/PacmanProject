@@ -8,6 +8,7 @@ public class Fruit extends Pickable{
 
     public Fruit(double x, double y) {
         super(x, y);
+        type="Fruit";
     }
 
     @Override
