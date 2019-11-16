@@ -3,6 +3,8 @@ package game;
 import entity.Direction;
 import entity.Entity;
 import entity.Movable;
+import entity.Wall;
+
 public class CollisionEngine {
     
     public Boolean outOfBoard(Movable movable , double canvasHeight, double canvasWidth){
@@ -33,7 +35,7 @@ public class CollisionEngine {
 
     }
     public boolean isCollide(Entity e1, Entity e2){
-       if(distanceEntities(e1,e2) <e1.getSize()/2+e2.getSize()/2){
+       if(distanceEntities(e1,e2) <=e1.getSize()/2+e2.getSize()/2){
            return true;
        }
        return false;
@@ -52,5 +54,32 @@ public class CollisionEngine {
         double centerE2Y=yE2+e2.getSize()/2;
         return Math.sqrt(Math.pow(centerE1X-centerE2X,2) + Math.pow(centerE1Y-centerE2Y,2)*1.0);
     }
-  
+
+    public boolean isCollideRec(Entity e1,Entity e2){
+        if (e1.getX() < e2.getX() + e2.getSize() &&
+                e1.getX() + e1.getSize() > e2.getX() &&
+                e1.getY() < e2.getY() + e2.getSize() &&
+                e1.getSize() + e1.getY() > e2.getY()) {
+            return true;
+        }
+        return false;
+    }
+
+    public void collideMovableWall(Movable m, Wall w ){
+
+        if(m.direction==Direction.UP && (w.getY())-m.getY()<=-24.5 && Math.abs((w.getX())-m.getX())!=24.5){
+            System.out.println("Colli : UP");
+            m.stop();
+        }else if(m.direction==Direction.LEFT && (w.getX())-m.getX()<=-24.5 && Math.abs((w.getY())-m.getY())!=24.5 ){
+            System.out.println("Colli : left : w :"+w.getX()+"m : "+m.getX() );
+            m.stop();
+        }else if(m.direction==Direction.DOWN && (w.getY())-m.getY()>=24.5 && Math.abs((w.getX())-m.getX())!=24.5){
+            System.out.println("Colli : Down");
+            m.stop();
+        }else if(m.direction==Direction.RIGHT && (w.getX())-m.getX()>=24.5 && Math.abs((w.getY())-m.getY())!=24.5){
+            System.out.println("Colli : Right");
+            m.stop();
+        }
+
+    }
 }

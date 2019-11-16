@@ -36,19 +36,19 @@ public class Kernel {
 
     public void step(){
         if(collisionEngine.outOfBoard(pacman , canvasHeight, canvasWidth)) pacman.stop();
-        pacman.move();
         collide();
+        pacman.move();
     }
     public void collide(){
         for(Wall w :walls ){
             for(Fantom f :fantoms ){
-                if(collisionEngine.isCollide(w,f)){
+                if(collisionEngine.isCollideRec(w,f)){
                     f.stop();
                 }
             }
-            if(collisionEngine.isCollide(pacman,w)){
-                System.out.println("collision mur");
-                pacman.stop();
+            if(collisionEngine.isCollideRec(pacman,w)){
+                //System.out.println("collision mur");
+                collisionEngine.collideMovableWall(pacman,w);
             }
         }
         for(Fantom f: fantoms){
