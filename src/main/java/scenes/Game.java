@@ -35,7 +35,7 @@ public class Game {
     
     AnimationTimer timer;
     GraphicsContext gc;
-
+    
     public Game(SceneController sceneController) {
         stackPane = new StackPane();
         
@@ -82,7 +82,8 @@ public class Game {
                 gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 gc.setStroke(Color.WHITE);
                 gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
+                gc.strokeText("Life : "+Integer.toString(kernel.pacman.life), canvas.getWidth()-40, 15);
+                
                 kernel.pacman.draw(gc);
                 
                 kernel.fantoms.forEach((entity) -> {

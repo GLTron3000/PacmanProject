@@ -4,11 +4,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Pacman extends Movable {
+    public int life;
 
     public Pacman(double x, double y) {
         super(x, y, 0.5);
         direction = Direction.STOP;
         type="Pacman";
+        life = 3;
     }
     
     @Override

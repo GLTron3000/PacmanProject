@@ -10,7 +10,7 @@ public class CollisionEngine {
     public Boolean outOfBoard(Movable movable , double canvasHeight, double canvasWidth){
         //tant qu'on ne touche pas un bord
         if(movable.getX() > 0 && movable.getY() > 0 && movable.getX()+movable.getSize()-1 < canvasWidth  
-                && movable.getY()+49 < canvasHeight ) 
+                && movable.getY()+movable.getSize()-1 < canvasHeight ) 
             return false;
         
         if(movable.getX() == 0 && movable.getY()+movable.getSize()-1 == canvasHeight 
