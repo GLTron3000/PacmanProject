@@ -83,14 +83,4 @@ public class CollisionEngine {
         }
 
     }
-    
-    public void collidePacmanFantom(Pacman pacman){
-        pacman.life -= 1;
-        pacman.stop();
-        if (pacman.life == 0){
-            //gestion du game over
-        }
-        //renvoyer pacman à sa position initial
-        //renvoyer les fantômes à leur position initial
-    }
 }  

@@ -20,6 +20,8 @@ public class Kernel {
     double canvasWidth;
     double canvasHeight;
 
+    int score;
+
     public Kernel(double canvasWidth, double canvasHeight) {
         collisionEngine = new CollisionEngine();
         
@@ -30,6 +32,8 @@ public class Kernel {
         
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
+
+        score=0;
     }
     
     
@@ -53,7 +57,20 @@ public class Kernel {
         }
         for(Fantom f: fantoms){
             if(collisionEngine.isCollide(pacman,f)){
-                collisionEngine.collidePacmanFantom(pacman);
+                pacman.life -= 1;
+                pacman.stop();
+                if (pacman.life == 0){
+                    //TODO gestion du game over
+                }
+                //renvoie pacman à sa position initiale
+                pacman.setX(pacman.initX);
+                pacman.setY(pacman.initY);
+
+                //renvoie les fantômes à leur position initiale
+                for(Fantom p: fantoms){
+                    p.setX(p.initX);
+                    p.setY(p.initY);
+                }
 
             }
         }
