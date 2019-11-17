@@ -1,8 +1,6 @@
 package scenes;
 
 import JSON.LevelData;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import entity.Entity;
 import entity.Fantom;
 import entity.Fruit;
@@ -10,13 +8,7 @@ import entity.Pacgum;
 import entity.Pacman;
 import entity.Pickable;
 import entity.Wall;
-import ia.IA;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
