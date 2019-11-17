@@ -67,7 +67,7 @@ public class Game {
                 gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 gc.setStroke(Color.WHITE);
                 gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                gc.strokeText("Life : "+Integer.toString(kernel.pacman.life), canvas.getWidth()-40, 15);
+                
                 
                 kernel.pickables.forEach((entity) -> {
                     entity.draw(gc);
@@ -82,6 +82,8 @@ public class Game {
                 kernel.walls.forEach((entity) -> {
                     entity.draw(gc);
                 });
+                
+                gc.strokeText("Life : "+Integer.toString(kernel.pacman.life), 10, 15);
             }
         };
         

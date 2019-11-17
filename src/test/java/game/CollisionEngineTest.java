@@ -2,6 +2,7 @@ package game;
 
 import entity.Direction;
 import entity.Entity;
+import entity.Fantom;
 import entity.Movable;
 import entity.Pacman;
 import entity.Wall;
@@ -83,53 +84,23 @@ class CollisionEngineTest {
         Entity pacman3 = new Pacman(98,26);
         assertEquals(70.774,col.distanceEntities(wall3,pacman3),0.001);
     }
-
-    /**
-     * Test of outOfBoard method, of class CollisionEngine.
-     */
-    @org.junit.Test
-    public void testOutOfBoard() {
-        System.out.println("outOfBoard");
-        Movable movable = null;
-        double canvasHeight = 0.0;
-        double canvasWidth = 0.0;
-        CollisionEngine instance = new CollisionEngine();
-        Boolean expResult = null;
-        Boolean result = instance.outOfBoard(movable, canvasHeight, canvasWidth);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of isCollide method, of class CollisionEngine.
-     */
-    @org.junit.Test
-    public void testIsCollide() {
-        System.out.println("isCollide");
-        Entity e1 = null;
-        Entity e2 = null;
-        CollisionEngine instance = new CollisionEngine();
-        boolean expResult = false;
-        boolean result = instance.isCollide(e1, e2);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of distanceEntities method, of class CollisionEngine.
-     */
-    @org.junit.Test
-    public void testDistanceEntities() {
-        System.out.println("distanceEntities");
-        Entity e1 = null;
-        Entity e2 = null;
-        CollisionEngine instance = new CollisionEngine();
-        double expResult = 0.0;
-        double result = instance.distanceEntities(e1, e2);
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    
+    @Test
+    void collidePacmanFantom(){
+        CollisionEngine collisionEngine = new CollisionEngine();
+        
+        Pacman pacman = new Pacman(40,40);
+        //Entity fant = new Fantom(30,40,"Pinky");
+        int result = 2;
+        collisionEngine.collidePacmanFantom(pacman);
+        
+        assertEquals(pacman.life,result);
+        
+        collisionEngine.collidePacmanFantom(pacman);
+         result = 1;
+        
+        assertEquals(pacman.life,result);
+        
+        
     }
 }

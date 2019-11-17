@@ -3,6 +3,7 @@ package game;
 import entity.Direction;
 import entity.Entity;
 import entity.Movable;
+import entity.Pacman;
 import entity.Wall;
 
 public class CollisionEngine {
@@ -82,4 +83,14 @@ public class CollisionEngine {
         }
 
     }
-}
+    
+    public void collidePacmanFantom(Pacman pacman){
+        pacman.life -= 1;
+        pacman.stop();
+        if (pacman.life == 0){
+            //gestion du game over
+        }
+        //renvoyer pacman à sa position initial
+        //renvoyer les fantômes à leur position initial
+    }
+}  

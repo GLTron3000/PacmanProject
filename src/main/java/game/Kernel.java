@@ -53,6 +53,7 @@ public class Kernel {
         }
         for(Fantom f: fantoms){
             if(collisionEngine.isCollide(pacman,f)){
+                collisionEngine.collidePacmanFantom(pacman);
 
             }
         }
