@@ -9,6 +9,9 @@ public class Fantom extends Movable {
     String name;
     public double initX;
     public double initY;
+    public enum FantomState{NORMAL, KILLABLE, BACKTOLOBBY}
+
+    public FantomState fState;
 
 
     public Fantom(double x, double y, String name) {
@@ -17,6 +20,7 @@ public class Fantom extends Movable {
         initY=y;
         type="Fantom";
         this.name = name;
+        fState = FantomState.NORMAL;
     }
 
     @Override
