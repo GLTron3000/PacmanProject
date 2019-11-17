@@ -20,6 +20,8 @@ public class Kernel {
     double canvasWidth;
     double canvasHeight;
 
+    int score;
+
     public Kernel(double canvasWidth, double canvasHeight) {
         collisionEngine = new CollisionEngine();
         
@@ -30,6 +32,8 @@ public class Kernel {
         
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
+
+        score=0;
     }
     
     
@@ -37,27 +41,60 @@ public class Kernel {
     public void step(){
         if(collisionEngine.outOfBoard(pacman , canvasHeight, canvasWidth)) pacman.stop();
         collide();
-
         pacman.move();
     }
     public void collide(){
         for(Wall w :walls ){
             for(Fantom f :fantoms ){
-                if(collisionEngine.isCollide(w,f)){
+                if(collisionEngine.isCollideRec(w,f)){
                     f.stop();
                 }
             }
-            if(collisionEngine.isCollide(pacman,w)){
-                pacman.stop();
+            if(collisionEngine.isCollideRec(pacman,w)){
+                //System.out.println("collision mur");
+                collisionEngine.collideMovableWall(pacman,w);
             }
         }
         for(Fantom f: fantoms){
             if(collisionEngine.isCollide(pacman,f)){
+                if(f.fState== Fantom.FantomState.NORMAL) {
+                    pacman.life -= 1;
+                    pacman.stop();
+                    if (pacman.life == 0) {
+                        //TODO gestion du game over
+                    }
+                    //renvoie pacman à sa position initiale
+                    pacman.setX(pacman.initX);
+                    pacman.setY(pacman.initY);
+
+                    //renvoie les fantômes à leur position initiale
+                    for (Fantom p : fantoms) {
+                        p.setX(p.initX);
+                        p.setY(p.initY);
+                    }
+                }
+                if(f.fState == Fantom.FantomState.KILLABLE) {
+                    f.fState=Fantom.FantomState.BACKTOLOBBY;
+                }
+
 
             }
         }
         for(Pickable p : pickables){
             if(collisionEngine.isCollide(pacman,p)){
+                if(p.getType()=="Fruit") {
+                    p.onPick();
+                    score+=50;
+                    for(Fantom f: fantoms){
+                        f.fState= Fantom.FantomState.KILLABLE;
+                    }
+                    //TODO Mettre un temps pour l'état "KILLABLE"
+                }
+
+                if(p.getType()=="Pacgum"){
+                    p.onPick();
+                    score+=10;
+                }
 
             }
         }

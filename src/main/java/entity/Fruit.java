@@ -11,6 +11,7 @@ public class Fruit extends Pickable{
         type="Fruit";
     }
 
+
     @Override
     public void onPick() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

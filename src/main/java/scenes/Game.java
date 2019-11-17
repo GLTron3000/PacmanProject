@@ -1,22 +1,7 @@
 package scenes;
 
-import JSON.EntityJsonDeserialize;
 import JSON.LevelData;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import entity.Entity;
-import entity.Fantom;
-import entity.Pacman;
-import entity.Wall;
 import game.Kernel;
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.nio.file.Files;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
@@ -35,7 +20,7 @@ public class Game {
     
     AnimationTimer timer;
     GraphicsContext gc;
-
+    
     public Game(SceneController sceneController) {
         stackPane = new StackPane();
         
@@ -82,7 +67,12 @@ public class Game {
                 gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 gc.setStroke(Color.WHITE);
                 gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
+                
+                
+                kernel.pickables.forEach((entity) -> {
+                    entity.draw(gc);
+                });
+                
                 kernel.pacman.draw(gc);
                 
                 kernel.fantoms.forEach((entity) -> {
@@ -93,9 +83,7 @@ public class Game {
                     entity.draw(gc);
                 });
                 
-                kernel.pickables.forEach((entity) -> {
-                    entity.draw(gc);
-                });
+                gc.strokeText("Life : "+Integer.toString(kernel.pacman.life), 10, 15);
             }
         };
         

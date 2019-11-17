@@ -7,11 +7,20 @@ import java.util.Objects;
 
 public class Fantom extends Movable {
     String name;
-    
+    public double initX;
+    public double initY;
+    public enum FantomState{NORMAL, KILLABLE, BACKTOLOBBY}
+
+    public FantomState fState;
+
+
     public Fantom(double x, double y, String name) {
         super(x, y, 0.1);
+        initX=x;
+        initY=y;
         type="Fantom";
         this.name = name;
+        fState = FantomState.NORMAL;
     }
 
     @Override
