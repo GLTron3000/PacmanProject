@@ -13,10 +13,9 @@ public class Pacgum extends Pickable{
     }
 
     @Override
-    public int onPick(Kernel k) {
+    public void onPick(Kernel k) {
         k.pickables.remove(this);
         k.score+=10;
-        return k.score;
     }
 
     @Override
