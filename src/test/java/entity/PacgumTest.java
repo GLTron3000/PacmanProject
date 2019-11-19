@@ -17,7 +17,7 @@ class PacgumTest {
         //pacgum.data.load("customLevel2.pml");
 
         int test = k.pickables.size();
-        k.score = pacgum.onPick(k);
+        pacgum.onPick(k);
         assertNotEquals(test,k.pickables.size());
         assertEquals(10,k.score);
     }

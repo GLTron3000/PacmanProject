@@ -16,10 +16,9 @@ public class Fruit extends Pickable{
 
 
     @Override
-    public int onPick(Kernel k) {
+    public void onPick(Kernel k) {
         k.pickables.remove(this);
         k.score+=50;
-        return k.score;
     }
 
     @Override

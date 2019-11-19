@@ -16,9 +16,9 @@ class FruitTest {
         int score = 0;
         k.pickables.add(fruit);
         int test = k.pickables.size();
-        score = fruit.onPick(k);
+        fruit.onPick(k);
         assertNotEquals(test,k.pickables.size());
-        assertEquals(50,score);
+        assertEquals(50,k.score);
     }
 
     @Test

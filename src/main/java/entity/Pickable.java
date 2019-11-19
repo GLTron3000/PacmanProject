@@ -11,5 +11,5 @@ public abstract class Pickable extends Entity{
         super(x, y);
     }
 
-    public abstract int onPick(Kernel k);
+    public abstract void onPick(Kernel k);
 }
