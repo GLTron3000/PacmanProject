@@ -5,12 +5,15 @@ import entity.Pacman;
 import entity.Pickable;
 import entity.Wall;
 import static game.GameState.*;
+
+import game.CollisionEngine.*;
 import ia.IA;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Kernel {
-    public CollisionEngine collisionEngine;
+    public Engine engine;
+    public CollideBehavior collBeha;
     public ArrayList<IA> ias;
     
     public Pacman pacman;
@@ -26,8 +29,8 @@ public class Kernel {
     public int score;
 
     public Kernel(double canvasWidth, double canvasHeight) {
-        collisionEngine = new CollisionEngine();
-        
+        engine = new CollisionEngineRectangle();
+        collBeha=new CollideBehaviorClassic();
         fantoms = new ArrayList<>();
         pickables = new CopyOnWriteArrayList<>();
         walls = new ArrayList<>();
@@ -45,7 +48,7 @@ public class Kernel {
 
     public void step(){
         
-        if(collisionEngine.outOfBoard(pacman , canvasHeight, canvasWidth)) pacman.stop();
+        if(engine.outOfBoard(pacman , canvasHeight, canvasWidth)) pacman.stop();
         
         collide();
         
@@ -57,17 +60,17 @@ public class Kernel {
     public void collide(){
         for(Wall w :walls ){
             for(Fantom f :fantoms ){
-                if(collisionEngine.isCollideRec(w,f)){
+                if(engine.isCollide(w,f)){
                     f.stop();
                 }
             }
-            if(collisionEngine.isCollideRec(pacman,w)){
+            if(engine.isCollide(pacman,w)){
                 //System.out.println("collision mur");
-                collisionEngine.collideMovableWall(pacman,w);
+                collBeha.collideMovableWall(pacman,w);
             }
         }
         for(Fantom f: fantoms){
-            if(collisionEngine.isCollide(pacman,f)){
+            if(engine.isCollide(pacman,f)){
                 if(f.fState== Fantom.FantomState.NORMAL) {
                     pacman.life -= 1;
                     pacman.stop();
@@ -92,7 +95,7 @@ public class Kernel {
             }
         }
         for(Pickable p : pickables){
-            if(collisionEngine.isCollide(pacman,p)){
+            if(engine.isCollide(pacman,p)){
                 p.onPick(this);
             }
         }
