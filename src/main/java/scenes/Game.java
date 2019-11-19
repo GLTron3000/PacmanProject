@@ -150,17 +150,27 @@ public class Game {
     private void checkState(){
         switch(kernel.gameState){
             case PLAY: break;
-            case GAMEOVER: endGame = true; drawGameOver(); timer.stop(); break;
-            case VICTORY: endGame = true; drawVictory(); timer.stop(); break;
+            case GAMEOVER: endGame = true; showEndMessage("GAME OVER"); timer.stop(); break;
+            case VICTORY: endGame = true; showEndMessage("VICTOIRE !"); timer.stop(); break;
             case PAUSE: break;
         }
     }
     
-    private void drawGameOver(){
-        canvas.getGraphicsContext2D().strokeText("GAME OVER", canvas.getHeight()/2, canvas.getWidth()/2);
-    }
-    
-    private void drawVictory(){
-        canvas.getGraphicsContext2D().strokeText("VICTOIRE", canvas.getHeight()/2, canvas.getWidth()/2);
+    private void showEndMessage(String message){       
+        Label messageLabel = new Label(message);
+        messageLabel.setFont(new Font(120));
+        messageLabel.setTextFill(Color.WHITE);
+        
+        Label helpLabel = new Label("Appuyer sur une touche pour continuer");
+        helpLabel.setFont(new Font(25));
+        helpLabel.setTextFill(Color.WHITE);
+        
+        VBox vbox = new VBox();
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setSpacing(10);
+        vbox.getChildren().addAll(messageLabel, helpLabel);
+        
+        
+        stackPane.getChildren().add(vbox);
     }
 }
