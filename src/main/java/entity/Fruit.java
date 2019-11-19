@@ -1,5 +1,6 @@
 package entity;
 
+import game.Kernel;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -15,21 +16,10 @@ public class Fruit extends Pickable{
 
 
     @Override
-    public int onPick(CopyOnWriteArrayList<Pickable> pickables, int score) {
-        int i = 0;
-        int test = 0;
-        while(test == 0)
-        {
-            if(pickables.get(i).x == this.x && pickables.get(i).y == this.y) {
-                pickables.remove(i);
-                score+=50;
-                test = 1;
-            }
-            else
-                i++;
-        }
-        return score;
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int onPick(Kernel k) {
+        k.pickables.remove(this);
+        k.score+=50;
+        return k.score;
     }
 
     @Override

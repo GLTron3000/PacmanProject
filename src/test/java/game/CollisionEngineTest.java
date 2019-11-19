@@ -85,7 +85,7 @@ class CollisionEngineTest {
         assertEquals(70.774,col.distanceEntities(wall3,pacman3),0.001);
     }
     
-    @Test
+    /*@Test
     void collidePacmanFantom(){
         CollisionEngine collisionEngine = new CollisionEngine();
         
@@ -102,5 +102,5 @@ class CollisionEngineTest {
         assertEquals(pacman.life,result);
         
         
-    }
+    }*/
 }

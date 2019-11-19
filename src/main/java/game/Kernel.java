@@ -21,7 +21,7 @@ public class Kernel {
     double canvasWidth;
     double canvasHeight;
 
-    int score;
+    public int score;
 
     public Kernel(double canvasWidth, double canvasHeight) {
         collisionEngine = new CollisionEngine();
@@ -84,24 +84,7 @@ public class Kernel {
         }
         for(Pickable p : pickables){
             if(collisionEngine.isCollide(pacman,p)){
-                if(p.getType().equals("Fruit")) {
-                    score = p.onPick(pickables,score);
-                    //pickables.remove(p);
-                    System.out.println(" Fruit mangé " + score);
-                    //score+=50;
-                    for(Fantom f: fantoms){
-                        f.fState= Fantom.FantomState.KILLABLE;
-                    }
-                    //TODO Mettre un temps pour l'état "KILLABLE"
-                }
-
-                if(p.getType().equals("Pacgum")){
-                    score = p.onPick(pickables,score);
-                    //pickables.remove(p);
-                    System.out.println(" pacgum mangé" + score);
-                    //score+=10;
-                }
-
+                p.onPick(this);
             }
         }
     }

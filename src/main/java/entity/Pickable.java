@@ -1,6 +1,8 @@
 package entity;
 
 
+import game.Kernel;
+
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Pickable extends Entity{
@@ -9,5 +11,5 @@ public abstract class Pickable extends Entity{
         super(x, y);
     }
 
-    public abstract int onPick(CopyOnWriteArrayList<Pickable> pickables, int score);
+    public abstract int onPick(Kernel k);
 }

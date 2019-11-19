@@ -1,5 +1,6 @@
 package entity;
 
+import game.Kernel;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -11,14 +12,14 @@ class PacgumTest {
     @Test
     void onPick() {
         Pacgum pacgum = new Pacgum(0.0,25.0);
-        int score = 0;
+        Kernel k= new Kernel(45,20);
+        k.pickables.add(pacgum);
         //pacgum.data.load("customLevel2.pml");
-        CopyOnWriteArrayList<Pickable> pickables = new CopyOnWriteArrayList<>();
-        pickables.add(pacgum);
-        int test = pickables.size();
-        score = pacgum.onPick(pickables,score);
-        assertNotEquals(test,pickables.size());
-        assertEquals(10,score);
+
+        int test = k.pickables.size();
+        k.score = pacgum.onPick(k);
+        assertNotEquals(test,k.pickables.size());
+        assertEquals(10,k.score);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package entity;
 
+import game.Kernel;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -11,12 +12,12 @@ class FruitTest {
     @Test
     void onPick() {
         Fruit fruit = new Fruit(0.0,25.0);
+        Kernel k= new Kernel(10,10);
         int score = 0;
-        CopyOnWriteArrayList<Pickable> pickables = new CopyOnWriteArrayList<>();
-        pickables.add(fruit);
-        int test = pickables.size();
-        score = fruit.onPick(pickables,score);
-        assertNotEquals(test,pickables.size());
+        k.pickables.add(fruit);
+        int test = k.pickables.size();
+        score = fruit.onPick(k);
+        assertNotEquals(test,k.pickables.size());
         assertEquals(50,score);
     }
 
