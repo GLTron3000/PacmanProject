@@ -8,7 +8,6 @@
 }
 
 .label{
-    -fx-font-family: "3Dventure";
     -fx-text-fill: white; 
     -fx-background-color: transparent;
 }

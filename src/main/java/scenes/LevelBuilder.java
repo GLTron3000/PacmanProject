@@ -49,7 +49,7 @@ public class LevelBuilder {
         
         Label titleLabel = new Label("Editeur de niveau");
         titleLabel.setTextFill(Color.WHITE);
-        titleLabel.setFont(new Font(25));
+        titleLabel.setFont(new Font(40));
         
         
         Label helpLabel = new Label("P: Pacman | F: Fantom | W: Wall | R: Fruit | G: Pacgum | D: supprimer | Enter: sauvegarder | Echap: quitter");
@@ -63,7 +63,7 @@ public class LevelBuilder {
         
         stackPane.getChildren().add(vbox);
         stackPane.getStyleClass().add("stackPane");
-        stackPane.getStylesheets().add("file:src/main/css/gameStyle.css");
+        stackPane.getStylesheets().add("file:src/main/css/levelBuilderStyle.css");
         stackPane.setAlignment(Pos.CENTER);
         this.sceneController = sceneController;
         

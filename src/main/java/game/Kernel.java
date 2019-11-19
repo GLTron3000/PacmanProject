@@ -4,19 +4,21 @@ import entity.Fantom;
 import entity.Pacman;
 import entity.Pickable;
 import entity.Wall;
+import static game.GameState.*;
 import ia.IA;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Kernel {
     public CollisionEngine collisionEngine;
+    public ArrayList<IA> ias;
     
     public Pacman pacman;
     public ArrayList<Fantom> fantoms;
     public CopyOnWriteArrayList<Pickable> pickables;
     public ArrayList<Wall> walls;
     
-    public ArrayList<IA> ias;
+    public GameState gameState;
     
     double canvasWidth;
     double canvasHeight;
@@ -35,13 +37,20 @@ public class Kernel {
         this.canvasHeight = canvasHeight;
 
         score=0;
+        
+        gameState = PLAY;
     }
     
     
 
     public void step(){
+        
         if(collisionEngine.outOfBoard(pacman , canvasHeight, canvasWidth)) pacman.stop();
+        
         collide();
+        
+        checkVictory();
+                
         pacman.move();
     }
 
@@ -63,7 +72,7 @@ public class Kernel {
                     pacman.life -= 1;
                     pacman.stop();
                     if (pacman.life == 0) {
-                        //TODO gestion du game over
+                        gameState = GAMEOVER;
                     }
                     //renvoie pacman à sa position initiale
                     pacman.setX(pacman.initX);
@@ -87,5 +96,9 @@ public class Kernel {
                 p.onPick(this);
             }
         }
+    }
+    
+    private void checkVictory(){
+        if(pickables.isEmpty()) gameState = VICTORY;
     }
 }
