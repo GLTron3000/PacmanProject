@@ -10,7 +10,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -63,9 +62,10 @@ public class Game {
         sceneController.getScene().addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {     
                 System.out.println(ke.getCode());
-                
+
                 if(endGame){
                     sceneController.showMainMenu();
+                    endGame = false;
                 }else{
                     switch (ke.getCode()){
                         case UP: kernel.pacman.goUp(); break;
