@@ -92,11 +92,11 @@ class CollisionEngineTest {
         Pacman pacman = new Pacman(40,40);
         //Entity fant = new Fantom(30,40,"Pinky");
         int result = 2;
-        collisionEngine.collidePacmanFantom(pacman);
+        //collisionEngine.collidePacmanFantom(pacman);
         
         assertEquals(pacman.life,result);
         
-        collisionEngine.collidePacmanFantom(pacman);
+        //collisionEngine.collidePacmanFantom(pacman);
          result = 1;
         
         assertEquals(pacman.life,result);
