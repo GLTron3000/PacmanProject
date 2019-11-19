@@ -18,13 +18,14 @@ import scenes.LevelBuilder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LevelData {
     public Pacman pacman;
     public ArrayList<Fantom> fantoms;
-    public ArrayList<Pickable> pickables;
+    public CopyOnWriteArrayList<Pickable> pickables;
     public ArrayList<Wall> walls;
 
     private String delimiter= "##&&##";
@@ -81,7 +82,7 @@ public class LevelData {
             this.walls=gson.fromJson(list[3],listTypeWalls);
 
             final Gson gsonPickable= new GsonBuilder().registerTypeAdapter(Pickable.class,new PickableJsonDeserialize()).create();
-            Type listTypePickable = new TypeToken<ArrayList<Pickable>>(){}.getType();
+            Type listTypePickable = new TypeToken<CopyOnWriteArrayList<Pickable>>(){}.getType();
             this.pickables=gsonPickable.fromJson(list[2],listTypePickable);
 
         }catch (IOException ex){
