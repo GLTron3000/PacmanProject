@@ -54,7 +54,6 @@ public class Kernel {
         pacman.move();
     }
 
-    
     public void collide(){
         for(Wall w :walls ){
             for(Fantom f :fantoms ){
