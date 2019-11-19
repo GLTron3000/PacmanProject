@@ -25,8 +25,14 @@ public class Fantom extends Movable {
 
     @Override
     public void draw(GraphicsContext gc) {
-        gc.setFill(Color.CYAN);
-        gc.fillRect(x, y, size, size);
+        if(fState==FantomState.KILLABLE){
+            gc.setFill(Color.RED);
+            gc.fillRect(x, y, size, size);
+        }else{
+            gc.setFill(Color.CYAN);
+            gc.fillRect(x, y, size, size);
+        }
+
     }
 
     @Override
