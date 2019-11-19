@@ -4,7 +4,7 @@ import JSON.LevelData;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class Pacgum extends Pickable{
@@ -16,20 +16,20 @@ public class Pacgum extends Pickable{
     }
 
     @Override
-    public void onPick() {
-        data.load("customLevel1.pml");
+    public int onPick(CopyOnWriteArrayList<Pickable> pickables, int score) {
         int i = 0;
         int test = 0;
         while(test == 0)
         {
-            if(data.pickables.get(i).x == this.x && data.pickables.get(i).y == this.y) {
-                data.pickables.remove(i);
+            if(pickables.get(i).x == this.x && pickables.get(i).y == this.y) {
+                pickables.remove(i);
+                score+=10;
                 test = 1;
             }
             else
                 i++;
         }
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return score;
     }
 
     @Override

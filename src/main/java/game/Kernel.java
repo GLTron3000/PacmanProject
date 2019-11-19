@@ -7,6 +7,7 @@ import entity.Wall;
 import static game.GameState.*;
 import ia.IA;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Kernel {
     public CollisionEngine collisionEngine;
@@ -14,7 +15,7 @@ public class Kernel {
     
     public Pacman pacman;
     public ArrayList<Fantom> fantoms;
-    public ArrayList<Pickable> pickables;
+    public CopyOnWriteArrayList<Pickable> pickables;
     public ArrayList<Wall> walls;
     
     public GameState gameState;
@@ -28,7 +29,7 @@ public class Kernel {
         collisionEngine = new CollisionEngine();
         
         fantoms = new ArrayList<>();
-        pickables = new ArrayList<>();
+        pickables = new CopyOnWriteArrayList<>();
         walls = new ArrayList<>();
         ias = new ArrayList<>();
         
@@ -52,6 +53,7 @@ public class Kernel {
                 
         pacman.move();
     }
+
     
     public void collide(){
         for(Wall w :walls ){
@@ -92,18 +94,22 @@ public class Kernel {
         }
         for(Pickable p : pickables){
             if(collisionEngine.isCollide(pacman,p)){
-                if(p.getType()=="Fruit") {
-                    p.onPick();
-                    score+=50;
+                if(p.getType().equals("Fruit")) {
+                    score = p.onPick(pickables,score);
+                    //pickables.remove(p);
+                    System.out.println(" Fruit mangé " + score);
+                    //score+=50;
                     for(Fantom f: fantoms){
                         f.fState= Fantom.FantomState.KILLABLE;
                     }
                     //TODO Mettre un temps pour l'état "KILLABLE"
                 }
 
-                if(p.getType()=="Pacgum"){
-                    p.onPick();
-                    score+=10;
+                if(p.getType().equals("Pacgum")){
+                    score = p.onPick(pickables,score);
+                    //pickables.remove(p);
+                    System.out.println(" pacgum mangé" + score);
+                    //score+=10;
                 }
 
             }

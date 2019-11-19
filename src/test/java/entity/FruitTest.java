@@ -6,19 +6,18 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PacgumTest {
+class FruitTest {
 
     @Test
     void onPick() {
-        Pacgum pacgum = new Pacgum(0.0,25.0);
+        Fruit fruit = new Fruit(0.0,25.0);
         int score = 0;
-        //pacgum.data.load("customLevel2.pml");
         CopyOnWriteArrayList<Pickable> pickables = new CopyOnWriteArrayList<>();
-        pickables.add(pacgum);
+        pickables.add(fruit);
         int test = pickables.size();
-        score = pacgum.onPick(pickables,score);
+        score = fruit.onPick(pickables,score);
         assertNotEquals(test,pickables.size());
-        assertEquals(10,score);
+        assertEquals(50,score);
     }
 
     @Test

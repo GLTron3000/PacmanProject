@@ -2,6 +2,7 @@ package scenes;
 
 import JSON.LevelData;
 import game.Kernel;
+import java.util.concurrent.CopyOnWriteArrayList;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -127,7 +128,7 @@ public class Game {
         kernel.pacman = levelData.pacman;
         kernel.fantoms = levelData.fantoms;
         kernel.walls = levelData.walls;
-        kernel.pickables = levelData.pickables;
+        kernel.pickables = new CopyOnWriteArrayList(levelData.pickables);
     }
     
     private void drawAllEntity(){
