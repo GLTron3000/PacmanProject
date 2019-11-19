@@ -8,6 +8,7 @@ import entity.Pacgum;
 import entity.Pacman;
 import entity.Pickable;
 import entity.Wall;
+import java.io.File;
 import java.util.ArrayList;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
@@ -20,6 +21,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import pacmanproject.SceneController;
 
 public class LevelBuilder {
@@ -35,7 +37,6 @@ public class LevelBuilder {
     double taille = 25;
     
     int fantomCounter = 0;
-    int saveCounter = 0;
     
     ArrayList<Entity> entities;
 
@@ -52,7 +53,7 @@ public class LevelBuilder {
         titleLabel.setFont(new Font(40));
         
         
-        Label helpLabel = new Label("P: Pacman | F: Fantom | W: Wall | R: Fruit | G: Pacgum | D: supprimer | Enter: sauvegarder | Echap: quitter");
+        Label helpLabel = new Label("P: Pacman | F: Fantom | W: Wall | R: Fruit | G: Pacgum | D: supprimer | Enter: sauvegarder | L: charger | Echap: quitter");
         helpLabel.setFont(new Font(15));
         helpLabel.setTextFill(Color.WHITE);
         
@@ -84,6 +85,7 @@ public class LevelBuilder {
                     case W: if(!checkEntityPresence()) entities.add(new Wall(x, y)); break;
                     case R: if(!checkEntityPresence()) entities.add(new Fruit(x, y)); break;
                     case G: if(!checkEntityPresence()) entities.add(new Pacgum(x, y)); break;
+                    case L: loadLevel(); break;
                     case D: deleteEntity(); break;
                     default: break;
                 }
@@ -150,9 +152,14 @@ public class LevelBuilder {
     }
     
     private void writeLevel(){
-        LevelData levelData = new LevelData();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Charger un niveau");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PacmanLevel", "*.pml"));
+        File file = fileChooser.showSaveDialog(sceneController.stage);
         
-        saveCounter++;
+        if(file == null) return;
+        
+        LevelData levelData = new LevelData();
         
         Pacman pacman = null;
         ArrayList<Fantom> fantoms = new ArrayList<>();
@@ -166,7 +173,26 @@ public class LevelBuilder {
             else if(entity instanceof Pickable) pickables.add((Pickable) entity);
         }
         
-        levelData.save(pacman, fantoms, pickables, walls, "customLevel"+saveCounter+".pml");
+        levelData.save(pacman, fantoms, pickables, walls, file.getPath());
+    }
+    
+    private void loadLevel(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Charger un niveau");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PacmanLevel", "*.pml"));
+        File file = fileChooser.showOpenDialog(sceneController.stage);
+        
+        if(file == null) return;
+        
+        LevelData levelData = new LevelData();
+        levelData.load(file.getPath());
+        
+        entities.clear();
+        
+        entities.addAll(levelData.fantoms);
+        entities.addAll(levelData.pickables);
+        entities.addAll(levelData.walls);
+        entities.add(levelData.pacman);
     }
     
     void moveUp(){
