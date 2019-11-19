@@ -1,6 +1,6 @@
 package entity;
 
-import static entity.Direction.STOP;
+import static entity.Direction.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -35,4 +35,30 @@ public class Pacman extends Movable {
                 ", type='" + type + '\'' +
                 '}';
     }
+
+    @Override
+    public void goUp(){
+        nextDirection = UP;
+    }
+
+    @Override
+    public void goDown(){
+        nextDirection = DOWN;
+    }
+
+    @Override
+    public void goLeft(){
+        nextDirection = LEFT;
+    }
+
+    @Override
+    public void goRight(){
+        nextDirection = RIGHT;
+    }
+    
+    public void nextDirection(){
+        direction = nextDirection;
+        nextDirection = STOP;
+    }
+    
 }

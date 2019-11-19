@@ -116,7 +116,7 @@ public class Game {
 
     private void entityInit(){
         LevelData levelData = new LevelData();
-        levelData.load("customLevel1.pml");
+        levelData.load("entityTest.pml");
 
         kernel.pacman = levelData.pacman;
         kernel.fantoms = levelData.fantoms;
@@ -169,10 +169,10 @@ public class Game {
     
     private void moveInput(KeyEvent ke){
         switch (ke.getCode()){
-            case UP: kernel.pacman.nextDirection = UP; break;
-            case DOWN: kernel.pacman.nextDirection = DOWN; break;
-            case LEFT: kernel.pacman.nextDirection = LEFT; break;
-            case RIGHT: kernel.pacman.nextDirection = RIGHT; break;
+            case UP: kernel.pacman.goUp(); break;
+            case DOWN: kernel.pacman.goDown(); break;
+            case LEFT: kernel.pacman.goLeft(); break;
+            case RIGHT: kernel.pacman.goRight(); break;
             case ESCAPE: sceneController.showMainMenu(); break;
             case ENTER: break;
             default: break;

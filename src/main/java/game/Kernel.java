@@ -93,8 +93,6 @@ public class Kernel {
                 if(f.fState == Fantom.FantomState.KILLABLE) {
                     f.fState=Fantom.FantomState.BACKTOLOBBY;
                 }
-
-
             }
         }
         for(Pickable p : pickables){
@@ -112,19 +110,14 @@ public class Kernel {
         if(pacman.nextDirection == STOP) return;
 
         Pacman nextPacman = new Pacman(pacman.getX(), pacman.getY());
-        nextPacman.direction = pacman.nextDirection;
-
-        nextPacman.move();
-
+        nextPacman.direction = pacman.nextDirection;      
+        
         for(Wall w : walls){
             if(engine.isCollide(nextPacman, w)) collBeha.collideMovableWall(nextPacman, w);
         }
 
         if(nextPacman.direction != STOP){
-            pacman.direction = pacman.nextDirection;
-            pacman.nextDirection = STOP;
+            pacman.nextDirection();
         }
-
-        System.out.println("next "+nextPacman.direction+" "+nextPacman.nextDirection+" "+pacman.direction+" "+pacman.nextDirection);
     }
 }

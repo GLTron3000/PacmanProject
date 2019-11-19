@@ -25,10 +25,12 @@ class CollisionEngineTest {
         
         //pacman touche un mur mais ne se déplace pas dans sa direction
         pacman2.goUp();
+        pacman2.nextDirection();
         assertFalse(collisionEngineCircle.outOfBoard(pacman2, canvas.getWidth(), canvas.getHeight()));
         
         //pacman touche un mur et se déplace dans sa direction
         pacman2.goLeft();
+        pacman2.nextDirection();
         assertTrue(collisionEngineCircle.outOfBoard(pacman2, canvas.getWidth(), canvas.getHeight()));
         
     }
