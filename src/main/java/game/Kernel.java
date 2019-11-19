@@ -5,6 +5,7 @@ import entity.Pacman;
 import entity.Pickable;
 import entity.Wall;
 import static game.GameState.*;
+import static entity.Direction.*;
 import ia.IA;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -44,12 +45,13 @@ public class Kernel {
     
 
     public void step(){
-        
         if(collisionEngine.outOfBoard(pacman , canvasHeight, canvasWidth)) pacman.stop();
         
         collide();
         
         checkVictory();
+        
+        checkNextMove();
                 
         pacman.move();
     }
@@ -100,5 +102,25 @@ public class Kernel {
     
     private void checkVictory(){
         if(pickables.isEmpty()) gameState = VICTORY;
+    }
+    
+    private void checkNextMove(){
+        if(pacman.nextDirection == STOP) return;
+        
+        Pacman nextPacman = new Pacman(pacman.getX(), pacman.getY());
+        nextPacman.direction = pacman.nextDirection;
+        
+        nextPacman.move();
+        
+        for(Wall w : walls){
+            if(collisionEngine.isCollideRec(nextPacman, w)) collisionEngine.collideMovableWall(nextPacman, w);
+        }
+        
+        if(nextPacman.direction != STOP){
+            pacman.direction = pacman.nextDirection;
+            pacman.nextDirection = STOP;
+        }
+        
+        System.out.println("next "+nextPacman.direction+" "+nextPacman.nextDirection+" "+pacman.direction+" "+pacman.nextDirection);
     }
 }

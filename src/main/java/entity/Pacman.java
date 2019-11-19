@@ -1,5 +1,6 @@
 package entity;
 
+import static entity.Direction.STOP;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -7,12 +8,14 @@ public class Pacman extends Movable {
     public int life;
     public double initX;
     public double initY;
+    public Direction nextDirection;
 
     public Pacman(double x, double y) {
         super(x, y, 0.5);
         initX=x;
         initY=y;
-        direction = Direction.STOP;
+        direction = STOP;
+        nextDirection = STOP;
         type="Pacman";
         life = 3;
     }

@@ -3,7 +3,6 @@ package game;
 import entity.Direction;
 import entity.Entity;
 import entity.Movable;
-import entity.Pacman;
 import entity.Wall;
 
 public class CollisionEngine {
