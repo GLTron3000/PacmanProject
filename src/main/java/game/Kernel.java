@@ -15,6 +15,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Kernel {
     public Engine engine;
     public CollideBehavior collBeha;
+    public OutOfBoardBehavior OOBBeha;
     public ArrayList<IA> ias;
     
     public Pacman pacman;
@@ -32,6 +33,7 @@ public class Kernel {
     public Kernel(double canvasWidth, double canvasHeight) {
         engine = new CollisionEngineRectangle();
         collBeha=new CollideBehaviorClassic();
+        OOBBeha= new OutOfBoardWrapper(canvasHeight,canvasWidth);
         fantoms = new ArrayList<>();
         pickables = new CopyOnWriteArrayList<>();
         walls = new ArrayList<>();
@@ -49,7 +51,7 @@ public class Kernel {
 
     public void step(){
         
-        if(engine.outOfBoard(pacman , canvasHeight, canvasWidth)) pacman.stop();
+        if(engine.outOfBoard(pacman , canvasHeight, canvasWidth)) OOBBeha.behavior(pacman);
         
         collide();
         
