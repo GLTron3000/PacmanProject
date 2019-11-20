@@ -8,10 +8,10 @@ public class CollisionEngineRectangle implements Engine {
 
     @Override
     public boolean isCollide(Entity e1,Entity e2){
-        if (e1.getX() < e2.getX() + e2.getSize() &&
-                e1.getX() + e1.getSize() > e2.getX() &&
-                e1.getY() < e2.getY() + e2.getSize() &&
-                e1.getSize() + e1.getY() > e2.getY()) {
+        if (e1.getX() <= e2.getX() + e2.getSize() &&
+                e1.getX() + e1.getSize() >= e2.getX() &&
+                e1.getY() <= e2.getY() + e2.getSize() &&
+                e1.getSize() + e1.getY() >= e2.getY()) {
             return true;
         }
         return false;

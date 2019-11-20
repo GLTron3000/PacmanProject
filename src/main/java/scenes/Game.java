@@ -116,7 +116,7 @@ public class Game {
 
     private void entityInit(){
         LevelData levelData = new LevelData();
-        levelData.load("entityTest.pml");
+        levelData.load("customLevel1.pml");
 
         kernel.pacman = levelData.pacman;
         kernel.fantoms = levelData.fantoms;
