@@ -36,6 +36,8 @@ public class LevelBuilder {
     double y;
     double taille = 25;
     
+    double pickableOffset = 7;
+    
     int fantomCounter = 0;
     
     ArrayList<Entity> entities;
@@ -83,8 +85,8 @@ public class LevelBuilder {
                     case F: if(!checkEntityPresence()) entities.add(new Fantom(x, y, fantomCounter+"")); fantomCounter++; break;
                     case P: if(!checkEntityPresence()) entities.add(new Pacman(x, y)); break;
                     case W: if(!checkEntityPresence()) entities.add(new Wall(x, y)); break;
-                    case R: if(!checkEntityPresence()) entities.add(new Fruit(x, y)); break;
-                    case G: if(!checkEntityPresence()) entities.add(new Pacgum(x, y)); break;
+                    case R: if(!checkEntityPresence()) entities.add(new Fruit(x+pickableOffset, y+pickableOffset)); break;
+                    case G: if(!checkEntityPresence()) entities.add(new Pacgum(x+pickableOffset, y+pickableOffset)); break;
                     case L: loadLevel(); break;
                     case D: deleteEntity(); break;
                     default: break;
@@ -139,6 +141,7 @@ public class LevelBuilder {
         Entity entityToDelete = null;
         for(Entity entity : entities){
             if(entity.getX() == x && entity.getY() == y) entityToDelete = entity;
+            else if(entity.getX() == x+pickableOffset && entity.getY() == y+pickableOffset) entityToDelete = entity;
         }
         
         if(entityToDelete != null) entities.remove(entityToDelete);
@@ -147,6 +150,7 @@ public class LevelBuilder {
     private boolean checkEntityPresence(){
         for(Entity entity : entities){
             if(entity.getX() == x && entity.getY() == y) return true;
+            else if(entity.getX() == x+pickableOffset && entity.getY() == y+pickableOffset) return true;
         }
         return false;
     }

@@ -41,7 +41,7 @@ public class Fruit extends Pickable{
 
     @Override
     public void draw(GraphicsContext gc) {
-        gc.setFill(Color.BEIGE);
+        gc.setFill(Color.ORANGE);
         gc.fillRect(x, y, size, size);
     }
     
