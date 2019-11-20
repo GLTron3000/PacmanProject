@@ -18,7 +18,7 @@ public class App extends Application{
         stage.setScene(mainScene);
         
         
-        sceneController = new SceneController(mainScene);
+        sceneController = new SceneController(mainScene, stage);
         
         sceneController.showMainMenu();
 

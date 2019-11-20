@@ -1,18 +1,21 @@
 package pacmanproject;
 
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 import scenes.Game;
 import scenes.LevelBuilder;
 import scenes.MainMenu;
 
 public class SceneController {
     private Scene scene;
+    public Stage stage;
     public Game game;
     public MainMenu mainMenu;
     public LevelBuilder levelBuilder;
 
-    public SceneController(Scene mainScene) {
+    public SceneController(Scene mainScene, Stage stage) {
         this.scene = mainScene;
+        this.stage = stage;
         mainMenu = new MainMenu(this);
     }
     
