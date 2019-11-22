@@ -41,6 +41,8 @@ public class LevelBuilder {
     int fantomCounter = 0;
     
     ArrayList<Entity> entities;
+    
+    EventHandler<KeyEvent> keyboardHandler;
 
     public LevelBuilder(SceneController sceneController) {
         stackPane = new StackPane();
@@ -71,8 +73,8 @@ public class LevelBuilder {
         this.sceneController = sceneController;
         
         entities = new ArrayList<>();
-                
-        sceneController.getScene().addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+        
+        keyboardHandler = new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
                                 
                 switch (ke.getCode()){
@@ -95,7 +97,9 @@ public class LevelBuilder {
                 
 
             }
-        });
+        };
+                
+        sceneController.getScene().addEventFilter(KeyEvent.KEY_PRESSED, keyboardHandler);
                 
         // ! Provoque une fuite de mémoire
         // Ajouter -Dprism.order=sw
@@ -135,6 +139,7 @@ public class LevelBuilder {
         gc.clearRect(0, 0, canvas.getHeight(), canvas.getWidth());
 
         timer.stop();
+        sceneController.getScene().removeEventFilter(KeyEvent.KEY_PRESSED, keyboardHandler);
     }
     
     private void deleteEntity(){
