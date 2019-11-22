@@ -1,12 +1,12 @@
 package scenes;
 
 import JSON.LevelData;
-import static entity.Direction.*;
 import game.Kernel;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -23,12 +23,14 @@ public class Game {
     StackPane stackPane;
     Label lifeLabel;
     Label scoreLabel;
+    Label timerLabel;
     VBox pauseMenu;
     
     Canvas canvas;
     Kernel kernel;
     
-    AnimationTimer timer;
+    AnimationTimer animationTimer;
+    Timer gameTimer;
     GraphicsContext gc;
     
     boolean endGame;
@@ -55,18 +57,21 @@ public class Game {
     }
     
     public void start(){
-        timer.start();
+        chronoInit();
+        animationTimer.start();
     }
     
     public void pause(){
-        timer.stop();
+        animationTimer.stop();
+        gameTimer.cancel();
     }
     
     public void stop(){
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getHeight(), canvas.getWidth());
 
-        timer.stop();
+        animationTimer.stop();
+        gameTimer.cancel();
         sceneController.getScene().removeEventFilter(KeyEvent.KEY_PRESSED, keyboardHandler);
     }
     
@@ -89,8 +94,8 @@ public class Game {
     private void checkState(){
         switch(kernel.gameState){
             case PLAY: break;
-            case GAMEOVER: endGame = true; showEndMessage("GAME OVER"); timer.stop(); break;
-            case VICTORY: endGame = true; showEndMessage("VICTOIRE !"); timer.stop(); break;
+            case GAMEOVER: endGame = true; showEndMessage("GAME OVER"); animationTimer.stop(); gameTimer.cancel(); break;
+            case VICTORY: endGame = true; showEndMessage("VICTOIRE !"); animationTimer.stop(); gameTimer.cancel(); break;
             case PAUSE: break;
         }
     }
@@ -112,8 +117,6 @@ public class Game {
         
         stackPane.getChildren().add(vbox);
     }
-    
-    
     
     private void pauseGame(){
         pause();
@@ -158,11 +161,15 @@ public class Game {
         scoreLabel = new Label();
         scoreLabel.setFont(new Font(100));
         scoreLabel.setTextFill(Color.WHITE);
+        
+        timerLabel = new Label();
+        timerLabel.setFont(new Font(50));
+        timerLabel.setTextFill(Color.WHITE);
                 
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
-        vbox.getChildren().addAll(scoreLabel, lifeLabel, canvas);
+        vbox.getChildren().addAll(scoreLabel, timerLabel, lifeLabel, canvas);
         
         stackPane.getChildren().add(vbox);
         stackPane.getStyleClass().add("stackPane");
@@ -239,14 +246,15 @@ public class Game {
     private void timerInit() {
         // ! Provoque une fuite de mémoire
         // Ajouter -Dprism.order=sw
-        timer = new AnimationTimer() {
+        animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 kernel.step();
                 
                 lifeLabel.setText(kernel.pacman.life+" vies");
                 scoreLabel.setText(""+kernel.score);
-
+                timerLabel.setText(kernel.timer+" s");
+                        
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 gc.setFill(Color.BLACK);
                 gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -258,5 +266,16 @@ public class Game {
                 checkState();
             }
         };
+    }
+
+    private void chronoInit() {
+        gameTimer = new Timer();
+        
+        gameTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if(kernel.timer != 0) kernel.timer--;
+            }
+        }, 1, 1000);
     }
 }
