@@ -29,6 +29,7 @@ public class Kernel {
     double canvasHeight;
 
     public int score;
+    public int timer;
 
     public Kernel(double canvasWidth, double canvasHeight) {
         engine = new CollisionEngineRectangle();
@@ -42,7 +43,8 @@ public class Kernel {
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
 
-        score=0;
+        score = 0;
+        timer = 120;
         
         gameState = PLAY;
     }
@@ -105,6 +107,7 @@ public class Kernel {
     }
     
     private void checkVictory(){
+        if(timer <= 0) gameState = GAMEOVER;
         if(pickables.isEmpty()) gameState = VICTORY;
     }
 
