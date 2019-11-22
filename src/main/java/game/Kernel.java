@@ -79,20 +79,7 @@ public class Kernel {
         for(Fantom f: fantoms){
             if(engine.isCollide(pacman,f)){
                 if(f.fState== Fantom.FantomState.NORMAL) {
-                    pacman.life -= 1;
-                    pacman.stop();
-                    if (pacman.life == 0) {
-                        gameState = GAMEOVER;
-                    }
-                    //renvoie pacman à sa position initiale
-                    pacman.setX(pacman.initX);
-                    pacman.setY(pacman.initY);
-
-                    //renvoie les fantômes à leur position initiale
-                    for (Fantom p : fantoms) {
-                        p.setX(p.initX);
-                        p.setY(p.initY);
-                    }
+                    playerCatched();
                 }
                 if(f.fState == Fantom.FantomState.KILLABLE) {
                     f.fState=Fantom.FantomState.BACKTOLOBBY;
@@ -106,8 +93,26 @@ public class Kernel {
         }
     }
     
+    private void playerCatched(){
+        timer = 120;
+        pacman.life -= 1;
+        pacman.stop();
+        if (pacman.life == 0) {
+            gameState = GAMEOVER;
+        }
+        //renvoie pacman à sa position initiale
+        pacman.setX(pacman.initX);
+        pacman.setY(pacman.initY);
+
+        //renvoie les fantômes à leur position initiale
+        for (Fantom p : fantoms) {
+            p.setX(p.initX);
+            p.setY(p.initY);
+        }
+    }
+    
     private void checkVictory(){
-        if(timer <= 0) gameState = GAMEOVER;
+        if(timer <= 0) playerCatched();
         if(pickables.isEmpty()) gameState = VICTORY;
     }
 
