@@ -13,6 +13,7 @@ public class State {
     Fantom f;
     Pacman p;
 
+
     public State(Pacman pacman, Fantom fantom, Direction d){
         p=pacman;
         f=fantom;

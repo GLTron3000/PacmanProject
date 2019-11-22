@@ -37,7 +37,6 @@ public class BestPath {
 
 
     /*
-
     @PARAM : Current direction of the fantom
 
      */
