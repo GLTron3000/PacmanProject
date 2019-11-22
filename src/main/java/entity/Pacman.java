@@ -1,13 +1,7 @@
 package entity;
 
 import static entity.Direction.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 
 public class Pacman extends Movable {
     public int life;
@@ -17,7 +11,6 @@ public class Pacman extends Movable {
     
     private int frameNumber = 0;
     private boolean reverseFrames = false;
-    private Image image;
 
     public Pacman(double x, double y) {
         super(x, y, 0.5);
@@ -87,13 +80,5 @@ public class Pacman extends Movable {
     public void nextDirection(){
         direction = nextDirection;
         nextDirection = STOP;
-    }
-    
-    public void loadAnimation(){
-        try {
-            image = new Image(new FileInputStream("assets/Pacman/PacmanFull.png"));
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }

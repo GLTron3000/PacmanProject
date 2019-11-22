@@ -1,6 +1,8 @@
 package scenes;
 
 import JSON.LevelData;
+import entity.Fruit;
+import entity.Wall;
 import game.Kernel;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -145,7 +147,19 @@ public class Game {
         kernel.walls = levelData.walls;
         kernel.pickables = new CopyOnWriteArrayList(levelData.pickables);
         
-        kernel.pacman.loadAnimation();
+        kernel.pacman.loadTexture("assets/Pacman/PacmanFull.png");
+        
+        // ! temporaire
+        kernel.pickables.forEach(pickable -> {
+            if(pickable instanceof Fruit) pickable.loadTexture("assets/Pickable/Fruit.png");
+            else pickable.loadTexture("assets/Pickable/Pacgum.png");
+        });
+        
+        kernel.fantoms.forEach(fantom -> {
+            //fantom.loadTexture("");
+        });
+        
+        loadWallTexture();
     }
     
     private void guiInit(){
@@ -279,5 +293,11 @@ public class Game {
                 if(kernel.timer != 0) kernel.timer--;
             }
         }, 1, 1000);
+    }
+    
+    private void loadWallTexture(){
+        for(Wall w : kernel.walls){
+            
+        }
     }
 }

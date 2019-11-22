@@ -1,14 +1,20 @@
 package entity;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.image.Image;
 
 public abstract class Entity {
     double x;
     double y;
     double size;
     String type;
+    Image image;
     
     public abstract void draw(GraphicsContext gc);
 
@@ -51,4 +57,12 @@ public abstract class Entity {
     public void setX(double x) { this.x = x; }
 
     public void setY(double y) { this.y = y; }
+    
+    public void loadTexture(String path){
+        try {
+            image = new Image(new FileInputStream(path));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
