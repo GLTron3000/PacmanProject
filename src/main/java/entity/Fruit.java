@@ -2,10 +2,10 @@ package entity;
 
 import game.Kernel;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
 
 
 public class Fruit extends Pickable{
@@ -41,8 +41,9 @@ public class Fruit extends Pickable{
 
     @Override
     public void draw(GraphicsContext gc) {
-        gc.setFill(Color.ORANGE);
-        gc.fillRect(x, y, size, size);
+        gc.drawImage(image, x, y, size, size);
+        //gc.setFill(Color.ORANGE);
+        //gc.fillRect(x, y, size, size);
     }
     
 }

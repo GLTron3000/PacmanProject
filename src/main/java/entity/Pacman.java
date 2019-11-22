@@ -2,13 +2,15 @@ package entity;
 
 import static entity.Direction.*;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 public class Pacman extends Movable {
     public int life;
     public double initX;
     public double initY;
     public Direction nextDirection;
+    
+    private int frameNumber = 0;
+    private boolean reverseFrames = false;
 
     public Pacman(double x, double y) {
         super(x, y, 0.5);
@@ -21,9 +23,28 @@ public class Pacman extends Movable {
     }
     
     @Override
-    public void draw(GraphicsContext gc) {
-        gc.setFill(Color.YELLOW);
-        gc.fillRect(x, y, size, size);
+    public void draw(GraphicsContext gc) {        
+        int ySource = 0;
+        switch (direction){
+            case UP: ySource+=size; break;
+            case DOWN: ySource+=3*size; break;
+            case LEFT: ySource+=2*size; break;
+            default: break;
+        }
+
+        if(reverseFrames){
+            if(frameNumber == 0) reverseFrames = false;
+            else frameNumber--;
+        }else{
+            if(frameNumber == 2) reverseFrames = true;
+            else frameNumber++;
+        }
+
+        // x_source y_source w_source h_source x_dest y_dest w_dest h_dest
+        gc.drawImage(image, frameNumber*size, ySource, size, size, x, y, size, size);
+
+        //gc.setFill(Color.YELLOW);
+        //gc.fillRect(x, y, size, size);
     }
 
     @Override
@@ -60,5 +81,4 @@ public class Pacman extends Movable {
         direction = nextDirection;
         nextDirection = STOP;
     }
-    
 }
