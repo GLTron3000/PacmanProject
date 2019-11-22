@@ -144,6 +144,8 @@ public class Game {
         kernel.fantoms = levelData.fantoms;
         kernel.walls = levelData.walls;
         kernel.pickables = new CopyOnWriteArrayList(levelData.pickables);
+        
+        kernel.pacman.loadAnimation();
     }
     
     private void guiInit(){
