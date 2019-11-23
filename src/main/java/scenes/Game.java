@@ -39,6 +39,10 @@ public class Game {
     EventHandler<KeyEvent> keyboardHandler;
     EventHandler<KeyEvent> keyboardPauseHandler;
     
+    private final long[] frameTimes = new long[100];
+    private int frameTimeIndex = 0 ;
+    private boolean arrayFilled = false ;
+    
     public Game(SceneController sceneController) {
         endGame = false;
         
@@ -52,6 +56,10 @@ public class Game {
         sceneController.getScene().addEventFilter(KeyEvent.KEY_PRESSED, keyboardHandler);
         
         timerInit();
+        
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawAllEntity();
     }
 
     public StackPane getNode() {
@@ -79,17 +87,25 @@ public class Game {
     
     private void drawAllEntity(){
         kernel.pickables.forEach((entity) -> {
-            entity.draw(gc);
+            entity.draw(canvas);
         });
 
-        kernel.pacman.draw(gc);
+        kernel.pacman.draw(canvas);
 
         kernel.fantoms.forEach((entity) -> {
-            entity.draw(gc);
+            entity.draw(canvas);
         });
 
         kernel.walls.forEach((entity) -> {
-            entity.draw(gc);
+            entity.draw(canvas);
+        });
+    }
+    
+    private void drawMovable(){
+        kernel.pacman.draw(canvas);
+
+        kernel.fantoms.forEach((entity) -> {
+            entity.draw(canvas);
         });
     }
     
@@ -271,15 +287,30 @@ public class Game {
                 scoreLabel.setText(""+kernel.score);
                 timerLabel.setText(kernel.timer+" s");
                         
-                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                gc.setFill(Color.BLACK);
-                gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                gc.setStroke(Color.WHITE);
-                gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                //gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                //gc.setFill(Color.BLACK);
+                //gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                //gc.setStroke(Color.WHITE);
+                //gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 
-                drawAllEntity();
+                //drawAllEntity();
+                drawMovable();
                
                 checkState();
+                
+                
+                long oldFrameTime = frameTimes[frameTimeIndex] ;
+                frameTimes[frameTimeIndex] = now ;
+                frameTimeIndex = (frameTimeIndex + 1) % frameTimes.length ;
+                if (frameTimeIndex == 0) {
+                    arrayFilled = true ;
+                }
+                if (arrayFilled) {
+                    long elapsedNanos = now - oldFrameTime ;
+                    long elapsedNanosPerFrame = elapsedNanos / frameTimes.length ;
+                    double frameRate = 1_000_000_000.0 / elapsedNanosPerFrame ;
+                    System.out.println(String.format("Current frame rate: %.3f", frameRate));
+                }
             }
         };
     }

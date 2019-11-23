@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import java.util.Objects;
+import javafx.scene.canvas.Canvas;
 
 public class Fantom extends Movable {
     String name;
@@ -24,7 +25,9 @@ public class Fantom extends Movable {
     }
 
     @Override
-    public void draw(GraphicsContext gc) {
+    public void draw(Canvas canvas) {
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        
         if(fState==FantomState.KILLABLE){
             gc.setFill(Color.RED);
             gc.fillRect(x, y, size, size);

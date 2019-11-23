@@ -1,7 +1,9 @@
 package entity;
 
 import static entity.Direction.*;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Pacman extends Movable {
     public int life;
@@ -23,7 +25,8 @@ public class Pacman extends Movable {
     }
     
     @Override
-    public void draw(GraphicsContext gc) {        
+    public void draw(Canvas canvas) {
+        GraphicsContext gc = canvas.getGraphicsContext2D();      
         int ySource = 0;
         switch (direction){
             case UP: ySource+=size; break;
@@ -40,6 +43,10 @@ public class Pacman extends Movable {
             else frameNumber++;
         }
 
+        //gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        gc.setFill(Color.BLACK);
+        gc.fillRect(x, y, size, size);
+        
         // x_source y_source w_source h_source x_dest y_dest w_dest h_dest
         gc.drawImage(image, frameNumber*size, ySource, size, size, x, y, size, size);
 

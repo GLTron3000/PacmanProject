@@ -1,6 +1,7 @@
 package entity;
 
 import game.Kernel;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 
@@ -18,7 +19,8 @@ public class Pacgum extends Pickable{
     }
 
     @Override
-    public void draw(GraphicsContext gc) {
+    public void draw(Canvas canvas) {
+        GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.drawImage(image, x, y, size, size);
         //gc.setFill(Color.WHITE);
         //gc.fillRect(x, y, size, size);

@@ -115,7 +115,7 @@ public class LevelBuilder {
                 gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
                 entities.forEach((entity) -> {
-                    entity.draw(gc);
+                    entity.draw(canvas);
                 });
                 
                 gc.setStroke(Color.RED);

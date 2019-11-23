@@ -2,11 +2,10 @@ package entity;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import javafx.scene.canvas.GraphicsContext;
-
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 
 public abstract class Entity {
@@ -16,7 +15,7 @@ public abstract class Entity {
     String type;
     Image image;
     
-    public abstract void draw(GraphicsContext gc);
+    public abstract void draw(Canvas canvas);
 
     public Entity(double x, double y) {
         this.x = x;
