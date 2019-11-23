@@ -8,7 +8,7 @@ class Astar {
     private static final int DIAGONAL_COST = 14;
     private static final int VERTICAL_AND_HORIZONTAL_COST = 10;
 
-    private Cell[][] grid;
+    Cell[][] grid;
 
     private PriorityQueue<Cell> open; // liste des cellules qui vont être étudiées
     private boolean[][] closed; // liste des cellules déja étudiées
@@ -138,5 +138,60 @@ class Astar {
         }
 
     return solution;
+    }
+
+    void display(){
+        System.out.println(" Grid : ");
+
+        for(int i = 0 ; i <grid.length ; i ++){
+            for(int j = 0 ; j <grid[i].length; j ++){
+                if(i == StartX && j == StartY)
+                    System.out.print("S  ");
+                else if(i == endX && j == endY)
+                    System.out.print("D  ");
+                else if (grid[i][j] != null)
+                    System.out.printf("%-3d", 0);
+                else
+                    System.out.print("W  ");
+
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    void displaySolution(){
+        if(closed[endX][endY]){
+            System.out.println("Path :");
+            Cell current = grid[endX][endY];
+            System.out.println(current);
+            grid[current.x][current.y].isSolution = true;
+
+            while(current.parent != null){
+                System.out.println(" path ->" + current.parent);
+                grid[current.parent.x][current.parent.y].isSolution = true;
+                current = current.parent;
+            }
+
+            System.out.println();
+
+            for(int i = 0 ; i <grid.length ; i ++){
+                for(int j = 0 ; j <grid[i].length; j ++){
+                    if(i == StartX && j == StartY)
+                        System.out.print("S  ");
+                    else if(i == endX && j == endY)
+                        System.out.print("D  ");
+                    else if (grid[i][j] != null)
+                        System.out.printf("%-3s", grid[i][j].isSolution ? "X" : "0");
+                    else
+                        System.out.print("W  ");
+
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
+        else
+            System.out.println(" No possible path");
     }
 }
