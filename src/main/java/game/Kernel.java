@@ -9,6 +9,9 @@ import static entity.Direction.*;
 
 import game.CollisionEngine.*;
 import ia.IA;
+import ia.RandomAI;
+import ia.SmartAI;
+
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -17,6 +20,8 @@ public class Kernel {
     public CollideBehavior collBeha;
     public OutOfBoardBehavior OOBBeha;
     public ArrayList<IA> ias;
+
+    public SmartAI ia;
     
     public Pacman pacman;
     public ArrayList<Fantom> fantoms;
@@ -39,6 +44,7 @@ public class Kernel {
         pickables = new CopyOnWriteArrayList<>();
         walls = new ArrayList<>();
         ias = new ArrayList<>();
+        ia = new SmartAI();
         
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
@@ -62,6 +68,10 @@ public class Kernel {
         checkNextMove();
 
         pacman.move();
+
+        fantoms.get(0).direction = ia.getMove(this);
+        fantoms.get(0).move();
+
     }
 
     public void collide(){
@@ -120,14 +130,16 @@ public class Kernel {
         if(pacman.nextDirection == STOP) return;
 
         Pacman nextPacman = new Pacman(pacman.getX(), pacman.getY());
-        nextPacman.direction = pacman.nextDirection;      
+        nextPacman.direction = pacman.nextDirection;
         
         for(Wall w : walls){
-            if(engine.isCollide(nextPacman, w)) collBeha.collideMovableWall(nextPacman, w);
+            if(engine.isCollide(nextPacman, w))
+                collBeha.collideMovableWall(nextPacman, w);
         }
 
         if(nextPacman.direction != STOP){
             pacman.nextDirection();
         }
+
     }
 }
