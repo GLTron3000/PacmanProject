@@ -41,7 +41,15 @@ class Astar {
     }
 
     private void addWallOnCell(int i, int j){
-        grid[i][j] = null;
+        for(int a=i;a<i+25;a++){
+            for(int b=j; b<j+25;b++){
+                grid[a][b]=null;
+
+            }
+
+        }
+        //grid[i][j] = null;
+
     }
 
     private void startCell(int i, int j){
@@ -75,7 +83,7 @@ class Astar {
         open.add(grid[StartX][StartY]);
         Cell current; // celulle courante
         boolean goal = false;
-        while (!open.isEmpty() || !goal) {
+        while (!open.isEmpty() && !goal) {
             current = open.poll();
             closed[current.x][current.y] = true;
 
@@ -182,7 +190,7 @@ class Astar {
                     else if(i == endX && j == endY)
                         System.out.print("D  ");
                     else if (grid[i][j] != null)
-                        System.out.printf("%-3s", grid[i][j].isSolution ? "X" : "0");
+                        System.out.printf("%-3s", grid[i][j].isSolution ? "X" : " 0 ");
                     else
                         System.out.print("W  ");
 
