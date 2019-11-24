@@ -52,6 +52,13 @@ public abstract class Movable extends Entity{
     @Override
     public void draw(Canvas canvas) {
         GraphicsContext gc = canvas.getGraphicsContext2D();      
+        
+        if(texture == null){
+            gc.setFill(Color.RED);
+            gc.fillRect(x, y, size, size);
+            return;
+        }  
+        
         int ySource = 0;
         switch (direction){
             case UP: ySource+=size; break;

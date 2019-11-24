@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.paint.Color;
 
 
 
@@ -43,9 +44,10 @@ public class Fruit extends Pickable{
     @Override
     public void draw(Canvas canvas) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.drawImage(texture, x, y, size, size);
-        //gc.setFill(Color.ORANGE);
-        //gc.fillRect(x, y, size, size);
+        if(texture == null){
+            gc.setFill(Color.ORANGE);
+            gc.fillRect(x, y, size, size);
+        }else gc.drawImage(texture, x, y, size, size);    
     }
     
 }

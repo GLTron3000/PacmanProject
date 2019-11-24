@@ -69,8 +69,8 @@ public class Kernel {
 
         pacman.move();
 
-        fantoms.get(0).direction = ia.getMove(this);
-        fantoms.get(0).move();
+        //fantoms.get(0).direction = ia.getMove(this);
+        //fantoms.get(0).move();
 
     }
 

@@ -14,10 +14,10 @@ public class Wall extends Entity {
     @Override
     public void draw(Canvas canvas) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.drawImage(texture, x, y, size, size);
-        
-        gc.setFill(Color.GRAY);
-        gc.fillRect(x, y, size, size);
+        if(texture == null){
+            gc.setFill(Color.GRAY);
+            gc.fillRect(x, y, size, size);
+        }else gc.drawImage(texture, x, y, size, size);        
     }
 
     @Override

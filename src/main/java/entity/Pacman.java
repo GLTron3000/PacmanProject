@@ -9,13 +9,14 @@ public class Pacman extends Movable {
     public Direction nextDirection;
     
     public Pacman(double x, double y) {
-        super(x, y, 0.5);
+        super(x, y, 1);
         initX=x;
         initY=y;
         direction = STOP;
         nextDirection = STOP;
         type="Pacman";
         life = 3;
+        frameNumber = 2;
     }
 
     @Override

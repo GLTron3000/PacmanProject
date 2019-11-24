@@ -187,8 +187,8 @@ public class LevelBuilder {
             
         }
         
-        setWallTexture(levelData);
-        setFantomTextureAndIA(levelData);
+        setWallTexture(walls);
+        setFantomTextureAndIA(fantoms);
         
         levelData.save(pacman, fantoms, pickables, walls, file.getPath());
     }
@@ -228,50 +228,49 @@ public class LevelBuilder {
         if(x != canvas.getWidth()-taille) x+=taille;
     }
     
-    private boolean isThereWallLeft(LevelData levelData, double x, double y){
-        return levelData.walls.stream().anyMatch((wall) -> (wall.getX() == x-wall.getSize() && wall.getY() == y));
+    private boolean isThereWallLeft(ArrayList<Wall> walls, double x, double y){
+        return walls.stream().anyMatch((wall) -> (wall.getX() == x-wall.getSize() && wall.getY() == y));
     }
     
-    private boolean isThereWallRight(LevelData levelData, double x, double y){
-        return levelData.walls.stream().anyMatch((wall) -> (wall.getX() == x+wall.getSize() && wall.getY() == y));
+    private boolean isThereWallRight(ArrayList<Wall> walls, double x, double y){
+        return walls.stream().anyMatch((wall) -> (wall.getX() == x+wall.getSize() && wall.getY() == y));
     }
     
-    private boolean isThereWallUp(LevelData levelData, double x, double y){
-        return levelData.walls.stream().anyMatch((wall) -> (wall.getX() == x && wall.getY() == y+wall.getSize()));
+    private boolean isThereWallUp(ArrayList<Wall> walls, double x, double y){
+        return walls.stream().anyMatch((wall) -> (wall.getX() == x && wall.getY() == y-wall.getSize()));
     }
     
-    private boolean isThereWallDown(LevelData levelData, double x, double y){
-        return levelData.walls.stream().anyMatch((wall) -> (wall.getX() == x && wall.getY() == y-wall.getSize()));
+    private boolean isThereWallDown(ArrayList<Wall> walls, double x, double y){
+        return walls.stream().anyMatch((wall) -> (wall.getX() == x && wall.getY() == y+wall.getSize()));
     }
     
-    private void setWallTexture(LevelData l){
+    private void setWallTexture(ArrayList<Wall> walls){
         
-        l.walls.forEach(wall -> {
+        walls.forEach(wall -> {
             double x = wall.getX();
             double y = wall.getY();
             
             String textureName="a";
             
-            if(isThereWallUp(l, x, y)) textureName += "U";
-            if(isThereWallDown(l, x, y)) textureName += "D";
-            if(isThereWallLeft(l, x, y)) textureName += "L";
-            if(isThereWallRight(l, x, y)) textureName += "R";
+            if(isThereWallUp(walls, x, y)) textureName += "U";
+            if(isThereWallDown(walls, x, y)) textureName += "D";
+            if(isThereWallLeft(walls, x, y)) textureName += "L";
+            if(isThereWallRight(walls, x, y)) textureName += "R";
             
-            System.out.println("wall set "+textureName);
             wall.setTexturePath("assets/Wall/"+textureName+".png");
         });
     }
     
-    private void setFantomTextureAndIA(LevelData levelData){
+    private void setFantomTextureAndIA(ArrayList<Fantom> fantoms){
         int counter = 0;
         
-        for(Fantom fantom : levelData.fantoms){
+        for(Fantom fantom : fantoms){
             switch(counter){
-                case 0: fantom.setTexturePath("assets/Fantome/BlueFull.png");
-                case 1: fantom.setTexturePath("assets/Fantome/OrangeFull.png");
-                case 2: fantom.setTexturePath("assets/Fantome/PinkFull.png");
-                case 3: fantom.setTexturePath("assets/Fantome/RedFull.png");
-                default: fantom.setTexturePath("assets/Fantome/BlueFull.png");
+                case 0: fantom.setTexturePath("assets/Fantome/BlueFull.png"); break;
+                case 1: fantom.setTexturePath("assets/Fantome/OrangeFull.png"); break;
+                case 2: fantom.setTexturePath("assets/Fantome/PinkFull.png"); break;
+                case 3: fantom.setTexturePath("assets/Fantome/RedFull.png"); break;
+                default: fantom.setTexturePath("assets/Fantome/BlueFull.png"); break;
             }
             counter++;
         }
