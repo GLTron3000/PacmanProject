@@ -59,7 +59,7 @@ public class SmartAI implements IA {
         PathToDirection translater = new PathToDirection(cells);
         System.out.println("[SMARTAI] path calculated");
         directions = translater.translate(astar.grid);
-        directions.forEach(directiona -> System.out.println(directiona));
+        directions.forEach(System.out::println);
     }
 
     private int[][] getWall(ArrayList<Wall> walls){
