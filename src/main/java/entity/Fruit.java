@@ -22,7 +22,7 @@ public class Fruit extends Pickable{
     @Override
     public void onPick(Kernel k) {
         for(Fantom f: k.fantoms){
-            f.fState= Fantom.FantomState.KILLABLE;
+            f.setKillable();
         }
         k.pickables.remove(this);
         k.score+=50;
@@ -33,7 +33,7 @@ public class Fruit extends Pickable{
             public void run() {
                 System.out.println("timer");
                 for(Fantom f: k.fantoms){
-                    f.fState= Fantom.FantomState.NORMAL;
+                    f.setNormal();
                 }
                 timer.cancel();
             }

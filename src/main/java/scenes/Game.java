@@ -31,8 +31,9 @@ public class Game {
     Canvas canvas;
     Kernel kernel;
     
-    AnimationTimer animationTimer;
-    Timer gameTimer;
+    AnimationTimer kernelTimer;
+    Timer chronoTimer;
+    Timer animationTimer;
     GraphicsContext gc;
     
     boolean endGame;
@@ -40,8 +41,8 @@ public class Game {
     EventHandler<KeyEvent> keyboardPauseHandler;
     
     private final long[] frameTimes = new long[100];
-    private int frameTimeIndex = 0 ;
-    private boolean arrayFilled = false ;
+    private int frameTimeIndex = 0;
+    private boolean arrayFilled = false;
     
     public Game(SceneController sceneController) {
         endGame = false;
@@ -55,11 +56,13 @@ public class Game {
         keyboardInit();
         sceneController.getScene().addEventFilter(KeyEvent.KEY_PRESSED, keyboardHandler);
         
-        timerInit();
+        kernelTimerInit(); 
         
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         drawAllEntity();
+        
+        animationTimerInit();
     }
 
     public StackPane getNode() {
@@ -68,20 +71,22 @@ public class Game {
     
     public void start(){
         chronoInit();
-        animationTimer.start();
+        kernelTimer.start();
     }
     
     public void pause(){
-        animationTimer.stop();
-        gameTimer.cancel();
+        kernelTimer.stop();
+        chronoTimer.cancel();
+        animationTimer.cancel();
     }
     
     public void stop(){
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getHeight(), canvas.getWidth());
 
-        animationTimer.stop();
-        gameTimer.cancel();
+        kernelTimer.stop();
+        chronoTimer.cancel();
+        animationTimer.cancel();
         sceneController.getScene().removeEventFilter(KeyEvent.KEY_PRESSED, keyboardHandler);
     }
     
@@ -112,8 +117,8 @@ public class Game {
     private void checkState(){
         switch(kernel.gameState){
             case PLAY: break;
-            case GAMEOVER: endGame = true; showEndMessage("GAME OVER"); animationTimer.stop(); gameTimer.cancel(); break;
-            case VICTORY: endGame = true; showEndMessage("VICTOIRE !"); animationTimer.stop(); gameTimer.cancel(); break;
+            case GAMEOVER: endGame = true; showEndMessage("GAME OVER"); kernelTimer.stop(); chronoTimer.cancel(); break;
+            case VICTORY: endGame = true; showEndMessage("VICTOIRE !"); kernelTimer.stop(); chronoTimer.cancel(); break;
             case PAUSE: break;
         }
     }
@@ -266,10 +271,10 @@ public class Game {
         }
     }
 
-    private void timerInit() {
+    private void kernelTimerInit() {
         // ! Provoque une fuite de mémoire
         // Ajouter -Dprism.order=sw
-        animationTimer = new AnimationTimer() {
+        kernelTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 kernel.step();
@@ -278,8 +283,6 @@ public class Game {
                 scoreLabel.setText(""+kernel.score);
                 timerLabel.setText(kernel.timer+" s");
                         
-                drawMovable();
-               
                 checkState();
                 
                 long oldFrameTime = frameTimes[frameTimeIndex] ;
@@ -292,20 +295,37 @@ public class Game {
                     long elapsedNanos = now - oldFrameTime ;
                     long elapsedNanosPerFrame = elapsedNanos / frameTimes.length ;
                     double frameRate = 1_000_000_000.0 / elapsedNanosPerFrame ;
-                    System.out.println(String.format("Current frame rate: %.3f", frameRate));
+                    System.out.println(String.format("%.3f fps", frameRate));
                 }
             }
         };
     }
 
     private void chronoInit() {
-        gameTimer = new Timer();
+        chronoTimer = new Timer();
         
-        gameTimer.scheduleAtFixedRate(new TimerTask() {
+        chronoTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 if(kernel.timer != 0) kernel.timer--;
             }
         }, 1, 1000);
     }
+    
+    private void animationTimerInit() {
+        animationTimer = new Timer();
+        
+        animationTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                drawMovable();
+                
+                //gc.clearRect(0, 0, canvas.getHeight(), canvas.getWidth());
+                //gc.setFill(Color.BLACK);
+                //gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                //drawAllEntity();
+            }
+        }, 1, 50);
+    }
+    
 }

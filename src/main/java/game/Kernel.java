@@ -88,11 +88,11 @@ public class Kernel {
         }
         for(Fantom f: fantoms){
             if(engine.isCollide(pacman,f)){
-                if(f.fState== Fantom.FantomState.NORMAL) {
+                if(f.fState == Fantom.FantomState.NORMAL) {
                     playerCatched();
                 }
                 if(f.fState == Fantom.FantomState.KILLABLE) {
-                    f.fState=Fantom.FantomState.BACKTOLOBBY;
+                    f.setBackToLobby();
                 }
             }
         }

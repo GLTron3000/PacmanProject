@@ -40,17 +40,11 @@ public abstract class Entity {
         return Objects.hash(x, y, size, type);
     }
 
-    public double getX() {
-        return x;
-    }
+    public double getX() { return x; }
 
-    public double getY() {
-        return y;
-    }
+    public double getY() { return y; }
 
-    public double getSize() {
-        return size;
-    }
+    public double getSize() { return size; }
 
     public String getType() { return type; }
 

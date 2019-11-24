@@ -12,6 +12,8 @@ public abstract class Movable extends Entity{
     int frame = 0;
     int frameNumber;
     boolean reverseFrames = false;
+    double lastDrawX;
+    double lastDrawY;
 
     public Movable(double x, double y, double speed) {
         super(x, y);
@@ -39,7 +41,7 @@ public abstract class Movable extends Entity{
         direction = Direction.STOP;
     }
 
-    public void move(){        
+    public void move(){    
         switch (direction){
             case UP: y-=speed; break;
             case DOWN: y+=speed; break;
@@ -76,9 +78,12 @@ public abstract class Movable extends Entity{
         }
 
         gc.setFill(Color.BLACK);
-        gc.fillRect(x, y, size, size);
+        gc.fillRect(lastDrawX, lastDrawY, size, size);
         
         // x_source y_source w_source h_source x_dest y_dest w_dest h_dest
         gc.drawImage(texture, frame*size, ySource, size, size, x, y, size, size);
+        
+        lastDrawX = x;
+        lastDrawY = y;
     }
 }
