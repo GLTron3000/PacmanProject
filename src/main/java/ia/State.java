@@ -19,6 +19,10 @@ public class State {
         f=fantom;
         firstDirection = d;
     }
+    
+    public State(Direction d){
+        firstDirection = d;
+    }
 
     void computeHeuristic(){
         heuristique = Math.abs(p.getX()-f.getX())+Math.abs(p.getY()-f.getY());

@@ -28,6 +28,9 @@ public class Fantom extends Movable {
     public void draw(Canvas canvas) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         
+        gc.setFill(Color.BLACK);
+        gc.fillRect(x, y, size, size);
+        
         if(fState==FantomState.KILLABLE){
             gc.setFill(Color.RED);
             gc.fillRect(x, y, size, size);

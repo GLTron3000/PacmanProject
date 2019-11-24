@@ -163,19 +163,10 @@ public class Game {
         kernel.walls = levelData.walls;
         kernel.pickables = new CopyOnWriteArrayList(levelData.pickables);
         
-        kernel.pacman.loadTexture("assets/Pacman/PacmanFull.png");
-        
-        // ! temporaire
-        kernel.pickables.forEach(pickable -> {
-            if(pickable instanceof Fruit) pickable.loadTexture("assets/Pickable/Fruit.png");
-            else pickable.loadTexture("assets/Pickable/Pacgum.png");
-        });
-        
-        kernel.fantoms.forEach(fantom -> {
-            //fantom.loadTexture("");
-        });
-        
-        loadWallTexture();
+        kernel.pacman.loadTexture();
+        kernel.pickables.forEach(pickable -> pickable.loadTexture());
+        kernel.fantoms.forEach(fantom -> fantom.loadTexture());
+        kernel.walls.forEach(wall -> wall.loadTexture());
     }
     
     private void guiInit(){
@@ -287,17 +278,9 @@ public class Game {
                 scoreLabel.setText(""+kernel.score);
                 timerLabel.setText(kernel.timer+" s");
                         
-                //gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                //gc.setFill(Color.BLACK);
-                //gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                //gc.setStroke(Color.WHITE);
-                //gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                
-                //drawAllEntity();
                 drawMovable();
                
                 checkState();
-                
                 
                 long oldFrameTime = frameTimes[frameTimeIndex] ;
                 frameTimes[frameTimeIndex] = now ;
@@ -324,11 +307,5 @@ public class Game {
                 if(kernel.timer != 0) kernel.timer--;
             }
         }, 1, 1000);
-    }
-    
-    private void loadWallTexture(){
-        for(Wall w : kernel.walls){
-            
-        }
     }
 }

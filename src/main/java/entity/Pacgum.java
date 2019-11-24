@@ -21,7 +21,7 @@ public class Pacgum extends Pickable{
     @Override
     public void draw(Canvas canvas) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.drawImage(image, x, y, size, size);
+        gc.drawImage(texture, x, y, size, size);
         //gc.setFill(Color.WHITE);
         //gc.fillRect(x, y, size, size);
     }
