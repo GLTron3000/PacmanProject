@@ -78,6 +78,9 @@ class Astar {
         }
     }
 
+    private boolean isValid(int x, int y){
+        return grid[x][y] != null;
+    }
 
     Stack<Cell> process() {
         open.add(grid[StartX][StartY]);
