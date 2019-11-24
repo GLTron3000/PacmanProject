@@ -23,69 +23,7 @@ public class RandomAI implements IA {
         this.kernel = kernel;
     }
 
-/*    @Override
-    public Direction getMove(Kernel kernel, Fantom f) {
-
-        this.f = f;
-        if(first==0){
-            first=1;
-            //kernel.fantoms.get(f).direction=UP;
-            return Direction.UP;
-        }
-        else {
-
-            if (first == 1) {
-
-                first = 50;
-                int random = (int) (Math.random() * 2);
-                switch (random) {
-                    case 0:
-                        return Direction.LEFT;
-
-                    case 1:
-                        return Direction.RIGHT;
-
-                    default:
-                        return LEFT;
-                }
-
-            }
-
-            if (f.direction != STOP)
-                return f.direction;
-
-            int random;
-
-            random = (int) (Math.random() * 4);
-            System.out.println(" random : " + random);
-            switch (random) {
-                case 0:
-                    checkNextMove(Direction.UP);
-                    return Direction.UP;
-
-
-                case 1:
-                    checkNextMove(Direction.DOWN);
-                    return Direction.DOWN;
-
-                case 2:
-                    checkNextMove(Direction.LEFT);
-                    return Direction.LEFT;
-
-                case 3:
-                    checkNextMove(Direction.RIGHT);
-                    return Direction.RIGHT;
-
-                case 4:
-                    break;
-            }
-        }
-
-        return Direction.STOP;
-
-    }*/
-
-
+    
     private void checkNextMove(Direction d){
 
         Fantom nextFantom = new Fantom(f.getX(), f.getY(),"test");
@@ -119,8 +57,7 @@ public class RandomAI implements IA {
             if (f.direction != STOP) {
                 return f.direction;
             }
-
-
+            
             if (first == 1) {
 
                 first = 50;
@@ -137,8 +74,7 @@ public class RandomAI implements IA {
                         return LEFT;
                 }
             }
-
-
+            
             Random random = new Random();
             int test = random.nextInt(4);
 
@@ -146,8 +82,7 @@ public class RandomAI implements IA {
                 case 0:
                     checkNextMove(Direction.UP);
                     return Direction.UP;
-
-
+                    
                 case 1:
                     checkNextMove(Direction.DOWN);
                     return Direction.DOWN;
@@ -163,10 +98,7 @@ public class RandomAI implements IA {
                 default:
                     break;
             }
-
         }
-
         return Direction.UP;
-
     }
 }
