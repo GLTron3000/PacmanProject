@@ -53,7 +53,12 @@ public abstract class Movable extends Entity{
     
     @Override
     public void draw(Canvas canvas) {
-        GraphicsContext gc = canvas.getGraphicsContext2D();      
+        GraphicsContext gc = canvas.getGraphicsContext2D();    
+        
+        gc.setFill(Color.BLACK);
+        gc.fillRect(lastDrawX, lastDrawY, size, size);
+        lastDrawX = x;
+        lastDrawY = y;
         
         if(texture == null){
             gc.setFill(Color.RED);
@@ -77,13 +82,7 @@ public abstract class Movable extends Entity{
             else frame++;
         }
 
-        gc.setFill(Color.BLACK);
-        gc.fillRect(lastDrawX, lastDrawY, size, size);
-        
         // x_source y_source w_source h_source x_dest y_dest w_dest h_dest
         gc.drawImage(texture, frame*size, ySource, size, size, x, y, size, size);
-        
-        lastDrawX = x;
-        lastDrawY = y;
     }
 }

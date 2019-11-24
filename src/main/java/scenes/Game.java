@@ -91,15 +91,8 @@ public class Game {
     }
     
     private void drawAllEntity(){
-        kernel.pickables.forEach((entity) -> {
-            entity.draw(canvas);
-        });
-
-        kernel.pacman.draw(canvas);
-
-        kernel.fantoms.forEach((entity) -> {
-            entity.draw(canvas);
-        });
+        drawPickables();
+        drawMovable();
 
         kernel.walls.forEach((entity) -> {
             entity.draw(canvas);
@@ -110,6 +103,12 @@ public class Game {
         kernel.pacman.draw(canvas);
 
         kernel.fantoms.forEach((entity) -> {
+            entity.draw(canvas);
+        });
+    }
+    
+    private void drawPickables(){
+        kernel.pickables.forEach((entity) -> {
             entity.draw(canvas);
         });
     }
@@ -172,6 +171,8 @@ public class Game {
         kernel.pickables.forEach(pickable -> pickable.loadTexture());
         kernel.fantoms.forEach(fantom -> fantom.loadTexture());
         kernel.walls.forEach(wall -> wall.loadTexture());
+        
+        kernel.setFantomIA();
     }
     
     private void guiInit(){
@@ -295,7 +296,7 @@ public class Game {
                     long elapsedNanos = now - oldFrameTime ;
                     long elapsedNanosPerFrame = elapsedNanos / frameTimes.length ;
                     double frameRate = 1_000_000_000.0 / elapsedNanosPerFrame ;
-                    System.out.println(String.format("%.3f fps", frameRate));
+                    //System.out.println(String.format("%.3f fps", frameRate));
                 }
             }
         };
@@ -318,6 +319,7 @@ public class Game {
         animationTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                drawPickables();
                 drawMovable();
                 
                 //gc.clearRect(0, 0, canvas.getHeight(), canvas.getWidth());

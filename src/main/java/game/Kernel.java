@@ -8,7 +8,6 @@ import static game.GameState.*;
 import static entity.Direction.*;
 
 import game.CollisionEngine.*;
-import ia.IA;
 import ia.RandomAI;
 import ia.SmartAI;
 
@@ -19,9 +18,6 @@ public class Kernel {
     public Engine engine;
     public CollideBehavior collBeha;
     public OutOfBoardBehavior OOBBeha;
-    public ArrayList<IA> ias;
-
-    public SmartAI ia;
     
     public Pacman pacman;
     public ArrayList<Fantom> fantoms;
@@ -43,8 +39,6 @@ public class Kernel {
         fantoms = new ArrayList<>();
         pickables = new CopyOnWriteArrayList<>();
         walls = new ArrayList<>();
-        ias = new ArrayList<>();
-        ia = new SmartAI();
         
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
@@ -68,10 +62,8 @@ public class Kernel {
         checkNextMove();
 
         pacman.move();
-
-        //fantoms.get(0).direction = ia.getMove(this);
-        //fantoms.get(0).move();
-
+        
+        moveFantoms();
     }
 
     public void collide(){
@@ -141,5 +133,24 @@ public class Kernel {
             pacman.nextDirection();
         }
 
+    }
+    
+    private void moveFantoms(){
+        fantoms.forEach(fantom -> {
+            fantom.computeMove(this);
+            fantom.move();
+        });
+    }
+    
+    public void setFantomIA(){
+        int counter = 0;
+        for(Fantom fantom : fantoms){
+            switch(counter){
+                case 0: fantom.setIA(new SmartAI()); break;
+                case 1: fantom.setIA(new RandomAI()); break;
+                default: fantom.setIA(new RandomAI()); break;
+            }
+            //counter++;
+        }
     }
 }

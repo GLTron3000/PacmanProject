@@ -47,7 +47,11 @@ public class Fruit extends Pickable{
         if(texture == null){
             gc.setFill(Color.ORANGE);
             gc.fillRect(x, y, size, size);
-        }else gc.drawImage(texture, x, y, size, size);    
+        }else{
+            gc.setFill(Color.BLACK);
+            gc.fillRect(x, y, size, size);
+            gc.drawImage(texture, x, y, size, size);
+        }    
     }
     
 }

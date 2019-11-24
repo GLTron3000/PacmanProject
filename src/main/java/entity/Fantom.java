@@ -1,6 +1,8 @@
 package entity;
 
 import static entity.Fantom.FantomState.NORMAL;
+import game.Kernel;
+import ia.IA;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Objects;
@@ -17,13 +19,14 @@ public class Fantom extends Movable {
     public double initY;
     Image textureKillable;
     Image textureBackToLobby;
+    IA ia;
 
     public enum FantomState{NORMAL, KILLABLE, BACKTOLOBBY}
 
     public FantomState fState;
 
     public Fantom(double x, double y, String name) {
-        super(x, y, 5);
+        super(x, y, 1);
         initX=x;
         initY=y;
         type="Fantom";
@@ -49,7 +52,15 @@ public class Fantom extends Movable {
         frame = 0;
         reverseFrames = false;
     }
-
+    
+    public void setIA(IA ia){
+        this.ia = ia;
+    }
+    
+    public void computeMove(Kernel kernel){
+        direction = ia.getMove(kernel, this);
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,7 +91,12 @@ public class Fantom extends Movable {
     }
     
     private void drawKillable(Canvas canvas) {
-        GraphicsContext gc = canvas.getGraphicsContext2D();      
+        GraphicsContext gc = canvas.getGraphicsContext2D();   
+        
+        gc.setFill(Color.BLACK);
+        gc.fillRect(lastDrawX, lastDrawY, size, size);
+        lastDrawX = x;
+        lastDrawY = y;
         
         if(textureKillable == null){
             gc.setFill(Color.WHITE);
@@ -95,16 +111,18 @@ public class Fantom extends Movable {
             if(frame == 3) reverseFrames = true;
             else frame++;
         }
-
-        gc.setFill(Color.BLACK);
-        gc.fillRect(lastDrawX, lastDrawY, size, size);
         
         // x_source y_source w_source h_source x_dest y_dest w_dest h_dest
         gc.drawImage(textureKillable, frame*size, 0, size, size, x, y, size, size);
     }
     
     private void drawBackToLobby(Canvas canvas) {
-        GraphicsContext gc = canvas.getGraphicsContext2D();      
+        GraphicsContext gc = canvas.getGraphicsContext2D(); 
+        
+        gc.setFill(Color.BLACK);
+        gc.fillRect(lastDrawX, lastDrawY, size, size);
+        lastDrawX = x;
+        lastDrawY = y;
         
         if(textureBackToLobby == null){
             gc.setFill(Color.DARKBLUE);
@@ -112,13 +130,7 @@ public class Fantom extends Movable {
             return;
         }  
 
-        gc.setFill(Color.BLACK);
-        gc.fillRect(lastDrawX, lastDrawY, size, size);
-
         gc.drawImage(textureBackToLobby, x, y, size, size);
-        
-        lastDrawX = x;
-        lastDrawY = y;
     }
     
     @Override
