@@ -1,11 +1,12 @@
 package ia;
 
 import entity.Direction;
+import entity.Fantom;
 import game.Kernel;
 
 public class RandomAI implements IA {
     @Override
-    public Direction getMove(Kernel kernel) {
+    public Direction getMove(Kernel kernel, Fantom fantom) {
         Direction direction;
         int random;
         for (; ;) {

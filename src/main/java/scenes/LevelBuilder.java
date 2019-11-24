@@ -74,29 +74,24 @@ public class LevelBuilder {
         
         entities = new ArrayList<>();
         
-        keyboardHandler = new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent ke) {
-                                
-                switch (ke.getCode()){
-                    case UP: moveUp(); break;
-                    case DOWN: moveDown(); break;
-                    case LEFT: moveLeft(); break;
-                    case RIGHT: moveRight(); break;
-                    case ESCAPE: sceneController.showMainMenu(); break;
-                    case ENTER: writeLevel(); break;
-                    case F: if(!checkEntityPresence()) entities.add(new Fantom(x, y, fantomCounter+"")); fantomCounter++; break;
-                    case P: if(!checkEntityPresence()) entities.add(new Pacman(x, y)); break;
-                    case W: if(!checkEntityPresence()) entities.add(new Wall(x, y)); break;
-                    case R: if(!checkEntityPresence()) entities.add(new Fruit(x+pickableOffset, y+pickableOffset)); break;
-                    case G: if(!checkEntityPresence()) entities.add(new Pacgum(x+pickableOffset, y+pickableOffset)); break;
-                    case L: loadLevel(); break;
-                    case D: deleteEntity(); break;
-                    default: break;
-                }
-                ke.consume();
-                
-
+        keyboardHandler = (KeyEvent ke) -> {
+            switch (ke.getCode()){
+                case UP: moveUp(); break;
+                case DOWN: moveDown(); break;
+                case LEFT: moveLeft(); break;
+                case RIGHT: moveRight(); break;
+                case ESCAPE: sceneController.showMainMenu(); break;
+                case ENTER: writeLevel(); break;
+                case F: if(!checkEntityPresence()) entities.add(new Fantom(x, y, fantomCounter+"")); fantomCounter++; break;
+                case P: if(!checkEntityPresence()) entities.add(new Pacman(x, y)); break;
+                case W: if(!checkEntityPresence()) entities.add(new Wall(x, y)); break;
+                case R: if(!checkEntityPresence()) entities.add(new Fruit(x+pickableOffset, y+pickableOffset)); break;
+                case G: if(!checkEntityPresence()) entities.add(new Pacgum(x+pickableOffset, y+pickableOffset)); break;
+                case L: loadLevel(); break;
+                case D: deleteEntity(); break;
+                default: break;
             }
+            ke.consume();
         };
                 
         sceneController.getScene().addEventFilter(KeyEvent.KEY_PRESSED, keyboardHandler);
@@ -176,11 +171,24 @@ public class LevelBuilder {
         ArrayList<Wall> walls = new ArrayList<>();
         
         for(Entity entity : entities){
-            if(entity instanceof Pacman) pacman = (Pacman) entity;
+            if(entity instanceof Pacman){
+                entity.setTexturePath("assets/Pacman/PacmanFull.png");
+                pacman = (Pacman) entity;
+            }
+            else if(entity instanceof Fruit){
+                entity.setTexturePath("assets/Pickable/Fruit.png");
+                pickables.add((Pickable) entity);
+            }else if(entity instanceof Pacgum){
+                entity.setTexturePath("assets/Pickable/Pacgum.png");
+                pickables.add((Pickable) entity);
+            }
             else if(entity instanceof Fantom) fantoms.add((Fantom) entity);
             else if(entity instanceof Wall) walls.add((Wall) entity);
-            else if(entity instanceof Pickable) pickables.add((Pickable) entity);
+            
         }
+        
+        setWallTexture(walls);
+        setFantomTextureAndIA(fantoms);
         
         levelData.save(pacman, fantoms, pickables, walls, file.getPath());
     }
@@ -219,5 +227,52 @@ public class LevelBuilder {
     void moveRight(){
         if(x != canvas.getWidth()-taille) x+=taille;
     }
-
+    
+    private boolean isThereWallLeft(ArrayList<Wall> walls, double x, double y){
+        return walls.stream().anyMatch((wall) -> (wall.getX() == x-wall.getSize() && wall.getY() == y));
+    }
+    
+    private boolean isThereWallRight(ArrayList<Wall> walls, double x, double y){
+        return walls.stream().anyMatch((wall) -> (wall.getX() == x+wall.getSize() && wall.getY() == y));
+    }
+    
+    private boolean isThereWallUp(ArrayList<Wall> walls, double x, double y){
+        return walls.stream().anyMatch((wall) -> (wall.getX() == x && wall.getY() == y-wall.getSize()));
+    }
+    
+    private boolean isThereWallDown(ArrayList<Wall> walls, double x, double y){
+        return walls.stream().anyMatch((wall) -> (wall.getX() == x && wall.getY() == y+wall.getSize()));
+    }
+    
+    private void setWallTexture(ArrayList<Wall> walls){
+        
+        walls.forEach(wall -> {
+            double x = wall.getX();
+            double y = wall.getY();
+            
+            String textureName="a";
+            
+            if(isThereWallUp(walls, x, y)) textureName += "U";
+            if(isThereWallDown(walls, x, y)) textureName += "D";
+            if(isThereWallLeft(walls, x, y)) textureName += "L";
+            if(isThereWallRight(walls, x, y)) textureName += "R";
+            
+            wall.setTexturePath("assets/Wall/"+textureName+".png");
+        });
+    }
+    
+    private void setFantomTextureAndIA(ArrayList<Fantom> fantoms){
+        int counter = 0;
+        
+        for(Fantom fantom : fantoms){
+            switch(counter){
+                case 0: fantom.setTexturePath("assets/Fantome/BlueFull.png"); break;
+                case 1: fantom.setTexturePath("assets/Fantome/OrangeFull.png"); break;
+                case 2: fantom.setTexturePath("assets/Fantome/PinkFull.png"); break;
+                case 3: fantom.setTexturePath("assets/Fantome/RedFull.png"); break;
+                default: fantom.setTexturePath("assets/Fantome/BlueFull.png"); break;
+            }
+            counter++;
+        }
+    }
 }
