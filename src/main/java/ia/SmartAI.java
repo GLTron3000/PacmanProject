@@ -8,6 +8,7 @@ import game.Kernel;
 
 import java.util.ArrayList;
 
+import java.util.List;
 import java.util.Stack;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -62,7 +63,7 @@ public class SmartAI implements IA {
         directions.forEach(System.out::println);
     }
 
-    private int[][] getWall(ArrayList<Wall> walls){
+    private int[][] getWall(List<Wall> walls){
         int[][] wall = new int[walls.size()][2];
         int i = 0;
         for (Wall w: walls) {

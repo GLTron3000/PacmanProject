@@ -8,19 +8,24 @@ import javafx.scene.paint.Color;
 
 public abstract class Movable extends Entity{
     public Direction direction;
-    double speed;
+    public double speed;
     int frame = 0;
     int frameNumber;
     boolean reverseFrames = false;
     double lastDrawX;
     double lastDrawY;
+    public double initX;
+    public double initY;
+
 
     public Movable(double x, double y, double speed) {
         super(x, y);
+        initX=x;
+        initY=y;
         direction = STOP;
         this.speed = speed;
     }
-    
+
     public void goUp(){
         direction = Direction.UP;
     }
@@ -50,7 +55,12 @@ public abstract class Movable extends Entity{
             default: break;
         }
     }
-    
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+
     @Override
     public void draw(Canvas canvas) {
         GraphicsContext gc = canvas.getGraphicsContext2D();    

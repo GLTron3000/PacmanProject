@@ -1,6 +1,5 @@
 package entity;
 
-import static entity.Fantom.FantomState.NORMAL;
 import game.Kernel;
 import ia.IA;
 import java.io.FileInputStream;
@@ -13,17 +12,19 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
-public class Fantom extends Movable {
+public class Fantom extends MovableFantom {
     String name;
-    public double initX;
-    public double initY;
     Image textureKillable;
     Image textureBackToLobby;
     IA ia;
 
     public enum FantomState{NORMAL, KILLABLE, BACKTOLOBBY}
 
-    public FantomState fState;
+    private FantomState fState;
+
+    public FantomState getState() {
+        return fState;
+    }
 
     public Fantom(double x, double y, String name) {
         super(x, y, 1);

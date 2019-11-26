@@ -1,6 +1,7 @@
 package scenes;
 
 import JSON.LevelData;
+
 import entity.Fruit;
 import entity.Wall;
 import game.Kernel;
@@ -163,7 +164,7 @@ public class Game {
         levelData.load("level1.pml");
 
         kernel.pacman = levelData.pacman;
-        kernel.fantoms = levelData.fantoms;
+        kernel.fantoms = new CopyOnWriteArrayList(levelData.fantoms);
         kernel.walls = levelData.walls;
         kernel.pickables = new CopyOnWriteArrayList(levelData.pickables);
         

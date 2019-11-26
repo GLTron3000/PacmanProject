@@ -4,8 +4,7 @@ import static entity.Direction.*;
 
 public class Pacman extends Movable {
     public int life;
-    public double initX;
-    public double initY;
+
     public Direction nextDirection;
     
     public Pacman(double x, double y) {

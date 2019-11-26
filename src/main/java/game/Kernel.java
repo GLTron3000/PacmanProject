@@ -1,17 +1,17 @@
 package game;
 
-import entity.Fantom;
-import entity.Pacman;
-import entity.Pickable;
-import entity.Wall;
+import entity.*;
+
 import static game.GameState.*;
 import static entity.Direction.*;
 
+import entity.MovableFantom;
 import game.CollisionEngine.*;
 import ia.RandomAI;
 import ia.SmartAI;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Kernel {
@@ -20,9 +20,9 @@ public class Kernel {
     public OutOfBoardBehavior OOBBeha;
     
     public Pacman pacman;
-    public ArrayList<Fantom> fantoms;
+    public CopyOnWriteArrayList<MovableFantom> fantoms;
     public CopyOnWriteArrayList<Pickable> pickables;
-    public ArrayList<Wall> walls;
+    public List<Wall> walls;
     
     public GameState gameState;
     
@@ -36,7 +36,7 @@ public class Kernel {
         engine = new CollisionEngineRectangle();
         collBeha=new CollideBehaviorClassic();
         OOBBeha= new OutOfBoardWrapper(canvasHeight,canvasWidth);
-        fantoms = new ArrayList<>();
+        fantoms = new CopyOnWriteArrayList<>();
         pickables = new CopyOnWriteArrayList<>();
         walls = new ArrayList<>();
         
@@ -68,7 +68,7 @@ public class Kernel {
 
     public void collide(){
         for(Wall w :walls ){
-            for(Fantom f :fantoms ){
+            for(Movable f :fantoms ){
                 if(engine.isCollide(w,f)){
                     f.stop();
                 }
@@ -78,12 +78,12 @@ public class Kernel {
                 collBeha.collideMovableWall(pacman,w);
             }
         }
-        for(Fantom f: fantoms){
+        for(MovableFantom f: fantoms){
             if(engine.isCollide(pacman,f)){
-                if(f.fState == Fantom.FantomState.NORMAL) {
+                if(f.getState() == Fantom.FantomState.NORMAL) {
                     playerCatched();
                 }
-                if(f.fState == Fantom.FantomState.KILLABLE) {
+                if(f.getState() == Fantom.FantomState.KILLABLE) {
                     f.setBackToLobby();
                 }
             }
@@ -107,7 +107,7 @@ public class Kernel {
         pacman.setY(pacman.initY);
 
         //renvoie les fantômes à leur position initiale
-        for (Fantom p : fantoms) {
+        for (Movable p : fantoms) {
             p.setX(p.initX);
             p.setY(p.initY);
         }
@@ -144,11 +144,11 @@ public class Kernel {
     
     public void setFantomIA(){
         int counter = 0;
-        for(Fantom fantom : fantoms){
+        for(MovableFantom fantom : fantoms){
             switch(counter){
                 case 0: fantom.setIA(new SmartAI()); break;
-                case 1: fantom.setIA(new RandomAI()); break;
-                default: fantom.setIA(new RandomAI()); break;
+                case 1: fantom.setIA(new RandomAI(this)); break;
+                default: fantom.setIA(new RandomAI(this)); break;
             }
             //counter++;
         }

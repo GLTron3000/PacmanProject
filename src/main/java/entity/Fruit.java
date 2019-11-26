@@ -1,10 +1,9 @@
 package entity;
 
+import entity.Decorator.FantomKillable;
 import game.Kernel;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.util.Timer;
-import java.util.TimerTask;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
@@ -21,23 +20,13 @@ public class Fruit extends Pickable{
 
     @Override
     public void onPick(Kernel k) {
-        for(Fantom f: k.fantoms){
+        for(MovableFantom f: k.fantoms){
             f.setKillable();
+            k.fantoms.remove(f);
+            k.fantoms.add(new FantomKillable(f));
         }
         k.pickables.remove(this);
         k.score+=50;
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                System.out.println("timer");
-                for(Fantom f: k.fantoms){
-                    f.setNormal();
-                }
-                timer.cancel();
-            }
-        },Fruit.buffDuration);
     }
 
 
