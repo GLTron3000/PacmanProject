@@ -19,7 +19,7 @@ public class Kernel {
     public CollideBehavior collBeha;
     public OutOfBoardBehavior OOBBeha;
     
-    public Pacman pacman;
+    public MovablePacman pacman;
     public CopyOnWriteArrayList<MovableFantom> fantoms;
     public CopyOnWriteArrayList<Pickable> pickables;
     public List<Wall> walls;
@@ -97,9 +97,9 @@ public class Kernel {
     
     private void playerCatched(){
         timer = 120;
-        pacman.life -= 1;
+        pacman.setLife(pacman.getLife()-1);
         pacman.stop();
-        if (pacman.life == 0) {
+        if (pacman.getLife() == 0) {
             gameState = GAMEOVER;
         }
         //renvoie pacman à sa position initiale
@@ -119,10 +119,10 @@ public class Kernel {
     }
 
     private void checkNextMove(){
-        if(pacman.nextDirection == STOP) return;
+        if(pacman.getNextDirection() == STOP) return;
 
         Pacman nextPacman = new Pacman(pacman.getX(), pacman.getY());
-        nextPacman.direction = pacman.nextDirection;
+        nextPacman.setNextDirection(pacman.getNextDirection());
         
         for(Wall w : walls){
             if(engine.isCollide(nextPacman, w))

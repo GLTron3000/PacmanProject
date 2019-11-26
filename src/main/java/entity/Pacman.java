@@ -2,7 +2,7 @@ package entity;
 
 import static entity.Direction.*;
 
-public class Pacman extends Movable {
+public class Pacman extends MovablePacman {
     public int life;
 
     public Direction nextDirection;
@@ -47,7 +47,23 @@ public class Pacman extends Movable {
     public void goRight(){
         nextDirection = RIGHT;
     }
-    
+
+    public int getLife() {
+        return life;
+    }
+
+    public Direction getNextDirection() {
+        return nextDirection;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    public void setNextDirection(Direction nextDirection) {
+        this.nextDirection = nextDirection;
+    }
+
     public void nextDirection(){
         direction = nextDirection;
         nextDirection = STOP;

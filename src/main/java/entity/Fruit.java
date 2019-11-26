@@ -1,6 +1,6 @@
 package entity;
 
-import entity.Decorator.FantomKillable;
+import entity.Decorator.Fantom.FantomKillable;
 import game.Kernel;
 import javafx.scene.canvas.GraphicsContext;
 

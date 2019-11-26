@@ -1,4 +1,4 @@
-package entity.Decorator;
+package entity.Decorator.Fantom;
 
 import entity.Direction;
 import entity.Fantom;
@@ -9,7 +9,7 @@ public abstract class FantomDecorator extends MovableFantom {
     protected MovableFantom movableFantom;
 
     public FantomDecorator(MovableFantom fantom) {
-        super(fantom.getX(),fantom.getY(),fantom.speed);
+        super(fantom.getX(),fantom.getY(),fantom.getSpeed());
         super.initX=fantom.initX;
         super.initY=fantom.initY;
         this.movableFantom = fantom;
@@ -28,8 +28,13 @@ public abstract class FantomDecorator extends MovableFantom {
     @Override
     public abstract double getY();
     @Override
+    public abstract double getSpeed();
+    @Override
+    public abstract double getSize();
+    @Override
     public abstract void setX(double x);
     @Override
     public abstract void setY(double y);
+
 
 }

@@ -60,6 +60,9 @@ public abstract class Movable extends Entity{
         return direction;
     }
 
+    public double getSpeed() {
+        return speed;
+    }
 
     @Override
     public void draw(Canvas canvas) {

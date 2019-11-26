@@ -1,4 +1,4 @@
-package entity.Decorator;
+package entity.Decorator.Fantom;
 
 import entity.Direction;
 import entity.Fantom;
@@ -77,6 +77,16 @@ public class FantomKillable extends FantomDecorator {
     @Override
     public double getY() {
         return movableFantom.getY();
+    }
+
+    @Override
+    public double getSpeed() {
+        return movableFantom.getSpeed();
+    }
+
+    @Override
+    public double getSize() {
+        return movableFantom.getSize();
     }
 
     @Override
