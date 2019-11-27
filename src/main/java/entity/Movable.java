@@ -58,6 +58,11 @@ public abstract class Movable extends Entity{
         }
     }
 
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
     public Direction getDirection() {
         return direction;
     }

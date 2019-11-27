@@ -101,6 +101,11 @@ public class PacmanWallBreacher extends PacmanDecorator{
     }
 
     @Override
+    public void setDirection(Direction direction) {
+        movablePacman.setDirection(direction);
+    }
+
+    @Override
     public void nextDirection() {
         movablePacman.nextDirection();
     }

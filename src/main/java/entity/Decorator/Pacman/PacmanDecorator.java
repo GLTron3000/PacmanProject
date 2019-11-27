@@ -39,5 +39,7 @@ public abstract class PacmanDecorator extends MovablePacman {
 
     public abstract void setNextDirection(Direction nextDirection);
 
+    public abstract void setDirection(Direction direction);
+
     public abstract void nextDirection();
 }

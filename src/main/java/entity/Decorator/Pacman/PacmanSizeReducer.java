@@ -5,6 +5,7 @@ import game.Kernel;
 import javafx.scene.canvas.Canvas;
 
 import static entity.Direction.STOP;
+import static java.lang.Math.round;
 
 public class PacmanSizeReducer extends PacmanDecorator {
     final double originalSize;
@@ -19,7 +20,24 @@ public class PacmanSizeReducer extends PacmanDecorator {
 // changed behavior
     @Override
     public double getSize() {
-        return reducedSize;
+        return round(reducedSize+0.5);
+    }
+
+    @Override
+    public void checkNextMove(Kernel k) {
+        if(getNextDirection() == STOP) return;
+
+        PacmanSizeReducer nextPacman = new PacmanSizeReducer(movablePacman);
+        nextPacman.size = getSize();
+        nextPacman.setDirection(getNextDirection());
+
+        for(Wall w : k.walls){
+            if(k.engine.isCollide(nextPacman, w)) k.collBeha.collideMovableWall(nextPacman, w);
+        }
+
+        if(nextPacman.getDirection() != STOP){
+            nextDirection();
+        }
     }
 
 // No change, here for consistency
@@ -81,6 +99,11 @@ public class PacmanSizeReducer extends PacmanDecorator {
     }
 
     @Override
+    public void setDirection(Direction direction) {
+        movablePacman.setDirection(direction);
+    }
+
+    @Override
     public void nextDirection() {
         movablePacman.nextDirection();
     }
@@ -125,19 +148,5 @@ public class PacmanSizeReducer extends PacmanDecorator {
         movablePacman.stop();
     }
 
-    @Override
-    public void checkNextMove(Kernel k) {
-        if(getNextDirection() == STOP) return;
 
-        PacmanSizeReducer nextPacman = new PacmanSizeReducer(movablePacman);
-        nextPacman.size = getSize();
-        nextPacman.direction = getNextDirection();
-
-        for(Wall w : k.walls){
-            if(k.engine.isCollide(nextPacman, w)) k.collBeha.collideMovableWall(nextPacman, w);
-        }
-
-        if(nextPacman.getDirection() != STOP) nextDirection();
-        movablePacman.checkNextMove(k);
-    }
 }
