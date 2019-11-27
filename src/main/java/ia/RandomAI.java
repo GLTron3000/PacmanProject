@@ -23,7 +23,7 @@ public class RandomAI implements IA {
         this.kernel = kernel;
     }
 
-    
+
     private void checkNextMove(Direction d){
 
         Fantom nextFantom = new Fantom(f.getX(), f.getY(),"test");
@@ -46,21 +46,35 @@ public class RandomAI implements IA {
     public Direction getMove(Kernel kernel, Fantom fantom) {
 
         this.f = fantom;
+
+        //Le fantome cherche à sortir de l'enclos pour le premier niveau
         if(first==0){
-            first=1;
-            System.out.println("FIRST");
-            //kernel.fantoms.get(f).direction=UP;
-            return Direction.UP;
+            //Si le fantome est trop à droite
+            if(fantom.getX()<340){
+                return Direction.RIGHT;
+            }
+            //Si le fantome est trop à gauche
+            if(fantom.getX()>360){
+                return Direction.LEFT;
+            }
+            //Si le fantome est positionné en dessous de la sortie
+            if(fantom.getX()>340 && fantom.getX()<360) {
+
+                first = 1;
+                System.out.println("FIRST");
+                return Direction.UP;
+            }
         }
         else {
 
             if (f.direction != STOP) {
                 return f.direction;
             }
-            
+
+            //Le fantome va vers la haut pour sortir de l'enclos et part a droite ou à gauche
             if (first == 1) {
 
-                first = 50;
+                first = 2;
                 Random random = new Random();
                 int test = random.nextInt(2);
                 switch (test) {
@@ -74,7 +88,9 @@ public class RandomAI implements IA {
                         return LEFT;
                 }
             }
-            
+
+
+            //Le fantome n'est plus dans l'enclos et à une direction aléatoire
             Random random = new Random();
             int test = random.nextInt(4);
 
@@ -82,7 +98,8 @@ public class RandomAI implements IA {
                 case 0:
                     checkNextMove(Direction.UP);
                     return Direction.UP;
-                    
+
+
                 case 1:
                     checkNextMove(Direction.DOWN);
                     return Direction.DOWN;
@@ -98,7 +115,11 @@ public class RandomAI implements IA {
                 default:
                     break;
             }
+
         }
+
         return Direction.UP;
+
+
     }
 }
