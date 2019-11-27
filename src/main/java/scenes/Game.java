@@ -281,7 +281,7 @@ public class Game {
             public void handle(long now) {
                 kernel.step();
                 
-                lifeLabel.setText(kernel.pacman.life+" vies");
+                lifeLabel.setText(kernel.pacman.getLife()+" vies");
                 scoreLabel.setText(""+kernel.score);
                 timerLabel.setText(kernel.timer+" s");
                         
@@ -322,7 +322,6 @@ public class Game {
             public void run() {
                 drawPickables();
                 drawMovable();
-                
                 //gc.clearRect(0, 0, canvas.getHeight(), canvas.getWidth());
                 //gc.setFill(Color.BLACK);
                 //gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());

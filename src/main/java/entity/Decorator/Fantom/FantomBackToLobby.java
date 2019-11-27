@@ -8,27 +8,27 @@ import game.Kernel;
 import ia.IA;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import javafx.scene.canvas.Canvas;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
-public class FantomKillable extends FantomDecorator {
-
-    private Image textureKillable;
-
-    public FantomKillable(MovableFantom fantom) {
-        super(fantom);        
+public class FantomBackToLobby extends FantomDecorator  {
+    
+    private Image textureBackToLobby;
+    
+    public FantomBackToLobby(MovableFantom fantom) {
+        super(fantom);
+        
         try {
-            textureKillable = new Image(new FileInputStream("assets/Fantome/KillableFull.png"));
+            textureBackToLobby = new Image(new FileInputStream("assets/Fantome/BackToLobby.png"));
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     @Override
     public void setIA(IA ia) {
         movableFantom.setIA(ia);
@@ -41,39 +41,25 @@ public class FantomKillable extends FantomDecorator {
 
     @Override
     public Fantom.FantomState getState() {
-        return Fantom.FantomState.KILLABLE;
+        return Fantom.FantomState.BACKTOLOBBY;
     }
 
     @Override
     public void draw(Canvas canvas) {
-        GraphicsContext gc = canvas.getGraphicsContext2D();   
+        GraphicsContext gc = canvas.getGraphicsContext2D(); 
         
         gc.setFill(Color.BLACK);
         gc.fillRect(movableFantom.lastDrawX, movableFantom.lastDrawY, movableFantom.size, movableFantom.size);
         movableFantom.lastDrawX = movableFantom.x;
         movableFantom.lastDrawY = movableFantom.y;
         
-        if(textureKillable == null){
-            gc.setFill(Color.WHITE);
+        if(textureBackToLobby == null){
+            gc.setFill(Color.DARKBLUE);
             gc.fillRect(movableFantom.x, movableFantom.y, movableFantom.size, movableFantom.size);
             return;
         }  
 
-        if(reverseFrames){
-            if(frame == 0) reverseFrames = false;
-            else frame--;
-        }else{
-            if(frame == 3) reverseFrames = true;
-            else frame++;
-        }
-        
-        // x_source y_source w_source h_source x_dest y_dest w_dest h_dest
-        gc.drawImage(textureKillable, frame*movableFantom.textureSize, 0, movableFantom.textureSize, movableFantom.textureSize, movableFantom.x, movableFantom.y, movableFantom.size, movableFantom.size);
-    }
-    
-    @Override
-    public void loadTexture(){
-        
+        gc.drawImage(textureBackToLobby, movableFantom.x, movableFantom.y, movableFantom.size, movableFantom.size);
     }
 
     @Override
@@ -115,7 +101,7 @@ public class FantomKillable extends FantomDecorator {
     public void setY(double y) {
         movableFantom.setY(y);
     }
-
+    
     @Override
     public MovableFantom removeDecorator() {
         return movableFantom.removeDecorator();

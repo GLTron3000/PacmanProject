@@ -9,11 +9,12 @@ import javafx.scene.paint.Color;
 public abstract class Movable extends Entity{
     public Direction direction;
     public double speed;
-    int frame = 0;
-    int frameNumber;
-    boolean reverseFrames = false;
-    double lastDrawX;
-    double lastDrawY;
+    public double textureSize;
+    public int frame = 0;
+    public int frameNumber;
+    public boolean reverseFrames = false;
+    public double lastDrawX;
+    public double lastDrawY;
     public double initX;
     public double initY;
 
@@ -81,9 +82,9 @@ public abstract class Movable extends Entity{
         
         int ySource = 0;
         switch (direction){
-            case UP: ySource+=size; break;
-            case DOWN: ySource+=3*size; break;
-            case LEFT: ySource+=2*size; break;
+            case UP: ySource+=textureSize; break;
+            case DOWN: ySource+=3*textureSize; break;
+            case LEFT: ySource+=2*textureSize; break;
             default: break;
         }
 
@@ -96,6 +97,6 @@ public abstract class Movable extends Entity{
         }
 
         // x_source y_source w_source h_source x_dest y_dest w_dest h_dest
-        gc.drawImage(texture, frame*size, ySource, size, size, x, y, size, size);
+        gc.drawImage(texture, frame*textureSize, ySource, textureSize, textureSize, x, y, size, size);
     }
 }

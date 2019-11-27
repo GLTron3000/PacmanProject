@@ -16,6 +16,7 @@ public class Pacman extends MovablePacman {
         type="Pacman";
         life = 3;
         frameNumber = 2;
+        textureSize = 25;
     }
 
     @Override
@@ -48,22 +49,27 @@ public class Pacman extends MovablePacman {
         nextDirection = RIGHT;
     }
 
+    @Override
     public int getLife() {
         return life;
     }
 
+    @Override
     public Direction getNextDirection() {
         return nextDirection;
     }
 
+    @Override
     public void setLife(int life) {
         this.life = life;
     }
 
+    @Override
     public void setNextDirection(Direction nextDirection) {
         this.nextDirection = nextDirection;
     }
-
+    
+    @Override
     public void nextDirection(){
         direction = nextDirection;
         nextDirection = STOP;

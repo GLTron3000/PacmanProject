@@ -1,11 +1,11 @@
 package game;
 
 import entity.*;
+import entity.Decorator.Fantom.FantomBackToLobby;
 
 import static game.GameState.*;
 import static entity.Direction.*;
 
-import entity.MovableFantom;
 import game.CollisionEngine.*;
 import ia.RandomAI;
 import ia.SmartAI;
@@ -52,9 +52,8 @@ public class Kernel {
     
 
     public void step(){
-        
         if(engine.outOfBoard(pacman , canvasHeight, canvasWidth)) OOBBeha.behavior(pacman);
-        
+
         collide();
         
         checkVictory();
@@ -84,7 +83,8 @@ public class Kernel {
                     playerCatched();
                 }
                 if(f.getState() == Fantom.FantomState.KILLABLE) {
-                    f.setBackToLobby();
+                    System.out.println("kill");
+                    fantomCatched(f);
                 }
             }
         }
@@ -113,6 +113,11 @@ public class Kernel {
         }
     }
     
+    private void fantomCatched(MovableFantom f) {
+        fantoms.remove(f);
+        fantoms.add(new FantomBackToLobby(f.removeDecorator()));
+    }
+    
     private void checkVictory(){
         if(timer <= 0) playerCatched();
         if(pickables.isEmpty()) gameState = VICTORY;
@@ -122,17 +127,13 @@ public class Kernel {
         if(pacman.getNextDirection() == STOP) return;
 
         Pacman nextPacman = new Pacman(pacman.getX(), pacman.getY());
-        nextPacman.setNextDirection(pacman.getNextDirection());
+        nextPacman.direction = pacman.getNextDirection();
         
         for(Wall w : walls){
-            if(engine.isCollide(nextPacman, w))
-                collBeha.collideMovableWall(nextPacman, w);
+            if(engine.isCollide(nextPacman, w)) collBeha.collideMovableWall(nextPacman, w);
         }
 
-        if(nextPacman.direction != STOP){
-            pacman.nextDirection();
-        }
-
+        if(nextPacman.direction != STOP) pacman.nextDirection();
     }
     
     private void moveFantoms(){
@@ -152,5 +153,6 @@ public class Kernel {
             }
             //counter++;
         }
-    }
+    }   
+
 }

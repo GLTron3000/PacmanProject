@@ -54,13 +54,13 @@ public class SmartAI implements IA {
         int pacX = (int) kernel.pacman.getX();
         int pacy = (int) kernel.pacman.getY();
 
-        System.out.println("[SMARTAI] pos fantome" + posX + " " + posY + "\n" + " pos pacman" + pacX + " "+ pacy);
+        System.out.println("[SMARTAI] pos fantome" + posX + " " + posY + " -> pos pacman" + pacX + " "+ pacy);
         Astar astar = new Astar(700, 800, posX, posY,pacX , pacy, getWall(kernel.walls));
         Stack<Cell> cells = astar.process();
         PathToDirection translater = new PathToDirection(cells);
         System.out.println("[SMARTAI] path calculated");
         directions = translater.translate(astar.grid);
-        directions.forEach(System.out::println);
+        //directions.forEach(System.out::println);
     }
 
     private int[][] getWall(List<Wall> walls){

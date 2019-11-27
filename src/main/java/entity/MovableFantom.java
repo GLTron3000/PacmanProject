@@ -9,10 +9,8 @@ public abstract class MovableFantom extends Movable {
     public MovableFantom(double x, double y, double speed) {
         super(x, y, speed);
     }
-    public abstract void setBackToLobby();
     public abstract void setIA(IA ia);
     public abstract void computeMove(Kernel kernel);
     public abstract Fantom.FantomState getState();
-    public abstract void setKillable();
-    public abstract void setNormal();
+    public abstract MovableFantom removeDecorator();
 }

@@ -34,11 +34,6 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx</artifactId>
-            <version>13</version>
-        </dependency>
     </dependencies>
     
     <build>

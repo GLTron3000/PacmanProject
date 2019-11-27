@@ -35,6 +35,7 @@ public abstract class FantomDecorator extends MovableFantom {
     public abstract void setX(double x);
     @Override
     public abstract void setY(double y);
-
-
+    
+    @Override
+    public abstract MovableFantom removeDecorator();
 }
