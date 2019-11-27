@@ -13,8 +13,10 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -28,6 +30,7 @@ public class Game {
     Label scoreLabel;
     Label timerLabel;
     Label powerUpReductorLabel;
+    Label powerUpwallBreacherLabel;
     VBox pauseMenu;
     
     Canvas canvas;
@@ -204,9 +207,40 @@ public class Game {
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
-        vbox.getChildren().addAll(scoreLabel, timerLabel, lifeLabel, canvas, powerUpReductorLabel);
+        vbox.getChildren().addAll(scoreLabel, timerLabel, lifeLabel);
         
-        stackPane.getChildren().add(vbox);
+        powerUpReductorLabel = new Label();
+        powerUpReductorLabel.setFont(new Font(35));
+        powerUpReductorLabel.setTextFill(Color.WHITE);
+        powerUpReductorLabel.setContentDisplay(ContentDisplay.LEFT);
+        
+        powerUpwallBreacherLabel = new Label();
+        powerUpwallBreacherLabel.setFont(new Font(35));
+        powerUpwallBreacherLabel.setTextFill(Color.WHITE);
+        powerUpwallBreacherLabel.setContentDisplay(ContentDisplay.LEFT);
+        
+        VBox vboxPowerUp = new VBox();
+        vboxPowerUp.setAlignment(Pos.CENTER_LEFT);
+        vboxPowerUp.setSpacing(10);
+        vboxPowerUp.getChildren().addAll(powerUpReductorLabel, powerUpwallBreacherLabel);
+        
+        Label hintLabel = new Label("Z Q S D \n Wall Breacher : E \n Reductor : A");
+        hintLabel.setFont(new Font(35));
+        hintLabel.setTextFill(Color.WHITE);
+        hintLabel.setContentDisplay(ContentDisplay.RIGHT);
+        
+        VBox vboxHint = new VBox();
+        vboxHint.setAlignment(Pos.CENTER_RIGHT);
+        vboxHint.setSpacing(10);
+        vboxHint.getChildren().addAll(hintLabel);
+        
+        BorderPane borderPane = new BorderPane();
+        borderPane.setTop(vbox);
+        borderPane.setCenter(canvas);
+        borderPane.setRight(vboxPowerUp);
+        borderPane.setLeft(vboxHint);
+        
+        stackPane.getChildren().add(borderPane);
         stackPane.getStyleClass().add("stackPane");
         stackPane.getStylesheets().add("file:src/main/css/gameStyle.css");
         
@@ -292,7 +326,8 @@ public class Game {
                 scoreLabel.setText(""+kernel.score);
                 timerLabel.setText(kernel.timer+" s");
                 powerUpReductorLabel.setText(kernel.pacman.getPowerUpReductor()+" Reductor PowerUp");
-                        
+                powerUpwallBreacherLabel.setText("Wall Breacher (-200 score)");
+                
                 checkState();
                 
                 long oldFrameTime = frameTimes[frameTimeIndex] ;
