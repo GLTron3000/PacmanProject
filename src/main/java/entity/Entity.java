@@ -21,7 +21,7 @@ public abstract class Entity {
     public Entity(double x, double y) {
         this.x = x;
         this.y = y;
-        size = 25;
+        size = 25.0;
     }
 
     @Override

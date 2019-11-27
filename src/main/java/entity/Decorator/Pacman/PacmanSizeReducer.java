@@ -1,10 +1,10 @@
 package entity.Decorator.Pacman;
 
-import entity.Direction;
-import entity.FruitRet;
-import entity.MovablePacman;
+import entity.*;
 import game.Kernel;
 import javafx.scene.canvas.Canvas;
+
+import static entity.Direction.STOP;
 
 public class PacmanSizeReducer extends PacmanDecorator {
     final double originalSize;
@@ -127,6 +127,17 @@ public class PacmanSizeReducer extends PacmanDecorator {
 
     @Override
     public void checkNextMove(Kernel k) {
+        if(getNextDirection() == STOP) return;
+
+        PacmanSizeReducer nextPacman = new PacmanSizeReducer(movablePacman);
+        nextPacman.size = getSize();
+        nextPacman.direction = getNextDirection();
+
+        for(Wall w : k.walls){
+            if(k.engine.isCollide(nextPacman, w)) k.collBeha.collideMovableWall(nextPacman, w);
+        }
+
+        if(nextPacman.getDirection() != STOP) nextDirection();
         movablePacman.checkNextMove(k);
     }
 }

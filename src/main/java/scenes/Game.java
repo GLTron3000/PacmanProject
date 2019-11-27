@@ -234,7 +234,7 @@ public class Game {
     private void entityInit(){
         LevelData levelData = new LevelData();
         levelData.load("level1.pml");
-
+        //levelData.load("customLevel1.pml");
         kernel.pacman = levelData.pacman;
         kernel.fantoms = new CopyOnWriteArrayList(levelData.fantoms);
         kernel.walls = levelData.walls;

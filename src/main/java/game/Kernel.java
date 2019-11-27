@@ -65,7 +65,7 @@ public class Kernel {
         pacman.checkNextMove(this);
         pacman.move();
         
-        moveFantoms();
+        //moveFantoms();
     }
 
     public void collide(){
