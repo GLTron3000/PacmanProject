@@ -7,7 +7,6 @@ import entity.Decorator.Pacman.PacmanSizeReducer;
 import entity.Decorator.Pacman.PacmanWallBreacher;
 
 import static game.GameState.*;
-import static entity.Direction.*;
 
 import game.CollisionEngine.*;
 import ia.RandomAI;
@@ -66,7 +65,7 @@ public class Kernel {
         pacman.checkNextMove(this);
         pacman.move();
         
-        //moveFantoms();
+        moveFantoms();
     }
 
     public void collide(){
@@ -137,20 +136,21 @@ public class Kernel {
                 case 1: fantom.setIA(new RandomAI(this)); break;
                 default: fantom.setIA(new RandomAI(this)); break;
             }
-            //counter++;
+            counter++;
         }
     }   
     
     public void activateWallPowerUp(){
-        int powerUpCost = 10;
+        int powerUpCost = 200;
         int duration = 10000;
         if(score - powerUpCost < 0) return;
         
         System.out.println("ADD EFFECT WALL BREACHER");
+        score-=powerUpCost;
         pacman = new PacmanWallBreacher(pacman);
         
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
+        Timer timerPowerUp = new Timer();
+        timerPowerUp.schedule(new TimerTask() {
 
             @Override
             public void run() {
@@ -159,7 +159,7 @@ public class Kernel {
                 pacman = pacman.removeDecorator();
                 //Detecter si pacman toujours dans mur => ded
                 
-                timer.cancel();
+                timerPowerUp.cancel();
             }
         }, duration);
     }
@@ -178,8 +178,8 @@ public class Kernel {
         
         pacman = new PacmanSizeReducer(pacman);
         
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
+        Timer timerPowerUp = new Timer();
+        timerPowerUp.schedule(new TimerTask() {
 
             @Override
             public void run() {
@@ -191,7 +191,7 @@ public class Kernel {
                 
                 pacman = pacman.removeDecorator();
                 
-                timer.cancel();
+                timerPowerUp.cancel();
             }
         }, FruitRet.buffDuration);
     }
