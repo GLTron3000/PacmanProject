@@ -182,7 +182,7 @@ public class LevelBuilder {
                 entity.setTexturePath("assets/Pickable/Fruit.png");
                 pickables.add((Pickable) entity);
             }else if(entity instanceof FruitRet){
-                entity.setTexturePath("assets/Pickable/Fruit.png");
+                entity.setTexturePath("assets/Pickable/FruitRet.png");
                 pickables.add((Pickable) entity);
             }else if(entity instanceof Pacgum){
                 entity.setTexturePath("assets/Pickable/Pacgum.png");

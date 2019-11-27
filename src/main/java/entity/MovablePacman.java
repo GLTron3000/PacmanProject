@@ -1,6 +1,6 @@
 package entity;
 
-import entity.Movable;
+import game.Kernel;
 
 public abstract class MovablePacman extends Movable {
     public MovablePacman(double x, double y, double speed) {
@@ -15,4 +15,5 @@ public abstract class MovablePacman extends Movable {
     public abstract void setNextDirection(Direction nextDirection);
     public abstract void nextDirection();
     public abstract MovablePacman removeDecorator();
+    public abstract void checkNextMove(Kernel k);
 }

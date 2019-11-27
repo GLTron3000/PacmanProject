@@ -1,6 +1,7 @@
 package entity;
 
 import static entity.Direction.*;
+import game.Kernel;
 
 public class Pacman extends MovablePacman {
     public int life;
@@ -91,4 +92,18 @@ public class Pacman extends MovablePacman {
         this.powerUpReductor = powerUpReductor;
     }  
     
+    @Override
+    public void checkNextMove(Kernel k){
+        if(getNextDirection() == STOP) return;
+
+        Pacman nextPacman = new Pacman(getX(), getY());
+        nextPacman.size = getSize();
+        nextPacman.direction = getNextDirection();
+        
+        for(Wall w : k.walls){
+            if(k.engine.isCollide(nextPacman, w)) k.collBeha.collideMovableWall(nextPacman, w);
+        }
+
+        if(nextPacman.direction != STOP) nextDirection();
+    }
 }

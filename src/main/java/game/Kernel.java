@@ -4,6 +4,7 @@ import entity.*;
 import entity.Decorator.Fantom.FantomBackToLobby;
 import entity.Decorator.Fantom.FantomSizeReducer;
 import entity.Decorator.Pacman.PacmanSizeReducer;
+import entity.Decorator.Pacman.PacmanWallBreacher;
 
 import static game.GameState.*;
 import static entity.Direction.*;
@@ -62,8 +63,7 @@ public class Kernel {
         
         checkVictory();
 
-        checkNextMove();
-
+        pacman.checkNextMove(this);
         pacman.move();
         
         //moveFantoms();
@@ -121,19 +121,6 @@ public class Kernel {
         if(timer <= 0) playerCatched();
         if(pickables.isEmpty()) gameState = VICTORY;
     }
-
-    private void checkNextMove(){
-        if(pacman.getNextDirection() == STOP) return;
-
-        Pacman nextPacman = new Pacman(pacman.getX(), pacman.getY());
-        nextPacman.direction = pacman.getNextDirection();
-        
-        for(Wall w : walls){
-            if(engine.isCollide(nextPacman, w)) collBeha.collideMovableWall(nextPacman, w);
-        }
-
-        if(nextPacman.direction != STOP) pacman.nextDirection();
-    }
     
     private void moveFantoms(){
         fantoms.forEach(fantom -> {
@@ -155,9 +142,26 @@ public class Kernel {
     }   
     
     public void activateWallPowerUp(){
-        int powerUpCost = 200;
+        int powerUpCost = 10;
+        int duration = 10000;
         if(score - powerUpCost < 0) return;
         
+        System.out.println("ADD EFFECT WALL BREACHER");
+        pacman = new PacmanWallBreacher(pacman);
+        
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                System.out.println("REMOVE EFFECT WALL BREACHER");
+
+                pacman = pacman.removeDecorator();
+                //Detecter si pacman toujours dans mur => ded
+                
+                timer.cancel();
+            }
+        }, duration);
     }
     
     public void activateReductorPowerUp(){
@@ -189,7 +193,7 @@ public class Kernel {
                 
                 timer.cancel();
             }
-        }, Fruit.buffDuration);
+        }, FruitRet.buffDuration);
     }
 
 }
