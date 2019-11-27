@@ -70,11 +70,6 @@ public class FantomKillable extends FantomDecorator {
         // x_source y_source w_source h_source x_dest y_dest w_dest h_dest
         gc.drawImage(textureKillable, frame*movableFantom.textureSize, 0, movableFantom.textureSize, movableFantom.textureSize, movableFantom.x, movableFantom.y, movableFantom.size, movableFantom.size);
     }
-    
-    @Override
-    public void loadTexture(){
-        
-    }
 
     @Override
     public void move() {

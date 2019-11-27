@@ -27,6 +27,7 @@ public class Game {
     Label lifeLabel;
     Label scoreLabel;
     Label timerLabel;
+    Label powerUpReductorLabel;
     VBox pauseMenu;
     
     Canvas canvas;
@@ -161,7 +162,7 @@ public class Game {
     
     private void entityInit(){
         LevelData levelData = new LevelData();
-        levelData.load("level1.pml");
+        levelData.load("customLevel1.pml");
 
         kernel.pacman = levelData.pacman;
         kernel.fantoms = new CopyOnWriteArrayList(levelData.fantoms);
@@ -180,7 +181,7 @@ public class Game {
         stackPane = new StackPane();
         
         //28 * 32
-        canvas = new Canvas(700, 800);
+        canvas = new Canvas(700, 775);
         kernel = new Kernel(canvas.getWidth(), canvas.getHeight());
         gc = canvas.getGraphicsContext2D();
         
@@ -195,11 +196,15 @@ public class Game {
         timerLabel = new Label();
         timerLabel.setFont(new Font(50));
         timerLabel.setTextFill(Color.WHITE);
+        
+        powerUpReductorLabel = new Label();
+        powerUpReductorLabel.setFont(new Font(35));
+        powerUpReductorLabel.setTextFill(Color.WHITE);
                 
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
-        vbox.getChildren().addAll(scoreLabel, timerLabel, lifeLabel, canvas);
+        vbox.getChildren().addAll(scoreLabel, timerLabel, lifeLabel, canvas, powerUpReductorLabel);
         
         stackPane.getChildren().add(vbox);
         stackPane.getStyleClass().add("stackPane");
@@ -256,10 +261,12 @@ public class Game {
     
     private void moveInput(KeyEvent ke){
         switch (ke.getCode()){
-            case UP: kernel.pacman.goUp(); break;
-            case DOWN: kernel.pacman.goDown(); break;
-            case LEFT: kernel.pacman.goLeft(); break;
-            case RIGHT: kernel.pacman.goRight(); break;
+            case Z: kernel.pacman.goUp(); break;
+            case S: kernel.pacman.goDown(); break;
+            case Q: kernel.pacman.goLeft(); break;
+            case D: kernel.pacman.goRight(); break;
+            case A: kernel.activateReductorPowerUp(); break;
+            case E: kernel.activateWallPowerUp(); break;
             case ESCAPE: pauseGame(); break;
             default: break;
         }
@@ -284,6 +291,7 @@ public class Game {
                 lifeLabel.setText(kernel.pacman.getLife()+" vies");
                 scoreLabel.setText(""+kernel.score);
                 timerLabel.setText(kernel.timer+" s");
+                powerUpReductorLabel.setText(kernel.pacman.getPowerUpReductor()+" Reductor PowerUp");
                         
                 checkState();
                 

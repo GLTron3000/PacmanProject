@@ -4,6 +4,7 @@ import static entity.Direction.*;
 
 public class Pacman extends MovablePacman {
     public int life;
+    public int powerUpReductor;
 
     public Direction nextDirection;
     
@@ -74,4 +75,20 @@ public class Pacman extends MovablePacman {
         direction = nextDirection;
         nextDirection = STOP;
     }
+
+    @Override
+    public MovablePacman removeDecorator() {
+        return this;
+    }
+
+    @Override
+    public int getPowerUpReductor() {
+        return powerUpReductor;
+    }
+
+    @Override
+    public void setPowerUpReductor(int powerUpReductor) {
+        this.powerUpReductor = powerUpReductor;
+    }  
+    
 }

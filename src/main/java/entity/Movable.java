@@ -15,6 +15,7 @@ public abstract class Movable extends Entity{
     public boolean reverseFrames = false;
     public double lastDrawX;
     public double lastDrawY;
+    public double lastDrawSize;
     public double initX;
     public double initY;
 
@@ -70,13 +71,14 @@ public abstract class Movable extends Entity{
         GraphicsContext gc = canvas.getGraphicsContext2D();    
         
         gc.setFill(Color.BLACK);
-        gc.fillRect(lastDrawX, lastDrawY, size, size);
+        gc.fillRect(lastDrawX, lastDrawY, lastDrawSize, lastDrawSize);
         lastDrawX = x;
         lastDrawY = y;
+        lastDrawSize = getSize();
         
         if(texture == null){
             gc.setFill(Color.RED);
-            gc.fillRect(x, y, size, size);
+            gc.fillRect(x, y, getSize(), getSize());
             return;
         }  
         
@@ -97,6 +99,7 @@ public abstract class Movable extends Entity{
         }
 
         // x_source y_source w_source h_source x_dest y_dest w_dest h_dest
-        gc.drawImage(texture, frame*textureSize, ySource, textureSize, textureSize, x, y, size, size);
+        gc.drawImage(texture, frame*textureSize, ySource, textureSize, textureSize, x, y, getSize(), getSize());
     }
+    
 }

@@ -4,6 +4,7 @@ import JSON.LevelData;
 import entity.Entity;
 import entity.Fantom;
 import entity.Fruit;
+import entity.FruitRet;
 import entity.Pacgum;
 import entity.Pacman;
 import entity.Pickable;
@@ -48,7 +49,7 @@ public class LevelBuilder {
         stackPane = new StackPane();
         
         //28 * 32
-        canvas = new Canvas(700, 800);
+        canvas = new Canvas(700, 775);
 
         gc = canvas.getGraphicsContext2D();
         
@@ -57,7 +58,8 @@ public class LevelBuilder {
         titleLabel.setFont(new Font(40));
         
         
-        Label helpLabel = new Label("P: Pacman | F: Fantom | W: Wall | R: Fruit | G: Pacgum | D: supprimer | Enter: sauvegarder | L: charger | Echap: quitter");
+        Label helpLabel = new Label("P: Pacman | F: Fantom | W: Wall | G: Pacgum | R: Fruit | T: Fruit Reducteur | D: supprimer"
+                + "\n Enter: sauvegarder | L: charger | Echap: quitter");
         helpLabel.setFont(new Font(15));
         helpLabel.setTextFill(Color.WHITE);
         
@@ -86,6 +88,7 @@ public class LevelBuilder {
                 case P: if(!checkEntityPresence()) entities.add(new Pacman(x, y)); break;
                 case W: if(!checkEntityPresence()) entities.add(new Wall(x, y)); break;
                 case R: if(!checkEntityPresence()) entities.add(new Fruit(x+pickableOffset, y+pickableOffset)); break;
+                case T: if(!checkEntityPresence()) entities.add(new FruitRet(x+pickableOffset, y+pickableOffset)); break;
                 case G: if(!checkEntityPresence()) entities.add(new Pacgum(x+pickableOffset, y+pickableOffset)); break;
                 case L: loadLevel(); break;
                 case D: deleteEntity(); break;
@@ -176,6 +179,9 @@ public class LevelBuilder {
                 pacman = (Pacman) entity;
             }
             else if(entity instanceof Fruit){
+                entity.setTexturePath("assets/Pickable/Fruit.png");
+                pickables.add((Pickable) entity);
+            }else if(entity instanceof FruitRet){
                 entity.setTexturePath("assets/Pickable/Fruit.png");
                 pickables.add((Pickable) entity);
             }else if(entity instanceof Pacgum){

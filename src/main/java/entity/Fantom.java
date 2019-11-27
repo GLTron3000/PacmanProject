@@ -10,6 +10,7 @@ public class Fantom extends MovableFantom {
 
     public enum FantomState{NORMAL, KILLABLE, BACKTOLOBBY}
 
+    @Override
     public FantomState getState() {
         return FantomState.NORMAL;
     }

@@ -2,6 +2,8 @@ package game;
 
 import entity.*;
 import entity.Decorator.Fantom.FantomBackToLobby;
+import entity.Decorator.Fantom.FantomSizeReducer;
+import entity.Decorator.Pacman.PacmanSizeReducer;
 
 import static game.GameState.*;
 import static entity.Direction.*;
@@ -12,6 +14,8 @@ import ia.SmartAI;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Kernel {
@@ -51,7 +55,7 @@ public class Kernel {
     
     
 
-    public void step(){
+    public void step(){      
         if(engine.outOfBoard(pacman , canvasHeight, canvasWidth)) OOBBeha.behavior(pacman);
 
         collide();
@@ -62,36 +66,27 @@ public class Kernel {
 
         pacman.move();
         
-        moveFantoms();
+        //moveFantoms();
     }
 
     public void collide(){
         for(Wall w :walls ){
             for(Movable f :fantoms ){
-                if(engine.isCollide(w,f)){
-                    f.stop();
-                }
+                if(engine.isCollide(w,f)) f.stop();
             }
             if(engine.isCollide(pacman,w)){
-                //System.out.println("collision mur");
+                //System.out.println("COLLISION PACMAN");
                 collBeha.collideMovableWall(pacman,w);
             }
         }
         for(MovableFantom f: fantoms){
             if(engine.isCollide(pacman,f)){
-                if(f.getState() == Fantom.FantomState.NORMAL) {
-                    playerCatched();
-                }
-                if(f.getState() == Fantom.FantomState.KILLABLE) {
-                    System.out.println("kill");
-                    fantomCatched(f);
-                }
+                if(f.getState() == Fantom.FantomState.NORMAL) playerCatched();
+                if(f.getState() == Fantom.FantomState.KILLABLE) fantomCatched(f);
             }
         }
         for(Pickable p : pickables){
-            if(engine.isCollide(pacman,p)){
-                p.onPick(this);
-            }
+            if(engine.isCollide(pacman,p)) p.onPick(this);
         }
     }
     
@@ -154,5 +149,43 @@ public class Kernel {
             //counter++;
         }
     }   
+    
+    public void activateWallPowerUp(){
+        int powerUpCost = 200;
+        if(score - powerUpCost < 0) return;
+        
+    }
+    
+    public void activateReductorPowerUp(){
+        if(pacman.getPowerUpReductor() <= 0) return;
+        
+        pacman.setPowerUpReductor(pacman.getPowerUpReductor()-1);
+        
+        System.out.println("ADD EFFECT REDUCTOR");
+        
+        for(MovableFantom f: fantoms){
+            fantoms.remove(f);
+            fantoms.add(new FantomSizeReducer(f));
+        }
+        
+        pacman = new PacmanSizeReducer(pacman);
+        
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                System.out.println("REMOVE EFFECT REDUCTOR");
+                for(MovableFantom f: fantoms){
+                    fantoms.remove(f);
+                    fantoms.add(f.removeDecorator());
+                }
+                
+                pacman = pacman.removeDecorator();
+                
+                timer.cancel();
+            }
+        }, Fruit.buffDuration);
+    }
 
 }

@@ -33,7 +33,7 @@ public class Fruit extends Pickable{
 
             @Override
             public void run() {
-                System.out.println("REMOVE EFFECT");
+                System.out.println("REMOVE EFFECT FRUIT");
                 for(MovableFantom f: k.fantoms){
                     k.fantoms.remove(f);
                     k.fantoms.add(f.removeDecorator());
