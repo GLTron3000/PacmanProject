@@ -111,6 +111,10 @@ public class Kernel {
     private void fantomCatched(MovableFantom f) {
         fantoms.remove(f);
         fantoms.add(new FantomBackToLobby(f.removeDecorator()));
+        
+        //renvoie les fantômes à leur position initiale
+        f.setX(f.initX);
+        f.setY(f.initY);
     }
     
     private void checkVictory(){
