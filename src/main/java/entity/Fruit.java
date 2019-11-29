@@ -17,12 +17,34 @@ public class Fruit extends Pickable{
     public Fruit(double x, double y) {
         super(x, y);
         type="Fruit";
+        value = 50;
     }
 
 
     @Override
     public void onPick(Kernel k) {
         System.out.println("PICKED FRUIT");
+        k.pickables.remove(this);
+        k.score+=Fruit.value;
+        
+        effect(k);
+    }
+
+
+    @Override
+    public void draw(Canvas canvas) {
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        if(texture == null){
+            gc.setFill(Color.ORANGE);
+            gc.fillRect(x, y, size, size);
+        }else{
+            gc.setFill(Color.BLACK);
+            gc.fillRect(x, y, size, size);
+            gc.drawImage(texture, x, y, size, size);
+        }    
+    }
+
+    public static void effect(Kernel k) {
         for(MovableFantom f: k.fantoms){
             k.fantoms.remove(f);
             k.fantoms.add(new FantomKillable(f));
@@ -41,23 +63,6 @@ public class Fruit extends Pickable{
                 timer.cancel();
             }
         }, Fruit.buffDuration);
-        
-        k.pickables.remove(this);
-        k.score+=50;
-    }
-
-
-    @Override
-    public void draw(Canvas canvas) {
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        if(texture == null){
-            gc.setFill(Color.ORANGE);
-            gc.fillRect(x, y, size, size);
-        }else{
-            gc.setFill(Color.BLACK);
-            gc.fillRect(x, y, size, size);
-            gc.drawImage(texture, x, y, size, size);
-        }    
     }
     
 }

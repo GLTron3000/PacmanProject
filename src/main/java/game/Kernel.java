@@ -2,20 +2,16 @@ package game;
 
 import entity.*;
 import entity.Decorator.Fantom.FantomBackToLobby;
-import entity.Decorator.Fantom.FantomSizeReducer;
-import entity.Decorator.Pacman.PacmanSizeReducer;
-import entity.Decorator.Pacman.PacmanWallBreacher;
 
 import static game.GameState.*;
 
 import game.CollisionEngine.*;
 import ia.RandomAI;
+import ia.SimpleAI;
 import ia.SmartAI;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Kernel {
@@ -57,26 +53,24 @@ public class Kernel {
 
     public void step(){      
         if(engine.outOfBoard(pacman , canvasHeight, canvasWidth)) OOBBeha.behavior(pacman);
-
+        
+        computeMove();
+        pacman.checkNextMove(this);
+        
         collide();
+        
+        pacman.move();
+        moveFantoms();
         
         checkVictory();
 
-        pacman.checkNextMove(this);
-        pacman.move();
         
-        //moveFantoms();
     }
 
     public void collide(){
         for(Wall w :walls ){
-            for(Movable f :fantoms ){
-                if(engine.isCollide(w,f)) f.stop();
-            }
-            if(engine.isCollide(pacman,w)){
-                //System.out.println("COLLISION PACMAN");
-                collBeha.collideMovableWall(pacman,w);
-            }
+            for(Movable f :fantoms ) if(engine.isCollide(w,f)) collBeha.collideMovableWall(f,w);
+            if(engine.isCollide(pacman,w))collBeha.collideMovableWall(pacman,w);
         }
         for(MovableFantom f: fantoms){
             if(engine.isCollide(pacman,f)){
@@ -121,11 +115,12 @@ public class Kernel {
         if(pickables.isEmpty()) gameState = VICTORY;
     }
     
+    private void computeMove(){
+        fantoms.forEach(fantom -> fantom.computeMove(this));
+    }
+    
     private void moveFantoms(){
-        fantoms.forEach(fantom -> {
-            fantom.computeMove(this);
-            fantom.move();
-        });
+        fantoms.forEach(fantom -> fantom.move());
     }
     
     public void setFantomIA(){
@@ -133,7 +128,8 @@ public class Kernel {
         for(MovableFantom fantom : fantoms){
             switch(counter){
                 case 0: fantom.setIA(new SmartAI()); break;
-                case 1: fantom.setIA(new RandomAI(this)); break;
+                case 1: fantom.setIA(new SimpleAI()); break;
+                case 2: fantom.setIA(new RandomAI(this)); break;
                 default: fantom.setIA(new RandomAI(this)); break;
             }
             counter++;
@@ -141,59 +137,11 @@ public class Kernel {
     }   
     
     public void activateWallPowerUp(){
-        int powerUpCost = 200;
-        int duration = 10000;
-        if(score - powerUpCost < 0) return;
-        
-        System.out.println("ADD EFFECT WALL BREACHER");
-        score-=powerUpCost;
-        pacman = new PacmanWallBreacher(pacman);
-        
-        Timer timerPowerUp = new Timer();
-        timerPowerUp.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                System.out.println("REMOVE EFFECT WALL BREACHER");
-
-                pacman = pacman.removeDecorator();
-                //Detecter si pacman toujours dans mur => ded
-                
-                timerPowerUp.cancel();
-            }
-        }, duration);
+        FruitWall.effect(this);
     }
     
     public void activateReductorPowerUp(){
-        if(pacman.getPowerUpReductor() <= 0) return;
-        
-        pacman.setPowerUpReductor(pacman.getPowerUpReductor()-1);
-        
-        System.out.println("ADD EFFECT REDUCTOR");
-        
-        for(MovableFantom f: fantoms){
-            fantoms.remove(f);
-            fantoms.add(new FantomSizeReducer(f));
-        }
-        
-        pacman = new PacmanSizeReducer(pacman);
-        
-        Timer timerPowerUp = new Timer();
-        timerPowerUp.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                System.out.println("REMOVE EFFECT REDUCTOR");
-                for(MovableFantom f: fantoms){
-                    fantoms.remove(f);
-                    fantoms.add(f.removeDecorator());
-                }
-                
-                pacman = pacman.removeDecorator();
-                
-                timerPowerUp.cancel();
-            }
-        }, FruitRet.buffDuration);
+        FruitRet.effect(this);
     }
 
 }
