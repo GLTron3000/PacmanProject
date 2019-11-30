@@ -24,25 +24,25 @@ class PathToDirection {
                 //System.out.println(" c1 : " + c1.toString() + "c2: " + c2.toString());
 
                 if (c1.x < c2.x && c1.y == c2.y){
-                    //for(int i = 0; i < 25 ; i++)
+                    for(int i = 0; i < 25 ; i++)
                         directions.add(Direction.RIGHT);
                     //System.out.println(" Down add");
                 }
 
                 if (c1.x > c2.x && c1.y == c2.y) {
-                    //for(int i = 0; i < 25 ; i++)
+                    for(int i = 0; i < 25 ; i++)
                         directions.add(Direction.LEFT);
                   //  System.out.println(" UP add");
                 }
 
                 if (c1.y < c2.y && c1.x == c2.x) {
-                    //for(int i = 0; i < 25 ; i++)
+                    for(int i = 0; i < 25 ; i++)
                         directions.add(Direction.DOWN);
                     //System.out.println(" Right add");
                 }
 
                 if (c1.y > c2.y && c1.x == c2.x) {
-                    //for(int i = 0; i < 25 ; i++)
+                    for(int i = 0; i < 25 ; i++)
                         directions.add(Direction.UP);
                     //System.out.println(" LEFT add");
                 }

@@ -1,19 +1,29 @@
 @font-face {
-    font-family: 3Dventure;
-    src: url("../../../assets/3Dventure.ttf");
+    font-family: "3Dventure";
+    src: url("../fonts/3Dventure.ttf");
 }
 
-.label{
-    -fx-font-size: 80px;
+@font-face {
+    font-family: "GAMEPLAY 1987";
+    src: url("../fonts/GAMEPLAY-1987.ttf");
+}
+
+@font-face {
+    font-family: "8BIT WONDER";
+    src: url("../fonts/8-BITWONDER.ttf");
+}
+
+.labelTitle{
+    -fx-font-size: 120px;
     -fx-font-family: "3Dventure";
-    -fx-text-fill: white;
+    -fx-text-fill: white; 
     -fx-background-color: transparent;
 }
 
 .button{
-    -fx-font-size: 30px;
-    -fx-font-family: "3Dventure";
-    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-family: "8BIT WONDER";
+    -fx-text-fill: white; 
     -fx-background-color: transparent;
 }
 
@@ -25,4 +35,15 @@
 
 .vbox{
     -fx-background-color: darkblue;
+}
+
+.vboxHelp{
+    -fx-background-color: rgba(0, 0, 0, 0.8);
+}
+
+.labelHelp{
+    -fx-font-size: 30px;
+    -fx-font-family: "8BIT WONDER";
+    -fx-text-fill: white; 
+    -fx-background-color: transparent;
 }

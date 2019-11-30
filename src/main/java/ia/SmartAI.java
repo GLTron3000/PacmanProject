@@ -22,18 +22,12 @@ public class SmartAI implements IA {
 
     @Override
     public Direction getMove(Kernel kernel, Fantom fantom) {
-        if(directions.isEmpty() || lastPacX != kernel.pacman.getX() || lastPacY != kernel.pacman.getY())
-            computeDirections(kernel, fantom);
+        //|| lastPacX != kernel.pacman.getX() || lastPacY != kernel.pacman.getY()
+        if(directions.isEmpty()) computeDirections(kernel, fantom);
 
-        Direction direction = directions.peek();
-              
-        while(!checkDirection(direction, fantom, kernel)){
-            if(directions.isEmpty()) computeDirections(kernel, fantom);
-            direction = directions.poll();
-            //System.out.println("[SMARTAI] Change to "+direction);
-        }
+        Direction direction = directions.poll();
 
-        //System.out.println("[SMARTAI] Current direction "+direction);
+        System.out.println("[SMARTAI] Current direction "+direction);
         return direction;
     }
 
@@ -64,7 +58,7 @@ public class SmartAI implements IA {
         PathToDirection translater = new PathToDirection(cells);
         System.out.println("[SMARTAI] path calculated");
         directions = translater.translate(astar.grid);
-        directions.forEach(System.out::println);
+        //directions.forEach(System.out::println);
     }
 
     private int[][] getWall(List<Wall> walls){
