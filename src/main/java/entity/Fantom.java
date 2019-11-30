@@ -5,7 +5,7 @@ import ia.IA;
 import java.util.Objects;
 
 public class Fantom extends MovableFantom {
-    String name;
+    public String name;
     IA ia;
 
     public enum FantomState{NORMAL, KILLABLE, BACKTOLOBBY}

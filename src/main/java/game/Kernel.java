@@ -55,19 +55,17 @@ public class Kernel {
         if(engine.outOfBoard(pacman , canvasHeight, canvasWidth)) OOBBeha.behavior(pacman);
         
         computeMove();
-        pacman.checkNextMove(this);
         
         collide();
         
+        pacman.checkNextMove(this);
         pacman.move();
         moveFantoms();
         
         checkVictory();
-
-        
     }
 
-    public void collide(){
+    private void collide(){
         for(Wall w :walls ){
             for(Movable f :fantoms ) if(engine.isCollide(w,f)) collBeha.collideMovableWall(f,w);
             if(engine.isCollide(pacman,w))collBeha.collideMovableWall(pacman,w);
@@ -99,6 +97,8 @@ public class Kernel {
             p.setX(p.initX);
             p.setY(p.initY);
         }
+        
+        setFantomIA();
     }
     
     private void fantomCatched(MovableFantom f) {
@@ -129,8 +129,7 @@ public class Kernel {
             switch(counter){
                 case 0: fantom.setIA(new SmartAI()); break;
                 case 1: fantom.setIA(new SimpleAI()); break;
-                case 2: fantom.setIA(new RandomAI(this)); break;
-                default: fantom.setIA(new RandomAI(this)); break;
+                default: fantom.setIA(new RandomAI()); break;
             }
             counter++;
         }

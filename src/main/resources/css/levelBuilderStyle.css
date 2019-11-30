@@ -1,6 +1,6 @@
 @font-face {
     font-family: 3Dventure;
-    src: url("../../../assets/3Dventure.ttf");
+    src: url("../fonts/3Dventure.ttf");
 }
 
 .stackPane{
@@ -8,7 +8,6 @@
 }
 
 .label{
-    -fx-font-family: "3Dventure";
     -fx-text-fill: white; 
     -fx-background-color: transparent;
 }

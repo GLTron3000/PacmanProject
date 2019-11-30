@@ -19,8 +19,8 @@ public class SceneController {
         mainMenu = new MainMenu(this);
     }
     
-    public void showGame(){
-        game = new Game(this);
+    public void showGame(String level){
+        game = new Game(this, level);
         scene.setRoot(game.getNode());
         game.start();
     }
