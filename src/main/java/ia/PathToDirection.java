@@ -24,25 +24,25 @@ class PathToDirection {
                 //System.out.println(" c1 : " + c1.toString() + "c2: " + c2.toString());
 
                 if (c1.x < c2.x && c1.y == c2.y){
-                    for(int i = 0; i < 25 ; i++)
-                        directions.add(Direction.LEFT);
+                    //for(int i = 0; i < 25 ; i++)
+                        directions.add(Direction.RIGHT);
                     //System.out.println(" Down add");
                 }
 
                 if (c1.x > c2.x && c1.y == c2.y) {
-                    for(int i = 0; i < 25 ; i++)
-                        directions.add(Direction.RIGHT);
+                    //for(int i = 0; i < 25 ; i++)
+                        directions.add(Direction.LEFT);
                   //  System.out.println(" UP add");
                 }
 
                 if (c1.y < c2.y && c1.x == c2.x) {
-                    for(int i = 0; i < 25 ; i++)
+                    //for(int i = 0; i < 25 ; i++)
                         directions.add(Direction.DOWN);
                     //System.out.println(" Right add");
                 }
 
                 if (c1.y > c2.y && c1.x == c2.x) {
-                    for(int i = 0; i < 25 ; i++)
+                    //for(int i = 0; i < 25 ; i++)
                         directions.add(Direction.UP);
                     //System.out.println(" LEFT add");
                 }
@@ -50,43 +50,47 @@ class PathToDirection {
                 if (c1.x > c2.x && c1.y > c2.y) { // diagonale haut-gauche
                     if(wall[c2.x][c1.y] == null){
                         for(int i = 0; i < 25 ; i++) {
-                            directions.add(Direction.UP);
-
+                            directions.add(Direction.LEFT);
                         }
                         for(int i = 0; i < 25 ; i++){
-                            directions.add(Direction.RIGHT);
+                            directions.add(Direction.UP);
                         }
                     }
                     else {
                         for(int i = 0; i < 25 ; i++) {
-                            directions.add(Direction.RIGHT);
                             directions.add(Direction.UP);
                         }
+                        for(int i = 0; i < 25 ; i++) {
+                            directions.add(Direction.LEFT);
+                        }
                     }
-
-                    //System.out.println(" UP-LEFT add");
                 }
 
                 if (c1.x > c2.x && c1.y < c2.y) { // diagonale haut-droite
                     if(wall[c2.x][c1.y] == null){
                         for(int i = 0; i < 25 ; i++) {
+                            directions.add(Direction.LEFT);
+                        }
+                        for(int i = 0; i < 25 ; i++) {
                             directions.add(Direction.DOWN);
-                            directions.add(Direction.RIGHT);
                         }
                     }
                     else {
                         for(int i = 0; i < 25 ; i++) {
-                            directions.add(Direction.RIGHT);
                             directions.add(Direction.DOWN);
+                            }
+                        for(int i = 0; i < 25 ; i++) {
+                            directions.add(Direction.LEFT);
                         }
                     }
-                    //System.out.println(" UP-RIGHT add" + directions.toString());
                 }
 
                 if (c1.x < c2.x && c1.y > c2.y) { // diagonale bas-gauche
                     if(wall[c1.x][c2.y] == null){
                         for(int i = 0; i < 25 ; i++) {
-                            directions.add(Direction.LEFT);
+                            directions.add(Direction.RIGHT);
+                        }
+                        for(int i = 0; i < 25 ; i++) {
                             directions.add(Direction.UP);
                         }
 
@@ -94,19 +98,19 @@ class PathToDirection {
                     else {
                         for(int i = 0; i < 25 ; i++) {
                             directions.add(Direction.UP);
-
                         }
                         for(int i = 0; i < 25 ; i++){
-                            directions.add(Direction.LEFT);
+                            directions.add(Direction.RIGHT);
                         }
                     }
-                    //System.out.println(" Down-Left add");
                 }
 
                 if (c1.x < c2.x && c1.y < c2.y) {  // diagonale bas-droite
                     if(wall[c1.x][c2.y] == null){
                         for(int i = 0; i < 25 ; i++) {
-                            directions.add(Direction.LEFT);
+                            directions.add(Direction.RIGHT);
+                        }
+                        for(int i = 0; i < 25 ; i++) {
                             directions.add(Direction.DOWN);
                         }
                     }
@@ -117,7 +121,6 @@ class PathToDirection {
                         }
 
                     }
-                    //System.out.println(" Down-Right add" + directions.toString());
                 }
 
                 if(cells.isEmpty())

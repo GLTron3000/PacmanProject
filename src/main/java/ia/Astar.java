@@ -186,14 +186,14 @@ class Astar {
 
             System.out.println();
 
-            for(int i = 0 ; i <grid.length ; i ++){
-                for(int j = 0 ; j <grid[i].length; j ++){
+            for(int i = grid.length-1 ; i >=0 ; i --){
+                for(int j = 0; j < grid[i].length; j ++){
                     if(i == StartX && j == StartY)
                         System.out.print("S  ");
                     else if(i == endX && j == endY)
                         System.out.print("D  ");
                     else if (grid[i][j] != null)
-                        System.out.printf("%-3s", grid[i][j].isSolution ? "X" : "  ");
+                        System.out.printf("%-3s", grid[i][j].isSolution ? "X" : " ");
                     else
                         System.out.print("W  ");
 
