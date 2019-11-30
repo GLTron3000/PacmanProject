@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 3Dventure;
+    src: url("../fonts/3Dventure.ttf");
+}
+
+@font-face {
+    font-family: "8BIT WONDER";
+    src: url("../fonts/8-BITWONDER.ttf");
+}
+
+.stackPane{
+    -fx-background-color: darkblue;
+}
+
+.label{
+    -fx-font-family: "8BIT WONDER";
+    -fx-text-fill: white; 
+    -fx-background-color: transparent;
+}
+
+.pauseMenu{
+    -fx-background-color: rgba(0, 0, 0, 0.8);
+}

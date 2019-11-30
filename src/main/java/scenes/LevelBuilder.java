@@ -70,7 +70,7 @@ public class LevelBuilder {
         
         stackPane.getChildren().add(vbox);
         stackPane.getStyleClass().add("stackPane");
-        stackPane.getStylesheets().add("file:src/main/css/levelBuilderStyle.css");
+        stackPane.getStylesheets().add(getClass().getClassLoader().getResource("css/levelBuilderStyle.css").toExternalForm());
         stackPane.setAlignment(Pos.CENTER);
         this.sceneController = sceneController;
         

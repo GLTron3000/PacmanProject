@@ -2,36 +2,26 @@ package ia;
 
 import entity.Direction;
 import entity.Fantom;
-import entity.Pacman;
 import entity.Wall;
 import game.Kernel;
 
-import java.rmi.dgc.Lease;
 import java.util.Random;
 
-import static entity.Direction.LEFT;
-import static entity.Direction.STOP;
-import static entity.Direction.UP;
+import static entity.Direction.*;
 
 public class RandomAI implements IA {
 
     Fantom f;
-    Kernel kernel;
     int first=0;
 
-    public RandomAI(Kernel kernel) {
-        this.kernel = kernel;
-    }
 
-
-    private void checkNextMove(Direction d){
+    private void checkNextMove(Direction d, Kernel k){
 
         Fantom nextFantom = new Fantom(f.getX(), f.getY(),"test");
         nextFantom.direction = d;
 
-        for(Wall w : kernel.walls){
-            if(kernel.engine.isCollide(nextFantom, w))
-                kernel.collBeha.collideMovableWall(nextFantom, w);
+        for(Wall w : k.walls){
+            if(k.engine.isCollide(nextFantom, w)) k.collBeha.collideMovableWall(nextFantom, w);
         }
 
         if(nextFantom.direction != STOP){
@@ -96,20 +86,20 @@ public class RandomAI implements IA {
 
             switch (test) {
                 case 0:
-                    checkNextMove(Direction.UP);
+                    checkNextMove(Direction.UP, kernel);
                     return Direction.UP;
 
 
                 case 1:
-                    checkNextMove(Direction.DOWN);
+                    checkNextMove(Direction.DOWN, kernel);
                     return Direction.DOWN;
 
                 case 2:
-                    checkNextMove(Direction.LEFT);
+                    checkNextMove(Direction.LEFT, kernel);
                     return Direction.LEFT;
 
                 case 3:
-                    checkNextMove(Direction.RIGHT);
+                    checkNextMove(Direction.RIGHT, kernel);
                     return Direction.RIGHT;
 
                 default:

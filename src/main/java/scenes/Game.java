@@ -2,8 +2,6 @@ package scenes;
 
 import JSON.LevelData;
 
-import entity.Fruit;
-import entity.Wall;
 import game.Kernel;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -16,7 +14,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -31,7 +28,6 @@ public class Game {
     Label scoreLabel;
     Label timerLabel;
     Label powerUpReductorLabel;
-    Label powerUpwallBreacherLabel;
     VBox pauseMenu;
     
     Canvas canvas;
@@ -45,18 +41,17 @@ public class Game {
     boolean endGame;
     EventHandler<KeyEvent> keyboardHandler;
     EventHandler<KeyEvent> keyboardPauseHandler;
+        
+    public String level;
     
-    private final long[] frameTimes = new long[100];
-    private int frameTimeIndex = 0;
-    private boolean arrayFilled = false;
-    
-    public Game(SceneController sceneController) {
+    public Game(SceneController sceneController, String level) {
         endGame = false;
         
         guiInit();
         
         this.sceneController = sceneController;
-        
+        this.level = level;
+                
         entityInit();
         
         keyboardInit();
@@ -79,60 +74,35 @@ public class Game {
         kernel = new Kernel(canvas.getWidth(), canvas.getHeight());
         gc = canvas.getGraphicsContext2D();
         
-        lifeLabel = new Label();
-        lifeLabel.setTextFill(Color.WHITE);
-        lifeLabel.setFont(new Font(35));
-        
         scoreLabel = new Label();
-        scoreLabel.setFont(new Font(100));
+        scoreLabel.setFont(new Font(50));
         scoreLabel.setTextFill(Color.WHITE);
-        
+                
         timerLabel = new Label();
-        timerLabel.setFont(new Font(50));
+        timerLabel.setFont(new Font(30));
         timerLabel.setTextFill(Color.WHITE);
         
+        lifeLabel = new Label();
+        lifeLabel.setTextFill(Color.WHITE);
+        lifeLabel.setFont(new Font(15));
+        
         powerUpReductorLabel = new Label();
-        powerUpReductorLabel.setFont(new Font(35));
-        powerUpReductorLabel.setTextFill(Color.WHITE);
-                
+        powerUpReductorLabel.setFont(new Font(15));
+        powerUpReductorLabel.setTextFill(Color.WHITE);  
+
+        HBox hbox = new HBox();
+        hbox.setAlignment(Pos.BOTTOM_CENTER);
+        hbox.setSpacing(50);
+        hbox.getChildren().addAll(scoreLabel, timerLabel, lifeLabel, powerUpReductorLabel);
+        
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
-        vbox.getChildren().addAll(scoreLabel, timerLabel, lifeLabel, canvas);
-        
-        powerUpReductorLabel = new Label();
-        powerUpReductorLabel.setFont(new Font(35));
-        powerUpReductorLabel.setTextFill(Color.WHITE);
-        powerUpReductorLabel.setContentDisplay(ContentDisplay.LEFT);
-        
-        powerUpwallBreacherLabel = new Label();
-        powerUpwallBreacherLabel.setFont(new Font(35));
-        powerUpwallBreacherLabel.setTextFill(Color.WHITE);
-        powerUpwallBreacherLabel.setContentDisplay(ContentDisplay.LEFT);
-        
-        VBox vboxPowerUp = new VBox();
-        vboxPowerUp.setAlignment(Pos.CENTER_LEFT);
-        vboxPowerUp.setSpacing(10);
-        vboxPowerUp.getChildren().addAll(powerUpReductorLabel, powerUpwallBreacherLabel);
-        
-        Label hintLabel = new Label("Direction : z q s d");
-        hintLabel.setFont(new Font(35));
-        hintLabel.setTextFill(Color.WHITE);
-        hintLabel.setContentDisplay(ContentDisplay.RIGHT);
-        
-        VBox vboxHint = new VBox();
-        vboxHint.setAlignment(Pos.CENTER_RIGHT);
-        vboxHint.setSpacing(10);
-        vboxHint.getChildren().addAll(hintLabel);
-        
-        HBox hbox = new HBox();
-        hbox.getChildren().addAll(vboxHint, vbox, vboxPowerUp);
-        hbox.setAlignment(Pos.CENTER_RIGHT);
-        hbox.setSpacing(10);
-        
-        stackPane.getChildren().add(hbox);
+        vbox.getChildren().addAll(hbox, canvas);
+                        
+        stackPane.getChildren().add(vbox);
         stackPane.getStyleClass().add("stackPane");
-        stackPane.getStylesheets().add("file:src/main/css/gameStyle.css");
+        stackPane.getStylesheets().add(getClass().getClassLoader().getResource("css/gameStyle.css").toExternalForm());
         
         pauseMenuInit();
     }
@@ -195,19 +165,24 @@ public class Game {
         }
     }
     
-    private void showEndMessage(String message){       
+    private void showEndMessage(String message){               
         Label messageLabel = new Label(message);
         messageLabel.setFont(new Font(120));
         messageLabel.setTextFill(Color.WHITE);
+        
+        Label endScoreLabel = new Label(kernel.score+"");
+        endScoreLabel.setFont(new Font(50));
+        endScoreLabel.setTextFill(Color.WHITE);
         
         Label helpLabel = new Label("Appuyer sur une touche pour continuer");
         helpLabel.setFont(new Font(25));
         helpLabel.setTextFill(Color.WHITE);
         
         VBox vbox = new VBox();
+        vbox.getStyleClass().add("pauseMenu");
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
-        vbox.getChildren().addAll(messageLabel, helpLabel);
+        vbox.getChildren().addAll(messageLabel, endScoreLabel, helpLabel);
         
         
         stackPane.getChildren().add(vbox);
@@ -233,8 +208,7 @@ public class Game {
     
     private void entityInit(){
         LevelData levelData = new LevelData();
-        levelData.load("level1.pml");
-        //levelData.load("customLevel1.pml");
+        levelData.load(level);
         kernel.pacman = levelData.pacman;
         kernel.fantoms = new CopyOnWriteArrayList(levelData.fantoms);
         kernel.walls = levelData.walls;
@@ -254,14 +228,15 @@ public class Game {
         pauseLabel.setTextFill(Color.WHITE);
         
         Label hintLabel = new Label("Appuyer sur echap pour continuer");
-        hintLabel.setFont(new Font(35));
+        hintLabel.setFont(new Font(20));
         hintLabel.setTextFill(Color.WHITE);
         
         Label hint2Label = new Label("ou sur enter pour quitter");
-        hint2Label.setFont(new Font(35));
+        hint2Label.setFont(new Font(20));
         hint2Label.setTextFill(Color.WHITE);
         
         pauseMenu = new VBox();
+        pauseMenu.getStyleClass().add("pauseMenu");
         pauseMenu.setAlignment(Pos.CENTER);
         pauseMenu.setSpacing(10);
         pauseMenu.getChildren().addAll(pauseLabel, hintLabel, hint2Label);
@@ -326,23 +301,9 @@ public class Game {
                 lifeLabel.setText(kernel.pacman.getLife()+" vies");
                 scoreLabel.setText(""+kernel.score);
                 timerLabel.setText(kernel.timer+" s");
-                powerUpReductorLabel.setText("(A)  "+kernel.pacman.getPowerUpReductor()+" Reductor PowerUp");
-                powerUpwallBreacherLabel.setText("(E) Wall Breacher [-200 score]");
+                powerUpReductorLabel.setText("(A)  "+kernel.pacman.getPowerUpReductor()+" Reductor");
                 
                 checkState();
-                
-                long oldFrameTime = frameTimes[frameTimeIndex] ;
-                frameTimes[frameTimeIndex] = now ;
-                frameTimeIndex = (frameTimeIndex + 1) % frameTimes.length ;
-                if (frameTimeIndex == 0) {
-                    arrayFilled = true ;
-                }
-                if (arrayFilled) {
-                    long elapsedNanos = now - oldFrameTime ;
-                    long elapsedNanosPerFrame = elapsedNanos / frameTimes.length ;
-                    double frameRate = 1_000_000_000.0 / elapsedNanosPerFrame ;
-                    //System.out.println(String.format("%.3f fps", frameRate));
-                }
             }
         };
     }
