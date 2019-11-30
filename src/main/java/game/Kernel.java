@@ -1,17 +1,17 @@
 package game;
 
-import entity.Fantom;
-import entity.Pacman;
-import entity.Pickable;
-import entity.Wall;
+import entity.*;
+import entity.Decorator.Fantom.FantomBackToLobby;
+
 import static game.GameState.*;
-import static entity.Direction.*;
 
 import game.CollisionEngine.*;
 import ia.RandomAI;
+import ia.SimpleAI;
 import ia.SmartAI;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Kernel {
@@ -19,10 +19,10 @@ public class Kernel {
     public CollideBehavior collBeha;
     public OutOfBoardBehavior OOBBeha;
     
-    public Pacman pacman;
-    public ArrayList<Fantom> fantoms;
+    public MovablePacman pacman;
+    public CopyOnWriteArrayList<MovableFantom> fantoms;
     public CopyOnWriteArrayList<Pickable> pickables;
-    public ArrayList<Wall> walls;
+    public List<Wall> walls;
     
     public GameState gameState;
     
@@ -36,7 +36,7 @@ public class Kernel {
         engine = new CollisionEngineRectangle();
         collBeha=new CollideBehaviorClassic();
         OOBBeha= new OutOfBoardWrapper(canvasHeight,canvasWidth);
-        fantoms = new ArrayList<>();
+        fantoms = new CopyOnWriteArrayList<>();
         pickables = new CopyOnWriteArrayList<>();
         walls = new ArrayList<>();
         
@@ -51,55 +51,43 @@ public class Kernel {
     
     
 
-    public void step(){
-        
+    public void step(){      
         if(engine.outOfBoard(pacman , canvasHeight, canvasWidth)) OOBBeha.behavior(pacman);
+        
+        computeMove();
+        pacman.checkNextMove(this);
         
         collide();
         
+        pacman.move();
+        moveFantoms();
+        
         checkVictory();
 
-        checkNextMove();
-
-        pacman.move();
         
-        moveFantoms();
     }
 
-    public void collide(){
+    private void collide(){
         for(Wall w :walls ){
-            for(Fantom f :fantoms ){
-                if(engine.isCollide(w,f)){
-                    f.stop();
-                }
-            }
-            if(engine.isCollide(pacman,w)){
-                //System.out.println("collision mur");
-                collBeha.collideMovableWall(pacman,w);
-            }
+            for(Movable f :fantoms ) if(engine.isCollide(w,f)) collBeha.collideMovableWall(f,w);
+            if(engine.isCollide(pacman,w))collBeha.collideMovableWall(pacman,w);
         }
-        for(Fantom f: fantoms){
+        for(MovableFantom f: fantoms){
             if(engine.isCollide(pacman,f)){
-                if(f.fState == Fantom.FantomState.NORMAL) {
-                    playerCatched();
-                }
-                if(f.fState == Fantom.FantomState.KILLABLE) {
-                    f.setBackToLobby();
-                }
+                if(f.getState() == Fantom.FantomState.NORMAL) playerCatched();
+                if(f.getState() == Fantom.FantomState.KILLABLE) fantomCatched(f);
             }
         }
         for(Pickable p : pickables){
-            if(engine.isCollide(pacman,p)){
-                p.onPick(this);
-            }
+            if(engine.isCollide(pacman,p)) p.onPick(this);
         }
     }
     
     private void playerCatched(){
         timer = 120;
-        pacman.life -= 1;
+        pacman.setLife(pacman.getLife()-1);
         pacman.stop();
-        if (pacman.life == 0) {
+        if (pacman.getLife() == 0) {
             gameState = GAMEOVER;
         }
         //renvoie pacman à sa position initiale
@@ -107,50 +95,53 @@ public class Kernel {
         pacman.setY(pacman.initY);
 
         //renvoie les fantômes à leur position initiale
-        for (Fantom p : fantoms) {
+        for (Movable p : fantoms) {
             p.setX(p.initX);
             p.setY(p.initY);
         }
+    }
+    
+    private void fantomCatched(MovableFantom f) {
+        fantoms.remove(f);
+        fantoms.add(new FantomBackToLobby(f.removeDecorator()));
+        
+        //renvoie les fantômes à leur position initiale
+        f.setX(f.initX);
+        f.setY(f.initY);
     }
     
     private void checkVictory(){
         if(timer <= 0) playerCatched();
         if(pickables.isEmpty()) gameState = VICTORY;
     }
-
-    private void checkNextMove(){
-        if(pacman.nextDirection == STOP) return;
-
-        Pacman nextPacman = new Pacman(pacman.getX(), pacman.getY());
-        nextPacman.direction = pacman.nextDirection;
-        
-        for(Wall w : walls){
-            if(engine.isCollide(nextPacman, w))
-                collBeha.collideMovableWall(nextPacman, w);
-        }
-
-        if(nextPacman.direction != STOP){
-            pacman.nextDirection();
-        }
-
+    
+    private void computeMove(){
+        fantoms.forEach(fantom -> fantom.computeMove(this));
     }
     
     private void moveFantoms(){
-        fantoms.forEach(fantom -> {
-            fantom.computeMove(this);
-            fantom.move();
-        });
+        fantoms.forEach(fantom -> fantom.move());
     }
     
     public void setFantomIA(){
         int counter = 0;
-        for(Fantom fantom : fantoms){
+        for(MovableFantom fantom : fantoms){
             switch(counter){
                 case 0: fantom.setIA(new SmartAI()); break;
-                case 1: fantom.setIA(new RandomAI()); break;
-                default: fantom.setIA(new RandomAI()); break;
+                case 1: fantom.setIA(new SimpleAI()); break;
+                case 2: fantom.setIA(new RandomAI(this)); break;
+                default: fantom.setIA(new RandomAI(this)); break;
             }
-            //counter++;
+            counter++;
         }
+    }   
+    
+    public void activateWallPowerUp(){
+        FruitWall.effect(this);
     }
+    
+    public void activateReductorPowerUp(){
+        FruitRet.effect(this);
+    }
+
 }

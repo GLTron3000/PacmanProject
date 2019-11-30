@@ -9,6 +9,7 @@ import java.io.*;
 import java.lang.reflect.Type;
 
 
+import entity.MovableFantom;
 import entity.Fantom;
 import entity.Pacman;
 import entity.Pickable;
@@ -23,7 +24,7 @@ import java.util.logging.Logger;
 
 public class LevelData {
     public Pacman pacman;
-    public ArrayList<Fantom> fantoms;
+    public ArrayList<MovableFantom> fantoms;
     public ArrayList<Pickable> pickables;
     public ArrayList<Wall> walls;
 

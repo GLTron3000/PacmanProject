@@ -41,14 +41,14 @@ class Astar {
     }
 
     private void addWallOnCell(int i, int j){
-        for(int a=i;a<i+25;a++){
+        /*for(int a=i;a<i+25;a++){
             for(int b=j; b<j+25;b++){
                 grid[a][b]=null;
 
             }
 
-        }
-        //grid[i][j] = null;
+        }*/
+        grid[i][j] = null;
 
     }
 
@@ -193,7 +193,7 @@ class Astar {
                     else if(i == endX && j == endY)
                         System.out.print("D  ");
                     else if (grid[i][j] != null)
-                        System.out.printf("%-3s", grid[i][j].isSolution ? "X" : " 0 ");
+                        System.out.printf("%-3s", grid[i][j].isSolution ? "X" : "  ");
                     else
                         System.out.print("W  ");
 

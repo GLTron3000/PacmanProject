@@ -14,14 +14,12 @@ public class OutOfBoardWrapper implements OutOfBoardBehavior {
 
     @Override
     public void behavior(Movable m) {
-        if(m.direction== Direction.UP){
-            m.setY(m.getY()+height-m.getSize());
-        }else if(m.direction== Direction.DOWN){
-            m.setY(m.getY()-height+m.getSize());
-        }else if(m.direction== Direction.LEFT){
-            m.setX(m.getX()+width-m.getSize());
-        }else if(m.direction== Direction.RIGHT){
-            m.setX(m.getX()-width+m.getSize());
+        if(null!= m.getDirection()) switch (m.getDirection()) {
+            case UP: m.setY(m.getY()+height-m.getSize()); break;
+            case DOWN: m.setY(m.getY()-height+m.getSize()); break;
+            case LEFT: m.setX(m.getX()+width-m.getSize()); break;
+            case RIGHT: m.setX(m.getX()-width+m.getSize()); break;
+            default: break;
         }
     }
 }

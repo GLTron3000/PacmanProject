@@ -16,7 +16,7 @@ public class Pacgum extends Pickable{
     @Override
     public void onPick(Kernel k) {
         k.pickables.remove(this);
-        k.score+=10;
+        k.score+=value;
     }
 
     @Override
@@ -31,7 +31,4 @@ public class Pacgum extends Pickable{
             gc.drawImage(texture, x, y, size, size);    
         } 
     }
-
-
-    
 }

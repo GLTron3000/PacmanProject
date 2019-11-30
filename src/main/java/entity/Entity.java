@@ -9,19 +9,19 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 
 public abstract class Entity {
-    double x;
-    double y;
-    double size;
-    String type;
-    String texturePath;
-    Image texture;
+    public double x;
+    public double y;
+    public double size;
+    public String type;
+    public String texturePath;
+    public Image texture;
     
     public abstract void draw(Canvas canvas);
 
     public Entity(double x, double y) {
         this.x = x;
         this.y = y;
-        size = 25;
+        size = 25.0;
     }
 
     @Override

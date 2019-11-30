@@ -54,7 +54,7 @@ class CollisionEngineTest {
         //se touche mais ne se rentre pas dedans size =25
         Entity wall3 = new Wall(30,50);
         Entity pacman3 = new Pacman(55,50);
-        assertFalse(collisionEngineCircle.isCollide(wall3,pacman3));
+        assertTrue(collisionEngineCircle.isCollide(wall3,pacman3));
 
         //se rentre dedans de 1 pixel size =25
         Entity wall4 = new Wall(30,50);
