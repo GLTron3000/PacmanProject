@@ -103,6 +103,36 @@ public class FantomBackToLobby extends FantomDecorator  {
     }
     
     @Override
+    public void setDirection(Direction direction) {
+        movableFantom.setDirection(direction);
+    }
+    
+    @Override
+    public void goUp(){
+        movableFantom.goUp();
+    }
+
+    @Override
+    public void goDown(){
+        movableFantom.goDown();
+    }
+
+    @Override
+    public void goLeft(){
+        movableFantom.goLeft();
+    }
+
+    @Override
+    public void goRight(){
+        movableFantom.goRight();
+    }
+
+    @Override
+    public void stop(){
+        movableFantom.stop();
+    }
+    
+    @Override
     public MovableFantom removeDecorator() {
         return movableFantom.removeDecorator();
     }

@@ -52,7 +52,7 @@ public class SmartAI implements IA {
         lastPacY = pacy;
 
         System.out.println("[SMARTAI] pos fantome"+ " " + fantom.name + " " + posX/25 + " " + posY/25 + " -> pos pacman" + pacX + " "+ pacy);
-        Astar astar = new Astar(700/25, 800/25, posX/25, posY/25,pacX/25 , pacy/25, getWall(kernel.walls));
+        Astar astar = new Astar(700/25, 775/25, posX/25, posY/25,pacX/25 , pacy/25, getWall(kernel.walls));
         Stack<Cell> cells = astar.process();
         astar.displaySolution();
         PathToDirection translater = new PathToDirection(cells);
