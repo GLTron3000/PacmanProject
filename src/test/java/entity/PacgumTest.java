@@ -11,7 +11,7 @@ class PacgumTest {
 
     @Test
     void onPick() {
-        /*
+        
         Pacgum pacgum = new Pacgum(0.0,25.0);
         Kernel k= new Kernel(45,20);
         k.pickables.add(pacgum);
@@ -21,7 +21,7 @@ class PacgumTest {
         pacgum.onPick(k);
         assertNotEquals(test,k.pickables.size());
         assertEquals(10,k.score);
-*/
+
     }
 
     @Test

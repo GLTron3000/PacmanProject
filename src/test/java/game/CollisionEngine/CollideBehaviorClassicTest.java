@@ -13,7 +13,7 @@ import java.util.Collection;
 import static org.junit.jupiter.api.Assertions.*;
 class CollideBehaviorClassicTest {
     CollideBehavior c= new CollideBehaviorClassic();
-    /*
+    
 
     @Test
     void collideMovableWallStandardSize() {
@@ -318,5 +318,5 @@ class CollideBehaviorClassicTest {
             assertEquals(p.getDirection(),Direction.STOP);
         }
     }
-*/
+
 }
