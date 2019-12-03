@@ -227,7 +227,7 @@ class CollideBehaviorClassicTest {
     @Test
     void collideMovableWallDownhalfSize() {
         Pacman p = new Pacman(0,0);
-        Wall down = new Wall(0,25);
+        Wall down = new Wall(0,12.5);
         p.size=25.0/2;
 
         for(int i =0;i<25;i++){
@@ -290,7 +290,7 @@ class CollideBehaviorClassicTest {
     @Test
     void collideMovableWallRighthalfSize() {
         Pacman p = new Pacman(0,0);
-        Wall right = new Wall(25,0);
+        Wall right = new Wall(12.5,0);
         p.size=25.0/2;
 
         for(int i =0;i<25;i++){
