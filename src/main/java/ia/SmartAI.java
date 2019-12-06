@@ -27,7 +27,7 @@ public class SmartAI implements IA {
 
         Direction direction = directions.poll();
 
-        System.out.println("[SMARTAI] Current direction "+direction);
+        //System.out.println("[SMARTAI] Current direction "+direction);
         return direction;
     }
 
@@ -51,12 +51,12 @@ public class SmartAI implements IA {
         lastPacX = pacX;
         lastPacY = pacy;
 
-        System.out.println("[SMARTAI] pos fantome"+ " " + fantom.name + " " + posX/25 + " " + posY/25 + " -> pos pacman" + pacX + " "+ pacy);
+        //System.out.println("[SMARTAI] pos fantome"+ " " + fantom.name + " " + posX/25 + " " + posY/25 + " -> pos pacman" + pacX + " "+ pacy);
         Astar astar = new Astar(700/25, 775/25, posX/25, posY/25,pacX/25 , pacy/25, getWall(kernel.walls));
         Stack<Cell> cells = astar.process();
-        astar.displaySolution();
+        //astar.displaySolution();
         PathToDirection translater = new PathToDirection(cells);
-        System.out.println("[SMARTAI] path calculated");
+        //System.out.println("[SMARTAI] path calculated");
         directions = translater.translate(astar.grid);
         //directions.forEach(System.out::println);
     }

@@ -20,7 +20,7 @@ class PacgumTest {
         int test = k.pickables.size();
         pacgum.onPick(k);
         assertNotEquals(test,k.pickables.size());
-        assertEquals(10,k.score);
+        assertEquals(50,k.score);
 
     }
 
